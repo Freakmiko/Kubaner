@@ -21,7 +21,7 @@ public class Professor {
         this.absenceTimes = new LinkedList<>();
         setName(name);
         for(Subject subject : sub) addSubject(subject);
-        for(AbsenceTime date: absenceTimes) addDesireDate(date);
+        for(AbsenceTime date: absenceTimes) addAbsenceTime(date);
     }
 
     /**
