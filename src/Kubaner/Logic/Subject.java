@@ -12,7 +12,7 @@ public class Subject {
      *
      * @return The name of the subject.
      */
-    String getName() {
+    public String getName() {
         return name;
     }
 }
