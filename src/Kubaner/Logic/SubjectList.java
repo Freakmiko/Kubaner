@@ -21,7 +21,7 @@ public class SubjectList {
     void add(Subject subject) {
         for(int i = 0; i < size(); i++) {
             if(subjects.get(i).getName().compareTo(subject.getName()) >= 1) {
-                subjects.add(subject);
+                subjects.add(i, subject);
                 return;
             }
         }
@@ -39,7 +39,7 @@ public class SubjectList {
      */
     public Subject create(String name) {
         Subject newSubject = new Subject(name);
-        subjects.add(newSubject);
+        add(newSubject);
         return newSubject;
     }
 
