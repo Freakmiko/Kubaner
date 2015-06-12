@@ -11,6 +11,12 @@ public class SubjectList {
         subjects = new LinkedList<>();
     }
 
+    /**
+     * Adds a subject to the list.
+     *
+     * @param subject The new subject that will be
+     *                added to the list.
+     */
     void add(Subject subject) {
         for(int i = 0; i < size(); i++) {
             if(subjects.get(i).getName().compareTo(subject.getName()) >= 1) {
@@ -20,24 +26,56 @@ public class SubjectList {
         }
     }
 
+    /**
+     * Creates a new subject with the given name
+     * and add it to the list.
+     *
+     * @param name The name of the subject.
+     * @return Returns the newly created Subject
+     */
     public Subject create(String name) {
         Subject newSubject = new Subject(name);
         subjects.add(newSubject);
         return newSubject;
     }
 
+    /**
+     * Gets a subject by index.
+     *
+     * @param index The index of the subject.
+     * @return Returns the subject.
+     */
     public Subject get(int index) {
         return subjects.get(index);
     }
 
+    /**
+     * Gets the subject list as an array.
+     *
+     * @return Returns the subject list as an array.
+     */
     public Subject[] toArray() {
         return (Subject[])subjects.toArray();
     }
 
+    /**
+     * Checks if a subject exists in the list.
+     *
+     * @param subject The subject that is looked for.
+     * @return Returns true if the subject exists and false
+     *         if it doesn't.
+     */
     public boolean exist(Subject subject) {
         return subjects.contains(subject);
     }
 
+    /**
+     * Deletes a subject from the list by index.
+     *
+     * @param index The index of the subject that will be removed.
+     * @return Returns true if the subject was deleted and returns
+     *         false if it wasn't deleted.
+     */
     public boolean delete(int index) {
         if(index < 0 || index >= size())
             return false;
@@ -45,6 +83,11 @@ public class SubjectList {
         return true;
     }
 
+    /**
+     * Gets the size of the list.
+     *
+     * @return Returns the size of the list.
+     */
     public int size() {
         return subjects.size();
     }
