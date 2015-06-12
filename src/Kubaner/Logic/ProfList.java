@@ -20,9 +20,12 @@ public class ProfList {
         for(int i = 0; i < size(); i++) {
             if(professors.get(i).getName().compareTo(professor.getName()) >= 1) {
                 professors.add(i, professor);
-                break;
+                return;
             }
         }
+        // if the professor hasn't been added
+        // to the list until now he's added last on the list.
+        professors.add(professor);
     }
 
     /**
@@ -44,8 +47,9 @@ public class ProfList {
      *
      * @param index The index of the professor.
      * @return Returns the professor.
+     * @throws IllegalArgumentException If the index is out of bounds
      */
-    public Professor get(int index) {
+    public Professor get(int index) throws IllegalArgumentException{
         if(index < 0 || index >= size())
             throw new IllegalArgumentException("The index was out of bounds.");
         return professors.get(index);
