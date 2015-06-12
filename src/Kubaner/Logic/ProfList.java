@@ -7,7 +7,7 @@ public class ProfList {
 
     private List<Professor> professors;
 
-    ProfList() {
+    public ProfList() {
         professors = new LinkedList<>();
     }
 
