@@ -1,5 +1,6 @@
 package Kubaner.Logic;
 
+import java.util.IllegalFormatCodePointException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -21,9 +22,12 @@ public class SubjectList {
         for(int i = 0; i < size(); i++) {
             if(subjects.get(i).getName().compareTo(subject.getName()) >= 1) {
                 subjects.add(subject);
-                break;
+                return;
             }
         }
+        // If the subject hasn't been added to the list
+        // it will be added as the last subject.
+        subjects.add(subject);
     }
 
     /**
@@ -44,8 +48,11 @@ public class SubjectList {
      *
      * @param index The index of the subject.
      * @return Returns the subject.
+     * @throws IllegalArgumentException If the index is out of bounds.
      */
-    public Subject get(int index) {
+    public Subject get(int index) throws IllegalArgumentException {
+        if(index < 0 || index >= size())
+            throw new IllegalArgumentException("The index was out of bounds.");
         return subjects.get(index);
     }
 
