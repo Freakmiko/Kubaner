@@ -74,7 +74,7 @@ public class Professor {
     /**
      * Gets the absence times of a professor as an array.
      *
-     * @return The absence times as an arry.
+     * @return The absence times as an array.
      */
     public AbsenceTime[] getAbsenceTimeArray() {
         return (AbsenceTime[]) absenceTimes.toArray();
@@ -95,7 +95,10 @@ public class Professor {
      * @param index The index of the absence time that should
      *              be removed.
      */
-    public void deleteAbsenceTime(int index) {
+    public boolean deleteAbsenceTime(int index) {
+        if(index < 0 || index > absenceTimes.size())
+            return false;
         absenceTimes.remove(index);
+        return true;
     }
 }
