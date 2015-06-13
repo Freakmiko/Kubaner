@@ -6,7 +6,7 @@ import java.util.List;
 public class Professor {
     private String name;
     private List<Subject> subjects;
-    private List<AbsenceTime> absenceTimes;
+    private List<TimePeriod> timePeriods;
 
     /**
      * This Creates a Professor with the given Name,
@@ -14,14 +14,14 @@ public class Professor {
      *
      * @param name The name of the professor
      * @param sub The subjects of the professor
-     * @param absenceTimes The desired dates of the professor
+     * @param timePeriods The Time periods that the professor is unavailable.
      */
-    Professor(String name, Subject[] sub, AbsenceTime[] absenceTimes) {
+    Professor(String name, Subject[] sub, TimePeriod[] timePeriods) {
         subjects = new LinkedList<>();
-        this.absenceTimes = new LinkedList<>();
+        this.timePeriods = new LinkedList<>();
         setName(name);
         for(Subject subject : sub) addSubject(subject);
-        for(AbsenceTime date: absenceTimes) addAbsenceTime(date);
+        for(TimePeriod date: timePeriods) addTimePeriod(date);
     }
 
     /**
@@ -72,33 +72,34 @@ public class Professor {
     }
 
     /**
-     * Gets the absence times of a professor as an array.
+     * Gets the time periods where the professor
+     * is unavailable as an array.
      *
-     * @return The absence times as an array.
+     * @return The unavailable time periods as an array.
      */
-    public AbsenceTime[] getAbsenceTimeArray() {
-        return (AbsenceTime[]) absenceTimes.toArray();
+    public TimePeriod[] getTimePeriodArray() {
+        return (TimePeriod[]) timePeriods.toArray();
     }
 
     /**
-     * Adds an absence time to the professor.
+     * Adds a time period where the professor is unavailable.
      *
-     * @param absenceTime The time that the professor is absent.
+     * @param timePeriod The time period that the professor is absent.
      */
-    public void addAbsenceTime(AbsenceTime absenceTime) {
-        absenceTimes.add(absenceTime);
+    public void addTimePeriod(TimePeriod timePeriod) {
+        timePeriods.add(timePeriod);
     }
 
     /**
-     * Deletes an absence time from a professor
+     * Deletes a time period from the professor.
      *
-     * @param index The index of the absence time that should
+     * @param index The index of the time period that should
      *              be removed.
      */
-    public boolean deleteAbsenceTime(int index) {
-        if(index < 0 || index > absenceTimes.size())
+    public boolean deleteTimePeriod(int index) {
+        if(index < 0 || index > timePeriods.size())
             return false;
-        absenceTimes.remove(index);
+        timePeriods.remove(index);
         return true;
     }
 }

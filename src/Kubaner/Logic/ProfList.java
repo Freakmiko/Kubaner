@@ -33,11 +33,11 @@ public class ProfList {
      *
      * @param name The name of the professor.
      * @param subjects The subjects the professor has.
-     * @param absenceTimes The absence times the professor has.
+     * @param timePeriods The time periods where the professor isn't available.
      * @return Returns the newly created professor.
      */
-    public Professor create(String name, Subject[] subjects, AbsenceTime[] absenceTimes) {
-        Professor newProf = new Professor(name, subjects, absenceTimes);
+    public Professor create(String name, Subject[] subjects, TimePeriod[] timePeriods) {
+        Professor newProf = new Professor(name, subjects, timePeriods);
         add(newProf);
         return newProf;
     }
