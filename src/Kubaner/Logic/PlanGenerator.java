@@ -21,7 +21,7 @@ public class PlanGenerator {
 		//loop through all students and add them to every ExamList with the corresponding subject
 		for(Student stud : studentList)
 		{
-			for(Subject sub : stud.getSubjects())
+			for(Subject sub : stud.getSubjectArray())
 			{
 				for(ExamList list : examLists)
 				{
