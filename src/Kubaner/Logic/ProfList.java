@@ -99,10 +99,14 @@ public class ProfList implements Iterable<Professor> {
         return professors.size();
     }
 
+    /**
+     * Gets the iterator of the ProfList
+     *
+     * @return Returns the iterator.
+     */
 	@Override
 	public Iterator<Professor> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+        return professors.iterator();
 	}
 }
 
