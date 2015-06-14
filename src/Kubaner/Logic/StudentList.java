@@ -15,6 +15,10 @@ public class StudentList {
 		return tmp;
 	}
 	
+	/**
+	 * Adds the given student to the studentList.
+	 * All students are organized in lexicographical order
+	 */
 	void add(Student std){
 		for(int i=0;i<v.size();i++){
 			//String im Vektor ist größer--> Einfügen in Vektor --> Elemente automatisch geshifted
@@ -28,13 +32,22 @@ public class StudentList {
 		return;
 	}
 	
-	//-------------------Throws Illegal Argument Exception oder was auch immer die Tester verlangen
-	public Student get(int index){
+	/**
+	 * this method tries to return the student at the given index
+	 * @param index	int  
+	 * @throws IllegalArgumentException An IllegalArgumentException is thrown if the given index was too high/low
+	 */
+	//EXCEPTION NOCH AN TESTER ANPASSEN
+	public Student get(int index) throws IllegalArgumentException{
 		if(index>=0 && index<v.size())
 			return v.get(index);
 		throw new IllegalArgumentException("Unvalid index. Tried to call get() in class Studentlist with index: "+index+". (StudentList holds at the moment "+v.size()+" students.)");
 	}
 	
+	/**
+	 * This method returns all students in this studentList as an array.
+	 * The students in this array are in lexicographical order.	 
+	 */
 	public Student[] toArray(){
 		Student[] res = new Student[v.size()];
 		for(int i=0;i<v.size();i++){
@@ -48,7 +61,7 @@ public class StudentList {
 	 * as the given student object (parameter) exists in this StudentList
 	 * (Knauber handles case that students have the same name, so the same name means the same student)
 	 * @param std A Student
-	 * @return true/false
+	 * @return true if such a student already exists and false if not
 	 */
 	public boolean exists(Student std){
 		for(int i=0;i<v.size();i++){
@@ -60,6 +73,12 @@ public class StudentList {
 		return false;
 	}
 	
+	/**
+	 * This method tries to delete the student at the given index from this studentList
+	 * 
+	 * @param index int
+	 * @return true if the student at the given index could be deleted and false if not
+	 */
 	public boolean delete(int index){
 		if(index>=0 && index<v.size() ){
 			v.remove(index);
@@ -68,6 +87,9 @@ public class StudentList {
 		return false;
 	}
 	
+	/**
+	 * Returns the amount of students in this studentList
+	 */
 	public int size(){
 		return v.size();
 	}

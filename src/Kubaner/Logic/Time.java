@@ -27,7 +27,9 @@ public class Time {
 	}
 	
 	/**
-	 * Returns true if this Time is earlier than the parameter Time
+	 * Returns true if this Time is earlier than the parameter Time and false if not
+	 * 
+	 * @param t Time
 	 */
 	public boolean isEarlier(Time t){
 		if(Stunde<t.Stunde)
@@ -40,7 +42,9 @@ public class Time {
 	}
 	
 	/**
-	 * Returns true if this Time is Later than the parameter Time
+	 * Returns true if this Time is Later than the parameter Time and false if not
+	 * 
+	 * @param t Time
 	 */
 	public boolean isLater(Time t){
 		if(Stunde>t.Stunde)

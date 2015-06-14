@@ -7,10 +7,12 @@ public class Student {
 	private TimePeriod[] absence;
 	private Subject[] faecher;
 	
-	public Student(String name, Subject[] subj, TimePeriod[] abs){
-		
+	public Student(String name, Subject[] subj, TimePeriod[] absence){
+		this.name=name;
+		this.absence=absence;
+		this.faecher=subj;
 	}
-	
+		
 	public String getName(){
 		return name;
 	}
@@ -18,19 +20,31 @@ public class Student {
 	public void setName(String name){
 		this.name=name;
 	}
-	
+		
 	public Subject[] getSubjectArray(){
 		return faecher;
 	}
 	
-	public void deleteSubject(int index){
+	/**
+	 * Deletes the Subject at the given index.
+	 * 
+	 * @return true if the Subject at the given index could be deleted and false if not
+	 */
+	public boolean deleteSubject(int index){
 		if(index>=0&&index<faecher.length){
 			faecher[index]=null;
 			shiftAllToTheLeft(index+1);
+			return true;
 		}
+		return false;
 			
 	}
 	
+	/**
+	 * Let's you add another subject to the student
+	 * 
+	 * @param sub the new subject
+	 */
 	public void addSubject(Subject sub){
 		//Array voll --> neues anlegen
 		if(faecher[faecher.length-1]!=null){
@@ -55,20 +69,26 @@ public class Student {
 		
 	}
 	
-	public TimePeriod[] getAbsenceTime(){
-		return absence;
-	}
-	
-	public void addAbsenceTime(TimePeriod abs){
+	/**
+	 * Adds another TimePeriod where this student is absent
+	 * 
+	 * @param absence the TimePeriod when this student is absent 
+	 */
+	public void addTimePeriod(TimePeriod absence){
 		//array um eins vergrößern
-		TimePeriod[] tmp = new TimePeriod[absence.length+1];
-		for(int i=0;i<absence.length;i++)
-			tmp[i]=absence[i];
-		tmp[absence.length]=abs;
-		absence=tmp;
+		TimePeriod[] tmp = new TimePeriod[this.absence.length+1];
+		for(int i=0;i<this.absence.length;i++)
+			tmp[i]=this.absence[i];
+		tmp[this.absence.length]=absence;
+		this.absence=tmp;
 	}	
 	
-	public boolean deleteAbsenceTime(int index){
+	/**
+	 * Deletes the TimePeriod at the given index, so this student is no longer absent at this Time.
+	 * 
+	 * @return true if TimePeriod could be deleted and false if not
+	 */
+	public boolean deleteTimePeriod(int index){
 		if(index>=0 && index <absence.length){
 			absence[index]=null;
 			shiftAllAbsToTheLeft(index+1);
@@ -77,6 +97,7 @@ public class Student {
 		return false;
 	}
 	
+	//Make sure indexOfFirstElementToBeShifted >0
 	private void shiftAllAbsToTheLeft(int indexOfFirstElementToBeShifted){
 		for(int i=indexOfFirstElementToBeShifted;i<absence.length;i++){
 			absence[i-1]=absence[i];
@@ -84,7 +105,10 @@ public class Student {
 		}
 	}
 	
-	public TimePeriod[] getAbsenceTimeArary(){
+	/**
+	 * Returns all TimePeriods where this student is absent as an array
+	 */
+	public TimePeriod[] getTimePeriodArary(){
 		return absence;
 	}
 	

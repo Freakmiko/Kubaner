@@ -28,7 +28,9 @@ public class TimePeriod {
 	
 	/**
 	 * Returns true if this TimePeriod start before tp ends or 
-	 * if tp starts before this ends
+	 * if tp starts before this TimePeriod ends
+	 * 
+	 * @param tp TimePeriod
 	 */
 	public boolean overlaying(TimePeriod tp){		
 		if(tp.end.isEarlier(start) || end.isEarlier(tp.start))
