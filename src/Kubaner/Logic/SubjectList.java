@@ -1,6 +1,5 @@
 package Kubaner.Logic;
 
-import java.util.IllegalFormatCodePointException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -100,9 +99,13 @@ public class SubjectList implements Iterable<Subject> {
         return subjects.size();
     }
 
+    /**
+     * Returns the iterator of the SubjectList
+     *
+     * @return Returns the iterator.
+     */
 	@Override
 	public Iterator<Subject> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+        return subjects.iterator();
 	}
 }
