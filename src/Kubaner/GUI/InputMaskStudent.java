@@ -14,7 +14,7 @@ public class InputMaskStudent extends JFrame implements ActionListener{
 		new InputMaskStudent().setVisible(true);
 	}
 
-	p	private int subjectListSize = SubjectList.size();
+	private int subjectListSize = SubjectList.size();
 	private JButton confirmButton, cancelButton;
 	private JRadioButton[] subjectListButtons = new JRadioButton[subjectListSize];
 	private JPanel itemsPanel, namePanel, subjectPanel, selectionSubjectPanel, timePanel, timeStartPanel, timeEndPanel, controlPanel;
