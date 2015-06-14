@@ -1,6 +1,7 @@
 package Kubaner.Logic;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class PlanGenerator {
 	private ProfList profList;
 	
 	
-	public Plan generatePlan()
+	public Plan generatePlan(Date startTime)
 	{
 		ExamList[] examLists = new ExamList[subjectList.size()];
 		//create a list for each subject
@@ -35,7 +36,7 @@ public class PlanGenerator {
 		sortArray(examLists);
 		
 		
-		Plan plan = new Plan();
+		Plan plan = new Plan(startTime);
 		
 		for(ExamList exam: examLists)
 		{
@@ -46,6 +47,8 @@ public class PlanGenerator {
 				
 			}
 		}
+		
+		return plan;
 	}
 	
 	private void sortArray(ExamList[] array)
