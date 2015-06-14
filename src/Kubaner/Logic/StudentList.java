@@ -1,11 +1,12 @@
 package Kubaner.Logic;
 
+import java.util.Iterator;
 import java.util.Vector;
 
 /**
  * Holds all Students in lexicographical order
  */
-public class StudentList {
+public class StudentList implements Iterable<Student> {
 
 	private Vector<Student> v = new Vector<Student>(100,10);
 	
@@ -92,5 +93,11 @@ public class StudentList {
 	 */
 	public int size(){
 		return v.size();
+	}
+
+	@Override
+	public Iterator<Student> iterator() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -1,9 +1,10 @@
 package Kubaner.Logic;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ProfList {
+public class ProfList implements Iterable<Professor> {
 
     private List<Professor> professors;
 
@@ -97,5 +98,11 @@ public class ProfList {
     public int size() {
         return professors.size();
     }
+
+	@Override
+	public Iterator<Professor> iterator() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
 
