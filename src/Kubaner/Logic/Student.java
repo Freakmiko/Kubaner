@@ -108,7 +108,7 @@ public class Student {
 	/**
 	 * Returns all TimePeriods where this student is absent as an array
 	 */
-	public TimePeriod[] getTimePeriodArary(){
+	public TimePeriod[] getTimePeriodArray(){
 		return absence;
 	}
 	
