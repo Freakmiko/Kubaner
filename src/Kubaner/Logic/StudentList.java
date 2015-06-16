@@ -20,7 +20,7 @@ public class StudentList implements Iterable<Student> {
 	 * Adds the given student to the studentList.
 	 * All students are organized in lexicographical order
 	 */
-	void add(Student std){
+	public void add(Student std){
 		for(int i=0;i<v.size();i++){
 			//String im Vektor ist größer--> Einfügen in Vektor --> Elemente automatisch geshifted
 			if(v.elementAt(i).getName().compareTo(std.getName())>0){

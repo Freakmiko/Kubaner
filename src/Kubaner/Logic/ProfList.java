@@ -17,7 +17,7 @@ public class ProfList implements Iterable<Professor> {
      *
      * @param professor The professor that will be added.
      */
-    void add(Professor professor) {
+    public void add(Professor professor) {
         for(int i = 0; i < size(); i++) {
             if(professors.get(i).getName().compareTo(professor.getName()) >= 1) {
                 professors.add(i, professor);
