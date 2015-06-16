@@ -1,5 +1,14 @@
 package Kubaner.GUI;
 
+import Kubaner.*;
+import Kubaner.Logic.Plan;
+import Kubaner.Logic.PlanGenerator;
+import Kubaner.Logic.StudentList;
+import Kubaner.Logic.Student;
+import Kubaner.Logic.Subject;
+import Kubaner.Logic.SubjectList;
+import Kubaner.Logic.TimePeriod;
+
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -10,11 +19,14 @@ import javax.swing.*;
 
 public class InputMaskStudent extends JFrame implements ActionListener{
 	
-	public static void main (String[] args) {
-		new InputMaskStudent().setVisible(true);
-	}
-
-	private int subjectListSize = SubjectList.size();
+	private PlanGenerator planGenerator;
+	private Plan plan;
+	private SubjectList subList;
+	private StudentList currentStudentList;
+	private Student currentStudent;
+	private Time start, end;
+	private TimePeriod periode;
+	private int subjectListSize = subList.size();
 	private JButton confirmButton, cancelButton;
 	private JRadioButton[] subjectListButtons = new JRadioButton[subjectListSize];
 	private JPanel itemsPanel, namePanel, subjectPanel, selectionSubjectPanel, timePanel, timeStartPanel, timeEndPanel, controlPanel;
@@ -25,48 +37,59 @@ public class InputMaskStudent extends JFrame implements ActionListener{
 	private String name;
 	private int startHour, startMinute, endHour, endMinute;
 	private Subject[] teachingSubject;
+
+//	public static void main (String[] args) {
+//		new ImportMaskProfessor(plan, planGenerator).setVisible(true);
+//	}
 	
-	InputMaskStudent(){
-		setTitle("Studenten-Eingabemaske");
+	InputMaskStudent(Plan plan, PlanGenerator planGenertor){
+		
+		this.plan = plan;
+		this.planGenerator = planGenerator;
+		
+		subList = planGenerator.getSubjectList();
+		currentStudentList = planGenerator.getStudentList();
+		
+		setTitle("Student-Eingabemaske");
 		setLayout(new BorderLayout());
 		
 		itemsPanel = new JPanel();
 		itemsPanel.setLayout(new GridLayout(3,1));
 		
-		//Erstellt ein Panel fÃ¼r die Namenseingabe
+		//Erstellt ein Panel für die Namenseingabe
 		namePanel = new JPanel();
 		namePanel.setLayout(new GridLayout(2,1));
 		namePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		nameLabel = new JLabel("Name des Studenten (Pflichtfeld): ");
+		nameLabel = new JLabel("Name des Student (Pflichtfeld): ");
 		nameField = new JTextField("Max Mustermann");
 		namePanel.add(nameLabel);
 		namePanel.add(nameField);
 		
-		//Erstellt ein Panel fÃ¼r die Fachauswahl.
+		//Erstellt ein Panel für die Fachauswahl.
 		subjectPanel = new JPanel();
 		subjectPanel.setLayout(new GridLayout(2,1));
 		subjectPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		subjectLabel = new JLabel("Fach des Studenten (Pflichtfeld): ");
+		subjectLabel = new JLabel("Fach des Student (Pflichtfeld): ");
 		
-		//Erstellt ein panel fÃ¼r die RadioButtons der FÃ¤cher.
+		//Erstellt ein panel für die RadioButtons der Fächer.
 		selectionSubjectPanel = new JPanel();
 		selectionSubjectPanel.setLayout(new GridLayout((subjectListSize)/2, 2));
 		for (int i = 0; i != subjectListSize; i++){
-			subjectListButtons[i] = new JRadioButton((SubjectList.get(i)).getName());
+			subjectListButtons[i] = new JRadioButton((subList.get(i)).getName());
 			selectionSubjectPanel.add(subjectListButtons[i]);
 			subjectListButtons[i].addActionListener(this);
 		}
 		subjectPanel.add(subjectLabel);
 		subjectPanel.add(selectionSubjectPanel);
 		
-		//Erstellt ein Panel fÃ¼r die Wunschzeit
+		//Erstellt ein Panel für die Wunschzeit
 		timePanel = new JPanel();
 		timePanel.setLayout(new GridLayout(4, 1));
 		timePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		timeStartLabel = new JLabel ("Wunschstartzeit des Studenten (optional): ");
+		timeStartLabel = new JLabel ("Wunschstartzeit des Student (optional): ");
 		timePanel.add(timeStartLabel);
 		
-		//Erstellt ein Panel fÃ¼r die Startzeit.
+		//Erstellt ein Panel für die Startzeit.
 		timeStartPanel = new JPanel();
 		timeStartPanel.setLayout(new GridLayout(1,2));
 		startTimeHoursModel = new SpinnerNumberModel(0,0,23, 1);
@@ -77,8 +100,8 @@ public class InputMaskStudent extends JFrame implements ActionListener{
 	    timeStartPanel.add(startTimeMinutes);
 		timePanel.add(timeStartPanel);
 		
-		//Erstellt ein Panel fÃ¼r die Endzeit.
-		timeEndLabel = new JLabel("Wunschendzeit des Studenten (optional): ");
+		//Erstellt ein Panel für die Endzeit.
+		timeEndLabel = new JLabel("Wunschendzeit des Student (optional): ");
 		timePanel.add(timeEndLabel);
 		timeEndPanel = new JPanel();
 		timeEndPanel.setLayout(new GridLayout(1,2));
@@ -90,14 +113,14 @@ public class InputMaskStudent extends JFrame implements ActionListener{
 	    timeEndPanel.add(endTimeMinutes);
 		timePanel.add(timeEndPanel);
 		
-		//Erstellt ein Pnale zum bestÃ¤tigen und zum abbrechen der Eingabe
+		//Erstellt ein Pnale zum bestätigen und zum abbrechen der Eingabe
 		controlPanel = new JPanel();
-		confirmButton = new JButton("BestÃ¤tigen");
+		confirmButton = new JButton("Bestätigen");
 		cancelButton = new JButton("Abbrechen");
 		controlPanel.add(confirmButton);
 		controlPanel.add(cancelButton);
 		
-		//FÃ¼gt ActionListener fÃ¼r die beiden knÃ¶pfe hinzu.
+		//Fügt ActionListener für die beiden knöpfe hinzu.
 		confirmButton.addActionListener(this);
 		cancelButton.addActionListener(this);
 		
@@ -122,14 +145,14 @@ public class InputMaskStudent extends JFrame implements ActionListener{
 			endHour = (int) endTimeHours.getValue();
 			endMinute = (int) endTimeMinutes.getValue();
 			
-			//ZÃ¤hlt die ausgewÃ¤hleten FÃ¤cher.
+			//Zählt die ausgewähleten Fächer.
 			int counterSubjects = 0;
 			for (int index = 0; index != subjectListSize ; index++){
 				if(subjectListButtons[index].isSelected())
 					counterSubjects++;
 			}
 			
-			//FÃ¼gt die unterichtenden FÃ¤cher in eine FÃ¤cherListe ein.
+			//Fügt die unterichtenden Fächer in eine FächerListe ein.
 			//teachingSubject= new Subject[counterSubjects];
 			int counter = 0;
 			
@@ -139,9 +162,9 @@ public class InputMaskStudent extends JFrame implements ActionListener{
 					counter++;
 			}
 			
-			Time start = new Time(startHour, startMinute);
-			Time end = new Time(endHour, endMinute);
-			TimePeriod period = new TimePeriode(start, end);
+			start = new Time(startHour, startMinute);
+			end = new Time(endHour, endMinute);
+			periode = new TimePeriod(start, end);
 			
 //			Testausgabe
 //			System.out.println("Name: " + professorName);
@@ -151,10 +174,15 @@ public class InputMaskStudent extends JFrame implements ActionListener{
 //			System.out.println("StartZeit: "+ startHour + ":" + startMinute);
 //			System.out.println("EndZeit: "+ endHour + ":" + endMinute);
 			
-			StudentList.add(StudentList.create(name, teachingSubject, period));
-			System.exit(0);
+			try{
+					currentStudent = currentStudentList.create(name, teachingSubject, periode);
+					currentStudentList.add(currentStudent);
+					System.exit(0);
+			} catch (IllegalArgumentException E){
+				JOptionPane.showMessageDialog(null, "Ihre Eingabe war fehlerhaft oder unvollständig!", "Fehler beim Erstellen", JOptionPane.CANCEL_OPTION);
+			}
 		}
 		
 	}
+}
 
-} 
