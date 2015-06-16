@@ -48,7 +48,7 @@ public class ImportMaskProfessor extends JFrame implements ActionListener{
 		itemsPanel = new JPanel();
 		itemsPanel.setLayout(new GridLayout(3,1));
 		
-		//Erstellt ein Panel für die Namenseingabe
+		//Erstellt ein Panel fÃ¼r die Namenseingabe
 		namePanel = new JPanel();
 		namePanel.setLayout(new GridLayout(2,1));
 		namePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -57,13 +57,13 @@ public class ImportMaskProfessor extends JFrame implements ActionListener{
 		namePanel.add(nameLabel);
 		namePanel.add(nameField);
 		
-		//Erstellt ein Panel für die Fachauswahl.
+		//Erstellt ein Panel fÃ¼r die Fachauswahl.
 		subjectPanel = new JPanel();
 		subjectPanel.setLayout(new GridLayout(2,1));
 		subjectPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		subjectLabel = new JLabel("Fach des Dozenten (Pflichtfeld): ");
 		
-		//Erstellt ein panel für die RadioButtons der Fächer.
+		//Erstellt ein panel fÃ¼r die RadioButtons der FÃ¤cher.
 		selectionSubjectPanel = new JPanel();
 		selectionSubjectPanel.setLayout(new GridLayout((subjectListSize)/2, 2));
 		for (int i = 0; i != subjectListSize; i++){
@@ -74,14 +74,14 @@ public class ImportMaskProfessor extends JFrame implements ActionListener{
 		subjectPanel.add(subjectLabel);
 		subjectPanel.add(selectionSubjectPanel);
 		
-		//Erstellt ein Panel für die Wunschzeit
+		//Erstellt ein Panel fÃ¼r die Wunschzeit
 		timePanel = new JPanel();
 		timePanel.setLayout(new GridLayout(4, 1));
 		timePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		timeStartLabel = new JLabel ("Wunschstartzeit des Dozenten (optional): ");
 		timePanel.add(timeStartLabel);
 		
-		//Erstellt ein Panel für die Startzeit.
+		//Erstellt ein Panel fÃ¼r die Startzeit.
 		timeStartPanel = new JPanel();
 		timeStartPanel.setLayout(new GridLayout(1,2));
 		startTimeHoursModel = new SpinnerNumberModel(0,0,23, 1);
@@ -92,7 +92,7 @@ public class ImportMaskProfessor extends JFrame implements ActionListener{
 	    timeStartPanel.add(startTimeMinutes);
 		timePanel.add(timeStartPanel);
 		
-		//Erstellt ein Panel für die Endzeit.
+		//Erstellt ein Panel fÃ¼r die Endzeit.
 		timeEndLabel = new JLabel("Wunschendzeit des Dozenten (optional): ");
 		timePanel.add(timeEndLabel);
 		timeEndPanel = new JPanel();
@@ -105,14 +105,14 @@ public class ImportMaskProfessor extends JFrame implements ActionListener{
 	    timeEndPanel.add(endTimeMinutes);
 		timePanel.add(timeEndPanel);
 		
-		//Erstellt ein Pnale zum bestätigen und zum abbrechen der Eingabe
+		//Erstellt ein Pnale zum bestÃ¤tigen und zum abbrechen der Eingabe
 		controlPanel = new JPanel();
-		confirmButton = new JButton("Bestätigen");
+		confirmButton = new JButton("BestÃ¤tigen");
 		cancelButton = new JButton("Abbrechen");
 		controlPanel.add(confirmButton);
 		controlPanel.add(cancelButton);
 		
-		//Fügt ActionListener für die beiden knöpfe hinzu.
+		//FÃ¼gt ActionListener fÃ¼r die beiden knÃ¶pfe hinzu.
 		confirmButton.addActionListener(this);
 		cancelButton.addActionListener(this);
 		
@@ -137,14 +137,14 @@ public class ImportMaskProfessor extends JFrame implements ActionListener{
 			endHour = (int) endTimeHours.getValue();
 			endMinute = (int) endTimeMinutes.getValue();
 			
-			//Zählt die ausgewähleten Fächer.
+			//ZÃ¤hlt die ausgewÃ¤hleten FÃ¤cher.
 			int counterSubjects = 0;
 			for (int index = 0; index != subjectListSize ; index++){
 				if(subjectListButtons[index].isSelected())
 					counterSubjects++;
 			}
 			
-			//Fügt die unterichtenden Fächer in eine FächerListe ein.
+			//FÃ¼gt die unterichtenden FÃ¤cher in eine FÃ¤cherListe ein.
 			//teachingSubject= new Subject[counterSubjects];
 			int counter = 0;
 			
@@ -171,7 +171,7 @@ public class ImportMaskProfessor extends JFrame implements ActionListener{
 					currentProfList.add(currentProfessor);
 					System.exit(0);
 			} catch (IllegalArgumentException E){
-				JOptionPane.showMessageDialog(null, "Ihre Eingabe war fehlerhaft oder unvollständig!", "Fehler beim Erstellen", JOptionPane.CANCEL_OPTION);
+				JOptionPane.showMessageDialog(null, "Ihre Eingabe war fehlerhaft oder unvollstÃ¤ndig!", "Fehler beim Erstellen", JOptionPane.CANCEL_OPTION);
 			}
 		}
 		
