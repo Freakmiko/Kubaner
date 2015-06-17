@@ -1,40 +1,36 @@
 package Kubaner.Logic;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TimeLine {
 	
 	public String room;
-	private TimeLineMember timeLine[];
+	private List<TimeLineMember> memberList;
 	
-	public void insertAt(int index, TimeLineMember time){
-		this.timeLine[index] = time;		
+	public TimeLine(){
+		memberList = new ArrayList<TimeLineMember>();
 	}
 	
-	public void deleteAt(int index){
-		this.timeLine[index] = null;
+	public void add(TimeLineMember member){
+		memberList.add(member);
+	}
+	
+	public void insert(TimeLineMember member, int index){
+		memberList.add(index, member);
+	}
+	
+	public void delete(int index){
+		memberList.remove(index);
+	}
+	
+	public int size(){
+		return memberList.size();
 	}
 	
 	public void moveMember(int oldIndex, int newIndex){
-		
-		//es fehlen hier noch Exceptions und andere ausnahmen
-		
-		TimeLineMember tmpOld = this.timeLine[oldIndex];
-		TimeLineMember tmpNew = this.timeLine[newIndex];
-		if(newIndex > oldIndex){
-			for(int i = oldIndex; i == newIndex; i++){
-				this.timeLine[i] = this.timeLine[i+1];
-			}
-			this.timeLine[newIndex] = tmpOld;
-		}
-		if(newIndex < oldIndex){
-			for(int i = oldIndex; i == newIndex; i--){
-				this.timeLine[i] = this.timeLine[i-1];
-			}
-			this.timeLine[newIndex] = tmpOld;	
-		}
-		
-		if(newIndex == oldIndex){
-		}
-		this.timeLine[newIndex] = this.timeLine[oldIndex];
+		TimeLineMember help = memberList.remove(oldIndex);
+		memberList.add(newIndex, help);
 	}
 
 	public String getRoom(){
@@ -45,15 +41,8 @@ public class TimeLine {
 		this.room = room;
 	}
 	
-	public int elementCount(){
-		
-		for(int i)
-		
-		return 0;
-	}
-	
 	public TimeLineMember getTimeLineMember(int index){
-		return this.timeLine[index];
+		return memberList.get(index);
 	}
 	
 

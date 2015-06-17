@@ -2,7 +2,12 @@ package Kubaner.Logic;
 
 public class Subject {
     private String name;
+    private int examLength;
 
+    
+    //TODO: Add setter and constructor parameter for examLength
+    
+    
     Subject(String name) {
         this.name = name;
     }
@@ -14,5 +19,14 @@ public class Subject {
      */
     public String getName() {
         return name;
+    }
+    
+    
+    /**
+     * Gets the length of the exam in the current subject in minutes.
+     * @return
+     */
+    public int getExamLength() {
+    	return examLength;
     }
 }

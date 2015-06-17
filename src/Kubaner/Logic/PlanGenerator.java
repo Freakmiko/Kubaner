@@ -136,19 +136,19 @@ public class PlanGenerator {
 	}
 	
 	
-	public Plan generatePlan(Date startTime)
+	public Plan generatePlan(Time startTime)
 	{
-		ExamList[] examLists = new ExamList[subjectList.size()];
+		StudentPerSubjectList[] examLists = new StudentPerSubjectList[subjectList.size()];
 		//create a list for each subject
 		for(int i = 0; i < subjectList.size(); i++)
-			examLists[i] = new ExamList(subjectList.get(i));
+			examLists[i] = new StudentPerSubjectList(subjectList.get(i));
 		
 		//loop through all students and add them to every ExamList with the corresponding subject
 		for(Student stud : studentList)
 		{
 			for(Subject sub : stud.getSubjectArray())
 			{
-				for(ExamList list : examLists)
+				for(StudentPerSubjectList list : examLists)
 				{
 					if(list.getSubject() == sub)
 						list.add(stud);
@@ -159,28 +159,70 @@ public class PlanGenerator {
 		//sort the array
 		sortArray(examLists);
 		
-		
+		//create new plan object
 		Plan plan = new Plan(startTime);
 		
-		for(ExamList exam: examLists)
+		//create a timeline for every subject
+		for(StudentPerSubjectList exam: examLists)
 		{
+			//TODO: get Professor from subject
+			Professor prof = null;
+			
 			TimeLine timeLine = new TimeLine();
 			
+			Time currentTime = startTime;
+			
+			//create an exam and optional a break for every student
 			for(Student stud: exam)
 			{
+				Time oldTime = currentTime;
+				currentTime = getTimeWhenProfIsAvailable(prof, currentTime);
 				
+				//add a break if prof is unavailable
+				int breakTime = oldTime.getMinutesBetween(currentTime);
+				if(breakTime > 0)
+				{
+					timeLine.add(new Break(breakTime));
+				}
+				
+				Subject[] subjectArray = { exam.subject, null};
+				Professor[] profArray = { prof, null};
+				
+				//add the exam to the time line
+				timeLine.add(new Exam(
+						profArray,
+						stud, 
+						subjectArray,
+						exam.subject.getExamLength(),
+						""));
 			}
 		}
 		
 		return plan;
 	}
 	
-	private void sortArray(ExamList[] array)
+	private void mergeTimeLines(Plan plan)
+	{
+		for(int i = 0; i < plan.getTimeLineNumber(); i++)
+	}
+	
+	private Time getTimeWhenProfIsAvailable(Professor prof, Time curTime)
+	{
+		for(TimePeriod period : prof.getTimePeriodArray())
+		{
+			if(period.laysBetween(curTime))
+				return period.getEnd();
+		}
+		
+		return curTime;
+	}
+	
+	private void sortArray(StudentPerSubjectList[] array)
 	{
 		for(int j = array.length-1; j < 0; j-- ){
 			for(int i = 0; i < j; i++){
 				if(array[i].compareTo(array[i+1]) < 0){
-					ExamList help = array[i+1];
+					StudentPerSubjectList help = array[i+1];
 					array[i+1] = array[i];
 					array[i] = help;
 				}	
@@ -189,12 +231,18 @@ public class PlanGenerator {
 	}
 	
 	
-	private class ExamList implements Comparable<ExamList>, Iterable<Student>
+	/**
+	 * An internal helper class which stores the students which are tested in the same subject.
+	 * 
+	 * @author Max & Max
+	 *
+	 */
+	private class StudentPerSubjectList implements Comparable<StudentPerSubjectList>, Iterable<Student>
 	{
 		private Subject subject;
 		private List<Student> students;
 		
-		ExamList(Subject subject)
+		StudentPerSubjectList(Subject subject)
 		{
 			this.subject = subject;
 			students = new ArrayList<Student>();
@@ -222,7 +270,7 @@ public class PlanGenerator {
 
 		
 		@Override
-		public int compareTo(ExamList o)
+		public int compareTo(StudentPerSubjectList o)
 		{	
 			if(o.size() > this.size())
 				return -1;

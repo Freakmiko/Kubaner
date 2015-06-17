@@ -1,13 +1,25 @@
 package Kubaner.Logic;
 
-public class Exam implements TimeLineMember {
+public class Exam implements TimeLineMember
+{
 
-	String assessor;
-	int length;
-	Student stu;
-	Subject sub;
-	Professor prof;
-		
+	private String assessor;
+	private int length;
+	private Student stu;
+	private Subject[] sub;
+	private Professor[] prof;
+	
+	
+	public Exam(Professor[] prof, Student stu, Subject[] sub, int length, String assessor)
+	{
+		this.prof = prof;
+		this.stu = stu;
+		this.sub  =sub;
+		this.length = length;
+		this.assessor = assessor;
+	}
+	
+	
 	@Override
 	public int getLength() {
 		return this.length;
@@ -17,11 +29,11 @@ public class Exam implements TimeLineMember {
 		return this.stu;
 	}
 	
-	public Subject getSubject(){
+	public Subject[] getSubjectArray(){
 		return this.sub;
 	}
 	
-	public Professor getProfessor(){
+	public Professor[] getProfessor(){
 		return this.prof;
 	}
 	

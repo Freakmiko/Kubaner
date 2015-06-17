@@ -39,4 +39,18 @@ public class TimePeriod {
 		
 	}
 	
+	/**
+	 * Checks if a {@link Time} object is inside the current {@link TimePeriod}
+	 * or matches the start or end times.
+	 * 
+	 * @param time
+	 * 		a {@link Time} object.
+	 * @return
+	 * 		true, if the parameter time lays between or is equal to the start or the end time.
+	 */
+	public boolean laysBetween(Time time)
+	{
+		return start.isEarlierOrEqual(time) && end.isLaterOrEqual(time);
+	}
+	
 }
