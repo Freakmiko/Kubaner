@@ -48,11 +48,11 @@ public class SubjectList implements Iterable<Subject> {
      *
      * @param index The index of the subject.
      * @return Returns the subject.
-     * @throws IllegalArgumentException If the index is out of bounds.
+     * @throws IndexOutOfBoundsException If the index is out of bounds.
      */
-    public Subject get(int index) throws IllegalArgumentException {
+    public Subject get(int index) throws IndexOutOfBoundsException {
         if(index < 0 || index >= size())
-            throw new IllegalArgumentException("The index was out of bounds.");
+            throw new IndexOutOfBoundsException("The index was out of bounds.");
         return subjects.get(index);
     }
 

@@ -35,13 +35,12 @@ public class StudentList implements Iterable<Student> {
 	/**
 	 * this method tries to return the student at the given index
 	 * @param index	int  
-	 * @throws IllegalArgumentException An IllegalArgumentException is thrown if the given index was too high/low
+	 * @throws IndexOutOfBoundsException An IndexOutOfBounds is thrown if the given index was too high/low
 	 */
-	//EXCEPTION NOCH AN TESTER ANPASSEN
-	public Student get(int index) throws IllegalArgumentException{
+	public Student get(int index) throws IndexOutOfBoundsException{
 		if(index>=0 && index<v.size())
 			return v.get(index);
-		throw new IllegalArgumentException("Unvalid index. Tried to call get() in class Studentlist with index: "+index+". (StudentList holds at the moment "+v.size()+" students.)");
+		throw new IndexOutOfBoundsException("Unvalid index. Tried to call get() in class Studentlist with index: "+index+". (StudentList holds at the moment "+v.size()+" students.)");
 	}
 	
 	/**
