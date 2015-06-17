@@ -45,9 +45,9 @@ public class TimeLine {
 		this.room = room;
 	}
 	
-	public int getTimeLineMemberNumber(TimeLineMember time){
+	public int elementCount(){
 		
-		//Wie wird hier verglichen um herauszufinden wer gesucht ist?
+		for(int i)
 		
 		return 0;
 	}
