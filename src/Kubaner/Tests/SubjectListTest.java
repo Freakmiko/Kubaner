@@ -23,12 +23,12 @@ public class SubjectListTest {
         assertEquals("GTI", subjectList.get(1).getName());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = IndexOutOfBoundsException.class)
     public void testGetFromEmptyList() throws Exception {
         subjectList.get(0);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = IndexOutOfBoundsException.class)
     public void testGetIndexOutOfBounds() throws Exception {
         subjectList.create("ANA");
         subjectList.get(1);

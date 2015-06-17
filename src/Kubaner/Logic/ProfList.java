@@ -62,7 +62,7 @@ public class ProfList implements Iterable<Professor> {
      * @return Returns the professors in an array.
      */
     public Professor[] toArray() {
-        return (Professor[])professors.toArray();
+        return professors.toArray(new Professor[size()]);
     }
 
     /**
