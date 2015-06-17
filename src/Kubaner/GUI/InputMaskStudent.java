@@ -172,7 +172,7 @@ public class InputMaskStudent extends JFrame implements ActionListener{
 					currentStudent = currentStudentList.create(name, teachingSubject, periode);
 					System.exit(0);
 			} catch (IllegalArgumentException E){
-				JOptionPane.showMessageDialog(null, "Ihre Eingabe war fehlerhaft oder unvollständig!", "Fehler beim Erstellen", JOptionPane.CANCEL_OPTION);
+				JOptionPane.showMessageDialog(null, "Fehlerhafte Eingabe!", "Erstellungsfehler", JOptionPane.CANCEL_OPTION);
 			}
 		}
 		

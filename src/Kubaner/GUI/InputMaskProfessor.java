@@ -134,6 +134,12 @@ public class InputMaskProfessor extends JFrame implements ActionListener{
 			System.exit(0);
 		} else if (e.getSource() == confirmButton){
 			name = nameField.getText();
+			
+			//Easteregg für Herr Knauber :D
+			if (name.contains("Knauber")){
+				name = "Prof. Dr. Kubaner";
+			}
+			
 			startHour = (int) startTimeHours.getValue();
 			startMinute = (int) startTimeMinutes.getValue();
 			endHour = (int) endTimeHours.getValue();
@@ -172,7 +178,7 @@ public class InputMaskProfessor extends JFrame implements ActionListener{
 					currentProfessor = currentProfList.create(name, teachingSubject, periode);
 					System.exit(0);
 			} catch (IllegalArgumentException E){
-				JOptionPane.showMessageDialog(null, "Ihre Eingabe war fehlerhaft oder unvollstÃ¤ndig!", "Fehler beim Erstellen", JOptionPane.CANCEL_OPTION);
+				JOptionPane.showMessageDialog(null, "Fehlerhafte Eingabe!", "Erstellungsfehler", JOptionPane.CANCEL_OPTION);
 			}
 		}
 		
