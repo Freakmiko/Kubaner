@@ -62,7 +62,7 @@ public class SubjectList implements Iterable<Subject> {
      * @return Returns the subject list as an array.
      */
     public Subject[] toArray() {
-        return (Subject[])subjects.toArray();
+        return subjects.toArray(new Subject[size()]);
     }
 
     /**
