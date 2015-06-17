@@ -18,9 +18,9 @@ public class InputMaskStudent extends JFrame implements ActionListener{
 	private Student currentStudent;
 	private Time start, end;
 	private TimePeriod[] periode = new TimePeriod[1];
-	private int subjectListSize = subList.size();
+	private int subjectListSize;
 	private JButton confirmButton, cancelButton;
-	private JRadioButton[] subjectListButtons = new JRadioButton[subjectListSize];
+	private JRadioButton[] subjectListButtons;
 	private JPanel itemsPanel, namePanel, subjectPanel, selectionSubjectPanel, timePanel, timeStartPanel, timeEndPanel, controlPanel;
 	private JTextField nameField;
 	private JLabel nameLabel, subjectLabel, timeStartLabel, timeEndLabel ;
@@ -41,6 +41,8 @@ public class InputMaskStudent extends JFrame implements ActionListener{
 		
 		subList = planGenerator.getSubjectList();
 		currentStudentList = planGenerator.getStudentList();
+		subjectListSize = subList.size();
+		subjectListButtons = new JRadioButton[subjectListSize];
 		
 		setTitle("Student-Eingabemaske");
 		setLayout(new BorderLayout());

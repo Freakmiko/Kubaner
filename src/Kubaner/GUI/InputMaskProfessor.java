@@ -15,12 +15,12 @@ public class InputMaskProfessor extends JFrame implements ActionListener{
 	private Plan plan;
 	private SubjectList subList;
 	private ProfList currentProfList;
-	Professor currentProfessor;
+	private Professor currentProfessor;
 	private Time start, end;
 	private TimePeriod[] periode = new TimePeriod[1];
-	private int subjectListSize = subList.size();
+	private int subjectListSize;
 	private JButton confirmButton, cancelButton;
-	private JRadioButton[] subjectListButtons = new JRadioButton[subjectListSize];
+	private JRadioButton[] subjectListButtons;
 	private JPanel itemsPanel, namePanel, subjectPanel, selectionSubjectPanel, timePanel, timeStartPanel, timeEndPanel, controlPanel;
 	private JTextField nameField;
 	private JLabel nameLabel, subjectLabel, timeStartLabel, timeEndLabel ;
@@ -41,6 +41,8 @@ public class InputMaskProfessor extends JFrame implements ActionListener{
 		
 		subList = planGenerator.getSubjectList();
 		currentProfList = planGenerator.getProfList();
+		subjectListSize = subList.size();
+		subjectListButtons = new JRadioButton[subjectListSize];
 		
 		setTitle("Professor-Eingabemaske");
 		setLayout(new BorderLayout());
