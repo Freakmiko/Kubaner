@@ -3,10 +3,10 @@ package Kubaner.Logic;
 import java.util.Date;
 
 public class Plan {
-	private Date startTime;
+	private Time startTime;
 	private TimeLine timeline[];
 	
-	Plan(Date startTime) {
+	Plan(Time startTime) {
 		this.startTime = startTime;
 		this.timeline = new TimeLine[0];
 	}
