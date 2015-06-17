@@ -131,4 +131,12 @@ public class Time {
 		
 		return false;
 	}
+	
+	public int getMinutesBetween(Time another)
+	{
+		int hourDif = Math.abs(this.hour - another.hour);
+		int minDif = Math.abs(this.minute - another.minute);
+		
+		return hourDif * 60 + minDif;
+	}
 }
