@@ -111,7 +111,7 @@ public class PlanGenerator {
 		for(int i = 0; i < plan.getTimeLineNumber(); i++) {
 			timeline = plan.getTimeLine(i);
 			
-			for(int i2 = 0; i2 < timeline.getTimeLineMemberNumber(); i2++) {
+			for(int i2 = 0; i2 < timeline.elementCount(); i2++) {
 				member = timeline.getTimeLineMember(i2);
 				
 				if(member.getClass() == new Exam().getClass()) {
