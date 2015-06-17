@@ -8,7 +8,7 @@ import java.util.Vector;
  */
 public class StudentList implements Iterable<Student> {
 
-	private Vector<Student> v = new Vector<Student>(100,10);
+	private Vector<Student> v = new Vector<>(100,10);
 	
 	public Student create(String name, Subject[] sub, TimePeriod[] abs){
 		Student tmp = new Student(name,sub,abs);		
@@ -20,17 +20,16 @@ public class StudentList implements Iterable<Student> {
 	 * Adds the given student to the studentList.
 	 * All students are organized in lexicographical order
 	 */
-	public void add(Student std){
+	void add(Student std){
 		for(int i=0;i<v.size();i++){
-			//String im Vektor ist größer--> Einfügen in Vektor --> Elemente automatisch geshifted
+			//String im Vektor ist grï¿½ï¿½er--> Einfï¿½gen in Vektor --> Elemente automatisch geshifted
 			if(v.elementAt(i).getName().compareTo(std.getName())>0){
 				v.insertElementAt(std, i);
 				return;
 			}
 		}
-		//wird nur erreicht, wenn das Element ganz am Schluss eingefügt werden muss 
+		//wird nur erreicht, wenn das Element ganz am Schluss eingefï¿½gt werden muss 
 		v.addElement(std);
-		return;
 	}
 	
 	/**
