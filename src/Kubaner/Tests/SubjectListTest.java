@@ -23,6 +23,16 @@ public class SubjectListTest {
         assertEquals("GTI", subjectList.get(1).getName());
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateWithEmptyName() throws Exception {
+        subjectList.create("");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateWithNullName() throws Exception {
+        subjectList.create(null);
+    }
+
     @Test(expected = IndexOutOfBoundsException.class)
     public void testGetFromEmptyList() throws Exception {
         subjectList.get(0);

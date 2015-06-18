@@ -34,6 +34,26 @@ public class StudentListTest {
         assertEquals("Schramm", studentList.get(1).getName());
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateWithEmptyName() throws Exception {
+        studentList.create("", subjectList.toArray(), new TimePeriod[] {new TimePeriod(new Time(0,0), new Time(12, 0))});
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateNullName() throws Exception {
+        studentList.create(null, subjectList.toArray(), new TimePeriod[] {new TimePeriod(new Time(0,0), new Time(12, 0))});
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateNullSubjectList() throws Exception {
+        studentList.create("Kubaner", null, new TimePeriod[] {new TimePeriod(new Time(0,0), new Time(12, 0))});
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateNullTimePeriod() throws Exception {
+        studentList.create("Kubaner", subjectList.toArray(), null);
+    }
+
     @Test(expected = IndexOutOfBoundsException.class)
     public void testGetFromEmptyList() throws Exception {
         studentList.get(1);

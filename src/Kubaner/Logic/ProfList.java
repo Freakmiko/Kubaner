@@ -37,7 +37,14 @@ public class ProfList implements Iterable<Professor> {
      * @param timePeriods The time periods where the professor isn't available.
      * @return Returns the newly created professor.
      */
-    public Professor create(String name, Subject[] subjects, TimePeriod[] timePeriods) {
+    public Professor create(String name, Subject[] subjects, TimePeriod[] timePeriods) throws IllegalArgumentException {
+        if(name == null || name.equals(""))
+            throw new IllegalArgumentException("Name is null or empty!");
+        if(subjects == null)
+            throw new IllegalArgumentException("Subjects can't be null!");
+        if(timePeriods == null)
+            throw new IllegalArgumentException("TimePeriods can't be null!");
+
         Professor newProf = new Professor(name, subjects, timePeriods);
         add(newProf);
         return newProf;

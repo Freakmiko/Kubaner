@@ -36,6 +36,26 @@ public class ProfListTest {
         assertEquals("Schramm", profList.get(1).getName());
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateWithEmptyName() throws Exception {
+        profList.create("", subjectList.toArray(), new TimePeriod[] {new TimePeriod(new Time(0,0), new Time(12, 0))});
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateNullName() throws Exception {
+        profList.create(null, subjectList.toArray(), new TimePeriod[] {new TimePeriod(new Time(0,0), new Time(12, 0))});
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateNullSubjectList() throws Exception {
+        profList.create("Kubaner", null, new TimePeriod[] {new TimePeriod(new Time(0,0), new Time(12, 0))});
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateNullTimePeriod() throws Exception {
+        profList.create("Kubaner", subjectList.toArray(), null);
+    }
+
     @Test(expected = IndexOutOfBoundsException.class)
     public void testGetFromEmptyList() throws Exception {
         profList.get(1);
