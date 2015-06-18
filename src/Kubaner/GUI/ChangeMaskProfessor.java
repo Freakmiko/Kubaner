@@ -59,6 +59,7 @@ public class ChangeMaskProfessor extends JFrame implements ActionListener{
 		subList = planGenerator.getSubjectList();
 		currentProfList = planGenerator.getProfList();
 		currentProf = currentProfList.get(profListPosition);
+		teachingSubject = currentProf.getSubjectArray();
 		subjectListSize = subList.size();
 		subjectListButtons = new JRadioButton[subjectListSize];
 
@@ -96,8 +97,14 @@ public class ChangeMaskProfessor extends JFrame implements ActionListener{
 		// Erstellt ein panel für die RadioButtons der Fächer.
 		selectionSubjectPanel = new JPanel();
 		selectionSubjectPanel.setLayout(new GridLayout((subjectListSize) / 2, 2));
+		
+		int j = 0;
 		for (int i = 0; i != subjectListSize; i++) {
 			subjectListButtons[i] = new JRadioButton((subList.get(i)).getName());
+			if (subList.get(i) == teachingSubject[j]){
+				subjectListButtons[i].isSelected();
+				j++;
+			}
 			selectionSubjectPanel.add(subjectListButtons[i]);
 			subjectListButtons[i].addActionListener(this);
 		}

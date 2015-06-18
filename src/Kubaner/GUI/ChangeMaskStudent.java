@@ -42,7 +42,7 @@ public class ChangeMaskStudent extends JFrame implements ActionListener{
 			subList = planGenerator.getSubjectList();
 			currentStudentList = planGenerator.getStudentList();
 			currentStudent = currentStudentList.get(studListPosition);
-			
+			teachingSubject = currentStudent.getSubjectArray();
 			//Liest die Zeitdaten aus dem aktuellen Studenten.
 			periode = currentStudent.getTimePeriodArray();
 			TimePeriod currentTimePeriod = periode[1];
@@ -79,11 +79,16 @@ public class ChangeMaskStudent extends JFrame implements ActionListener{
 
 			// Erstellt ein panel für die RadioButtons der Fächer.
 			selectionSubjectPanel = new JPanel();
-			selectionSubjectPanel
-					.setLayout(new GridLayout((subjectListSize) / 2, 2));
+			selectionSubjectPanel.setLayout(new GridLayout((subjectListSize) / 2, 2));
+			
+			int j = 0;
 			for (int i = 0; i != subjectListSize; i++) {
 				subjectListButtons[i] = new JRadioButton((subList.get(i)).getName());
 				selectionSubjectPanel.add(subjectListButtons[i]);
+				if (subList.get(i) == teachingSubject[j]){
+					subjectListButtons[i].isSelected();
+					j++;
+				}
 				subjectListButtons[i].addActionListener(this);
 			}
 			subjectPanel.add(subjectLabel);
