@@ -34,7 +34,7 @@ public class InputMaskProfessor extends JFrame implements ActionListener{
 //		new ImportMaskProfessor(plan, planGenerator).setVisible(true);
 //	}
 	
-	InputMaskProfessor(Plan plan, PlanGenerator planGenertor){
+	InputMaskProfessor(Plan plan, PlanGenerator planGenerator){
 		
 		this.plan = plan;
 		this.planGenerator = planGenerator;
@@ -109,7 +109,7 @@ public class InputMaskProfessor extends JFrame implements ActionListener{
 		
 		//Erstellt ein Pnale zum bestätigen und zum abbrechen der Eingabe
 		controlPanel = new JPanel();
-		confirmButton = new JButton("Bestätigen");
+		confirmButton = new JButton("OK");
 		cancelButton = new JButton("Abbrechen");
 		controlPanel.add(confirmButton);
 		controlPanel.add(cancelButton);
@@ -131,7 +131,8 @@ public class InputMaskProfessor extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == cancelButton){
-			System.exit(0);
+			this.setVisible(false);
+			this.dispose();
 		} else if (e.getSource() == confirmButton){
 			name = nameField.getText();
 			
@@ -176,7 +177,8 @@ public class InputMaskProfessor extends JFrame implements ActionListener{
 			
 			try{
 					currentProfessor = currentProfList.create(name, teachingSubject, periode);
-					System.exit(0);
+					this.setVisible(false);
+					this.dispose();
 			} catch (IllegalArgumentException E){
 				JOptionPane.showMessageDialog(null, "Fehlerhafte Eingabe!", "Erstellungsfehler", JOptionPane.CANCEL_OPTION);
 			}
