@@ -27,7 +27,7 @@ public class InputMaskSubject extends JFrame implements ActionListener {
 		subjectList = planGenerator.getSubjectList();
 		setTitle("Fach-Eingabemaske");
 		getContentPane().setLayout(new BorderLayout());
-		setSize(190, 200);
+		setSize(200, 200);
 
 		// Panel für die Facheingabe
 		subjectPanel = new JPanel();
