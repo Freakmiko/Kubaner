@@ -111,10 +111,10 @@ public class PlanGenerator {
 		for(int i = 0; i < plan.getTimeLineNumber(); i++) {
 			timeline = plan.getTimeLine(i);
 			
-			for(int i2 = 0; i2 < timeline.elementCount(); i2++) {
+			for(int i2 = 0; i2 < timeline.size(); i2++) {
 				member = timeline.getTimeLineMember(i2);
 				
-				if(member.getClass() == new Exam().getClass()) {
+				if(member instanceof Exam) {
 					exam = (Exam)member;
 					subjects = exam.getSubjectArray();
 					
@@ -125,7 +125,7 @@ public class PlanGenerator {
 					student = exam.getStudent();
 					this.studentList.create(student.getName(), student.getSubjectArray(), student.getTimePeriodArray());
 					
-					prof = exam.getProfessorArray();
+					prof = exam.getProfArray();
 					
 					for(int i3 = 0; i3 < prof.length; i3++) {
 						this.profList.create(prof[i3].getName(), prof[i3].getSubjectArray(), prof[i3].getTimePeriodArray());
