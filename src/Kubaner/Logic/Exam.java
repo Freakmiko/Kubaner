@@ -33,7 +33,7 @@ public class Exam implements TimeLineMember
 		return this.sub;
 	}
 	
-	public Professor[] getProfessor(){
+	public Professor[] getProfArray(){
 		return this.prof;
 	}
 	

@@ -16,7 +16,7 @@ public class TimeLine {
 		memberList.add(member);
 	}
 	
-	public void insert(TimeLineMember member, int index){
+	public void insert(int index, TimeLineMember member){
 		memberList.add(index, member);
 	}
 	
