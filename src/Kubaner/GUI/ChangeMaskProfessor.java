@@ -114,8 +114,8 @@ public class ChangeMaskProfessor extends JFrame implements ActionListener{
 		// Erstellt ein Panel für die Startzeit.
 		timeStartPanel = new JPanel();
 		timeStartPanel.setLayout(new GridLayout(1, 2));
-		startTimeHoursModel = new SpinnerNumberModel(0, 0, 23, 1);
-		startTimeMinutesModel = new SpinnerNumberModel(0, 0, 59, 1);
+		startTimeHoursModel = new SpinnerNumberModel(startHour, 0, 23, 1);
+		startTimeMinutesModel = new SpinnerNumberModel(startMinute, 0, 59, 1);
 		startTimeHours = new JSpinner(startTimeHoursModel);
 		startTimeHours.setValue(startHour);
 		startTimeMinutes = new JSpinner(startTimeMinutesModel);
@@ -129,8 +129,8 @@ public class ChangeMaskProfessor extends JFrame implements ActionListener{
 		timePanel.add(timeEndLabel);
 		timeEndPanel = new JPanel();
 		timeEndPanel.setLayout(new GridLayout(1, 2));
-		endTimeHoursModel = new SpinnerNumberModel(0, 0, 23, 1);
-		endTimeMinutesModel = new SpinnerNumberModel(0, 0, 59, 1);
+		endTimeHoursModel = new SpinnerNumberModel(endHour, 0, 23, 1);
+		endTimeMinutesModel = new SpinnerNumberModel(endMinute, 0, 59, 1);
 		endTimeHours = new JSpinner(endTimeHoursModel);
 		endTimeHours.setValue(endHour);
 		endTimeMinutes = new JSpinner(endTimeMinutesModel);

@@ -1,15 +1,19 @@
 package Kubaner.GUI;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 
 import Kubaner.Logic.Plan;
 import Kubaner.Logic.PlanGenerator;
@@ -21,11 +25,14 @@ public class ChangeMaskSubject extends JFrame implements ActionListener{
 	private Subject subject;
 	private SubjectList subjectList;
 	private JButton setButton, exitButton;
-	private JLabel subjectLabel;
-	private JPanel south, subjectPanel;
+	private JLabel subjectLabel, timeLabel;
+	private JPanel south, subjectPanel, timePanel;
 	private JTextField subjectField;
 	private String name;
 	private int subjectListPosition;
+	private SpinnerNumberModel subjectTimeModel;
+	private JSpinner subjectTime;
+	private int time;
 
 	/**
 	 * 
@@ -37,6 +44,7 @@ public class ChangeMaskSubject extends JFrame implements ActionListener{
 		this.subjectListPosition = subjectListPosition;
 		subjectList = planGenerator.getSubjectList();
 		subject = subjectList.get(subjectListPosition);
+		time = subject.getExamLength();
 		setTitle("Fach-Eingabemaske");
 		getContentPane().setLayout(new BorderLayout());
 		setSize(190, 200);
@@ -48,6 +56,17 @@ public class ChangeMaskSubject extends JFrame implements ActionListener{
 		subjectPanel.add(subjectLabel);
 		subjectPanel.add(subjectField);
 		getContentPane().add(subjectPanel, BorderLayout.CENTER);
+		
+		//Panel f�r die Zeiteingabe
+		timePanel = new JPanel();
+		timePanel.setLayout(new GridLayout(2,1));
+		timePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		timeLabel = new JLabel("Dauer der Pruefung (in Minuten)");
+		timePanel.add(timeLabel);
+		subjectTimeModel = new SpinnerNumberModel(time, 5, 10, 5);
+		subjectTime = new JSpinner(subjectTimeModel);
+		timePanel.add(subjectTime);
+		add(timePanel);
 
 		// Panel für die Knöpfe
 		south = new JPanel();
@@ -70,6 +89,8 @@ public class ChangeMaskSubject extends JFrame implements ActionListener{
 		}
 
 		if (e.getSource() == setButton) {
+			
+			time = (int) subjectTime.getValue();
 			name = subjectField.getText();
 			if (name.equals(""))
 				JOptionPane.showMessageDialog(null, "Fehlender Name!",
@@ -78,7 +99,8 @@ public class ChangeMaskSubject extends JFrame implements ActionListener{
 			else {
 				try {
 					subjectList.delete(subjectListPosition);
-					subjectList.create(name);
+					subject = subjectList.create(name);
+					subject.setExamLength(time);
 					JOptionPane.showMessageDialog(null,
 							"Erfolgreiche Eingabe!",
 							"Das Fach wurde erfolgreich erstellt.",
