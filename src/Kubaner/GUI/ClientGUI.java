@@ -91,6 +91,8 @@ public class ClientGUI extends JFrame implements ActionListener{
 			
 		}else if(e.getSource() == createProf){
 			
+			new InputMaskProfessor(plan, planGen).setVisible(true);
+			
 		}else if(e.getSource() == createSubject){
 			
 			new InputMaskSubject(planGen).setVisible(true);

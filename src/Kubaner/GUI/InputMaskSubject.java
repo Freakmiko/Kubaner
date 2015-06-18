@@ -22,7 +22,7 @@ public class InputMaskSubject extends JFrame implements ActionListener {
 	private JTextField subjectField;
 	private String name;
 
-	public InputMaskSubject(PlanGenerator planGenerator) {
+	InputMaskSubject(PlanGenerator planGenerator) {
 
 		subjectList = planGenerator.getSubjectList();
 		setTitle("Fach-Eingabemaske");
