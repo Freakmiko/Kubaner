@@ -18,7 +18,7 @@ public class PlanGenerator {
 	private ProfList profList;
 	
 	
-	PlanGenerator() {
+	public PlanGenerator() {
 		studentList = new StudentList();
 		subjectList = new SubjectList();
 		profList = new ProfList();
