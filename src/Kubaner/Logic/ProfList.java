@@ -48,11 +48,11 @@ public class ProfList implements Iterable<Professor> {
      *
      * @param index The index of the professor.
      * @return Returns the professor.
-     * @throws IllegalArgumentException If the index is out of bounds
+     * @throws IndexOutOfBoundsException If the index is out of bounds
      */
-    public Professor get(int index) throws IllegalArgumentException{
+    public Professor get(int index) throws IndexOutOfBoundsException{
         if(index < 0 || index >= size())
-            throw new IllegalArgumentException("The index was out of bounds.");
+            throw new IndexOutOfBoundsException("The index was out of bounds.");
         return professors.get(index);
     }
 
@@ -62,7 +62,7 @@ public class ProfList implements Iterable<Professor> {
      * @return Returns the professors in an array.
      */
     public Professor[] toArray() {
-        return (Professor[])professors.toArray();
+        return professors.toArray(new Professor[size()]);
     }
 
     /**
