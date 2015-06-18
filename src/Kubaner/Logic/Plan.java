@@ -180,7 +180,7 @@ public class Plan {
 		
 		
 		master = new MasterModel(rows, cols);
-		actualTime = new Time(startTime.getHours(), startTime.getMinutes());
+		actualTime = new Time(startTime.getHour(), startTime.getMinute());
 		
 		
 		for(int i = 0; i < cols; i++) {
@@ -257,10 +257,10 @@ public class Plan {
 		Time actualTime;
 		
 		for(int i = 0; i < timeline.length; i++) {
-			actualTime = new Time(startTime.getHours(), startTime.getMinutes());
+			actualTime = new Time(startTime.getHour(), startTime.getMinute());
 			timeArray = new Time[timeline[i].size()];
 			
-			timeArray[0] = new Time(startTime.getHours(), startTime.getMinutes());
+			timeArray[0] = new Time(startTime.getHour(), startTime.getMinute());
 			
 			for(int i2 = 0; i2 < timeline[i].size(); i2++) {
 				nextDuration = timeline[i].getTimeLineMember(i2).getLength();
@@ -310,7 +310,7 @@ public class Plan {
 	private int calculateRows(ArrayList<Time[]> startTimeList) {
 		int rows = 1;
 		
-		Time time = new Time(startTime.getHours(), startTime.getMinutes());
+		Time time = new Time(startTime.getHour(), startTime.getMinute());
 		
 		while(time != null) {
 			
