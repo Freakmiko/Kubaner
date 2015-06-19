@@ -11,6 +11,12 @@ public class StudentList implements Iterable<Student> {
 	private Vector<Student> v = new Vector<>(100,10);
 	
 	public Student create(String name, Subject[] sub, TimePeriod[] abs){
+		if(name == null || name.equals(""))
+            throw new IllegalArgumentException("Name was null or empty!");
+        if(sub == null)
+            throw new IllegalArgumentException("Subjects was null!");
+        if(abs == null)
+            throw new IllegalArgumentException("TimePeriods was null!");
 		Student tmp = new Student(name,sub,abs);		
 		add(tmp);
 		return tmp;
