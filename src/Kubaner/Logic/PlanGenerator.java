@@ -326,6 +326,7 @@ public class PlanGenerator {
 		return startTime;
 	}
 
+	
 	/**
 	 * Sorts an array of {@link StudentPerSubjectList, StudentPerSubjectLists} after the length of every list.
 	 * @param array
