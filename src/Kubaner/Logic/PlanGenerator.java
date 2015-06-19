@@ -135,7 +135,20 @@ public class PlanGenerator {
 		}
 	}
 	
+
 	
+	
+	/*
+	 * Methods for the plan generation:
+	 */
+	
+	/**
+	 * Generates a new {@link Plan} based on the data which was given to the PlanManager.
+	 * @param startTime
+	 * 		A {@link Time} object which defines the start time of every {@link TimeLine} in the plan.
+	 * @return
+	 * 		The generated plan object.
+	 */
 	public Plan generatePlan(Time startTime)
 	{
 		StudentPerSubjectList[] examLists = new StudentPerSubjectList[subjectList.size()];
@@ -198,25 +211,127 @@ public class PlanGenerator {
 			}
 		}
 		
+		mergeTimeLines(plan);
+		
 		return plan;
 	}
 	
+	/**
+	 * Merges the timelines of a plan.
+	 * 
+	 * @param plan
+	 * 		The plan of which timelines should be merged.
+	 */
 	private void mergeTimeLines(Plan plan)
 	{
-		for(int i = 0; i < plan.getTimeLineNumber(); i++)
+		for(int targetLineIndex = 0;
+				targetLineIndex < plan.getTimeLineNumber();
+				targetLineIndex++)
+		{
+			TimeLine targetLine = plan.getTimeLine(targetLineIndex);
+			
+			//loop through every other timeline
+			for(int sourceLineIndex = 0;
+					sourceLineIndex < plan.getTimeLineNumber();
+					sourceLineIndex++)
+			{
+				if(sourceLineIndex != targetLineIndex) //if Timelines are not identical
+				{
+					TimeLine sourceLine = plan.getTimeLine(sourceLineIndex);
+				
+					Time targetExamStartTime = plan.getStartTime();
+					
+					for(TimeLineMember targetMember : targetLine)
+					{
+						if(targetMember.getClass() == Exam.class)
+						{
+							Exam targetExam = (Exam)targetMember;
+							if(!targetExam.isDoubleExam())
+								continue;
+							
+							for(int sourceMemberIndex = 0;
+									sourceMemberIndex < sourceLine.size();
+									sourceMemberIndex++)
+							{
+								if(sourceLine.getTimeLineMember(sourceMemberIndex).getClass() == Exam.class)
+								{
+									Exam sourceExam = (Exam)sourceLine.getTimeLineMember(sourceMemberIndex);
+									if(sourceExam.getStudent() == targetExam.getStudent()
+										&& !sourceExam.isDoubleExam()
+										&& sourceExam.getProfessorArray()[0].isAvailable(targetExamStartTime))
+									{
+										
+										//copy prof and subject from source to target exam.
+										targetExam.getSubjectArray()[1] = sourceExam.getSubjectArray()[0];
+										
+										targetExam.getProfessorArray()[1] = sourceExam.getProfessorArray()[0];
+										
+										//replace the source exam with a break
+										sourceLine.delete(sourceMemberIndex);
+										sourceLine.insert(
+												new Break(sourceExam.getLength()),
+												sourceMemberIndex);
+									}
+								}
+							}
+						}
+						
+						targetExamStartTime = targetExamStartTime.addMinutes(targetMember.getLength());
+					}
+
+				}
+				
+			}
+			
+		}
+		
+		removeEmptyTimeLines(plan);
 	}
 	
-	private Time getTimeWhenProfIsAvailable(Professor prof, Time curTime)
+	/**
+	 * Removes the empty TimeLines of a plan object.
+	 * @param plan
+	 */
+	private void removeEmptyTimeLines(Plan plan)
+	{
+		int index = 0;
+		while(index < plan.getTimeLineNumber())
+		{
+			if(!plan.getTimeLine(index).containsExams())
+			{
+				plan.remove(index);
+			}
+			else
+			{
+				index++;
+			}
+		}
+	}
+	
+	/**
+	 * Finds the first time, starting at a specific time, when a {@link Professor} is available.
+	 * @param prof
+	 * @param startTime
+	 * 		A {@link Time} object which define the start time the search should begin.
+	 * @return
+	 * 		The end time of the {@link TimePeriod} when the prof is unavailable.
+	 */
+	private Time getTimeWhenProfIsAvailable(Professor prof, Time startTime)
 	{
 		for(TimePeriod period : prof.getTimePeriodArray())
 		{
-			if(period.laysBetween(curTime))
+			if(period.laysBetween(startTime))
 				return period.getEnd();
 		}
 		
-		return curTime;
+		return startTime;
 	}
-	
+
+	/**
+	 * Sorts an array of {@link StudentPerSubjectList, StudentPerSubjectLists} after the length of every list.
+	 * @param array
+	 * 		The array which should be sorted.
+	 */
 	private void sortArray(StudentPerSubjectList[] array)
 	{
 		for(int j = array.length-1; j < 0; j-- ){
