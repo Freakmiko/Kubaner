@@ -122,9 +122,15 @@ public class ClientGUI extends JFrame implements ActionListener{
 			
 		}else if(e.getSource() == studentSummary){
 			
+			new overviewMaskStudent(planGen).setVisible(true);
+			
 		}else if(e.getSource() == profSummary){
 			
+			new overviewMaskProfessor(planGen).setVisible(true);
+			
 		}else if(e.getSource() == subjSummary){
+			
+			new overviewMaskSubject(planGen).setVisible(true);
 			
 		}else if(e.getSource() == studentEdit){
 			
