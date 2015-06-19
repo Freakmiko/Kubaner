@@ -187,9 +187,9 @@ public class InputMaskProfessor extends JFrame implements ActionListener{
 
 				try {
 					currentProfList.create(name, teachingSubject, periode);
-					JOptionPane.showInputDialog(null, "Der Professor " + name
+					JOptionPane.showOptionDialog(null, "Der Professor " + name
 							+ " wurde erfolgreich erstellt.",
-							"Erfolgreiche Eingabe", JOptionPane.CANCEL_OPTION);
+							"Erfolgreiche Eingabe", JOptionPane.CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
 					setVisible(false);
 					dispose();
 				} catch (IllegalArgumentException E) {

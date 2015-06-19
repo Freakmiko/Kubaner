@@ -212,10 +212,10 @@ public class ChangeMaskStudent extends JFrame implements ActionListener{
 						try {
 							currentStudentList.create(name, teachingSubject,
 									periode);
-							JOptionPane.showInputDialog(null, "Der Student "
+							JOptionPane.showOptionDialog(null, "Der Student "
 									+ name + " wurde erfolgreich erstellt!",
 									"Erfolgreiche Eingabe",
-									JOptionPane.CANCEL_OPTION);
+									JOptionPane.CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
 							setVisible(false);
 							dispose();
 						} catch (IllegalArgumentException E) {
