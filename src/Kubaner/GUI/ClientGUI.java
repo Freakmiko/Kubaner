@@ -105,9 +105,15 @@ public class ClientGUI extends JFrame implements ActionListener{
 			
 		}else if(e.getSource() == studentEdit){
 			
+			new SelectStudent(plan, planGen);
+			
 		}else if(e.getSource() == profEdit){
 			
+			new SelectProfessor(plan, planGen);
+			
 		}else if(e.getSource() == subjEdit){
+			
+			new SelectSubject(plan, planGen);
 			
 		}else if(e.getSource() == createPlan){
 			
