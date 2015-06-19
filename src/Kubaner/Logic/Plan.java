@@ -204,7 +204,7 @@ public class Plan {
 							subjects = profList.get(i3).getSubjectArray();
 							
 							for(int i4 = 0; i4 < subjects.length; i4++) {
-								if(subjects[i].getName() == subjectList.get(i - 1).getName())
+								if(subjects[i4].getName() == subjectList.get(i - 1).getName())
 									value += "\n" + profList.get(i3).getName();
 							}
 						}	
