@@ -14,14 +14,23 @@ public class TimeLine implements Iterable<TimeLineMember> {
 	}
 	
 	public void add(TimeLineMember member){
+		if(member==null)
+			throw new IllegalArgumentException();
 		memberList.add(member);
 	}
 	
 	public void insert(int index, TimeLineMember member){
+		if(member==null)
+			throw new IllegalArgumentException();
+		if(index > this.size())
+			throw new IllegalArgumentException("index to high");
 		memberList.add(index, member);
 	}
 	
 	public void delete(int index){
+		if(index > this.size()){
+			throw new IllegalArgumentException("index doesn't exist");
+		}
 		memberList.remove(index);
 	}
 	
@@ -30,6 +39,10 @@ public class TimeLine implements Iterable<TimeLineMember> {
 	}
 	
 	public void moveMember(int oldIndex, int newIndex){
+		if(oldIndex > this.size())
+			throw new IllegalArgumentException("oldIndex doesn't exist");
+		if(newIndex > this.size())
+			throw new IllegalArgumentException("newIndex doesn't exist");
 		TimeLineMember help = memberList.remove(oldIndex);
 		memberList.add(newIndex, help);
 	}
@@ -39,6 +52,8 @@ public class TimeLine implements Iterable<TimeLineMember> {
 	}
 	
 	public void setRoom(String room){
+		if(room == null || room.equals("" ))
+			throw new IllegalArgumentException();
 		this.room = room;
 	}
 	
