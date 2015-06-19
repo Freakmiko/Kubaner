@@ -1,7 +1,6 @@
 package Kubaner.Tests;
 
-import Kubaner.Logic.Break;
-import Kubaner.Logic.TimeLine;
+import Kubaner.Logic.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -136,7 +135,14 @@ public class TimeLineTest {
 
     @Test
     public void testContainsExamsWithOneMember() throws Exception {
-        timeLine.add(new Break(10));
+        ProfList profList = new ProfList();
+        SubjectList subjectList = new SubjectList();
+        subjectList.create("ANA");
+        profList.create("Kubaner", subjectList.toArray(), new TimePeriod[]{new TimePeriod(new Time(0, 0), new Time(12, 0))});
+        StudentList studentList = new StudentList();
+        studentList.create("Kub", subjectList.toArray(), new TimePeriod[]{new TimePeriod(new Time(0, 0), new Time(12, 0))});
+
+        timeLine.add(new Exam(profList.toArray(), studentList.get(0), subjectList.toArray(), 60, "Test"));
         assertTrue(timeLine.containsExams());
     }
 }

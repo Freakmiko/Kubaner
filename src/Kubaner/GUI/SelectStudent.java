@@ -78,7 +78,6 @@ public class SelectStudent extends JFrame implements ActionListener{
 				} else {
 					selection = (int) studentSpinner.getValue();
 					setVisible(false);
-					new ChangeMaskStudent(plan, planGenerator, selection);
 					dispose();
 				}
 			}

@@ -30,7 +30,7 @@ public class InputMaskStudent extends JFrame implements ActionListener {
 	private int startHour, startMinute, endHour, endMinute;
 	private Subject[] teachingSubject;
 
-	InputMaskStudent(Plan plan, PlanGenerator planGenerator) {
+	InputMaskStudent(Plan plan, PlanGenerator planGenerator) throws NoSubjectException {
 
 		subList = planGenerator.getSubjectList();
 		currentStudentList = planGenerator.getStudentList();
@@ -121,13 +121,14 @@ public class InputMaskStudent extends JFrame implements ActionListener {
 		setLocationRelativeTo(null);
 
 		if (subjectListSize == 0) {
-			JOptionPane
-					.showMessageDialog(
-							null,
-							"Erstellen Sie zuerst ein Fach bevor Sie einen Student erstellen.",
-							"Kein Fach vorhanden", JOptionPane.CANCEL_OPTION);
-			setVisible(false);
-			dispose();
+			throw new NoSubjectException();
+//			JOptionPane
+//					.showMessageDialog(
+//							null,
+//							"Erstellen Sie zuerst ein Fach bevor Sie einen Student erstellen.",
+//							"Kein Fach vorhanden", JOptionPane.CANCEL_OPTION);
+//			setVisible(false);
+//			dispose();
 		}
 	}
 
