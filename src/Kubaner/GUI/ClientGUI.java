@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 import Kubaner.Logic.Plan;
 import Kubaner.Logic.PlanGenerator;
@@ -28,6 +29,7 @@ public class ClientGUI extends JFrame implements ActionListener{
 	
 	private Plan plan = null;
 	private PlanGenerator planGen = new PlanGenerator();
+	
 	
 	public void actionPerformed ( ActionEvent e ) {
 		if(e.getSource() == open){
@@ -87,11 +89,32 @@ public class ClientGUI extends JFrame implements ActionListener{
 			System.exit(0);
 		}else if(e.getSource() == createStudent){
 			
-			new InputMaskStudent(plan, planGen).setVisible(true);
+			try{
+				JFrame tempWindow;
+				tempWindow = new InputMaskStudent(plan, planGen);
+				tempWindow.setVisible(true);
+			}catch(NoSubjectException ex){
+				
+				JOptionPane.showMessageDialog(
+						null,
+						"Erstellen Sie zuerst ein Fach bevor Sie einen Studenten erstellen.",
+						"Kein Fach vorhanden", JOptionPane.CANCEL_OPTION);
+			}
+			
 			
 		}else if(e.getSource() == createProf){
 			
-			new InputMaskProfessor(plan, planGen).setVisible(true);
+			try{
+				JFrame tempWindow;
+				tempWindow = new InputMaskProfessor(plan, planGen);
+				tempWindow.setVisible(true);
+			}catch(NoSubjectException ex){
+				
+				JOptionPane.showMessageDialog(
+						null,
+						"Erstellen Sie zuerst ein Fach bevor Sie einen Dozenten erstellen.",
+						"Kein Fach vorhanden", JOptionPane.CANCEL_OPTION);
+			}
 			
 		}else if(e.getSource() == createSubject){
 			
