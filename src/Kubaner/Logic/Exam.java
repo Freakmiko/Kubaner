@@ -45,4 +45,8 @@ public class Exam implements TimeLineMember
 		this.assessor = ass;
 	}
 	
+	public boolean isDoubleExam(){
+		return sub[0]!= null && sub[1]!= null;
+	}
+	
 }
