@@ -77,7 +77,6 @@ public class SelectProfessor extends JFrame implements ActionListener {
 			} else {
 				selection = (int) professorSpinner.getValue();
 				setVisible(false);
-				new ChangeMaskProfessor(plan, planGenerator, selection);
 				dispose();
 			}
 		}

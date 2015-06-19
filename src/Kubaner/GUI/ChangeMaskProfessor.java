@@ -74,7 +74,7 @@ public class ChangeMaskProfessor extends JFrame implements ActionListener{
 		endHour = end.getHour();
 		endMinute = end.getMinute();
 		
-		setTitle("Professor-Eingabemaske");
+		setTitle("Dozent-Eingabemaske");
 		setLayout(new BorderLayout());
 
 		itemsPanel = new JPanel();
@@ -171,7 +171,7 @@ public class ChangeMaskProfessor extends JFrame implements ActionListener{
 //			JOptionPane
 //					.showMessageDialog(
 //							null,
-//							"Erstellen Sie zuerst ein Fach bevor Sie einen Professor erstellen.",
+//							"Erstellen Sie zuerst ein Fach bevor Sie einen Dozent erstellen.",
 //							"Kein Fach vorhanden", JOptionPane.CANCEL_OPTION);
 //			setVisible(false);
 //			dispose();
@@ -211,7 +211,7 @@ public class ChangeMaskProfessor extends JFrame implements ActionListener{
 
 			if (counterSubjects == 0) {
 				JOptionPane.showMessageDialog(null,
-						"Sie haben kein Fach ausgewählt!", "Kein Fach",
+						"Sie haben kein Fach ausgewaehlt!", "Kein Fach",
 						JOptionPane.CANCEL_OPTION);
 			} else {
 
@@ -242,7 +242,7 @@ public class ChangeMaskProfessor extends JFrame implements ActionListener{
 				try {
 					currentProfList.delete(profListPosition);
 					currentProfList.create(name, teachingSubject, periode);
-					JOptionPane.showMessageDialog(null, "Der Professor " + name
+					JOptionPane.showMessageDialog(null, "Der Dozent " + name
 							+ " wurde erfolgreich bearbeitet.",
 							"Erfolgreiche Eingabe", JOptionPane.CANCEL_OPTION);
 					setVisible(false);

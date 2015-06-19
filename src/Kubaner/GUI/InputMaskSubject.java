@@ -70,6 +70,7 @@ public class InputMaskSubject extends JFrame implements ActionListener {
 		getContentPane().add(south, BorderLayout.SOUTH);
 		pack();
 		setLocationRelativeTo(null);
+		
 	}
 
 	@Override

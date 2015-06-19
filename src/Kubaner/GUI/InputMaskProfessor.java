@@ -30,7 +30,7 @@ public class InputMaskProfessor extends JFrame implements ActionListener{
 	private int startHour, startMinute, endHour, endMinute;
 	private Subject[] teachingSubject;
 
-	InputMaskProfessor(Plan plan, PlanGenerator planGenerator) {
+	InputMaskProfessor(Plan plan, PlanGenerator planGenerator) throws NoSubjectException {
 
 		subList = planGenerator.getSubjectList();
 		currentProfList = planGenerator.getProfList();
@@ -119,6 +119,16 @@ public class InputMaskProfessor extends JFrame implements ActionListener{
 		pack();
 		setLocationRelativeTo(null);
 
+		if (subjectListSize == 0) {
+			throw new NoSubjectException();
+//			JOptionPane
+//					.showMessageDialog(
+//							null,
+//							"Erstellen Sie zuerst ein Fach bevor Sie einen Dozent erstellen.",
+//							"Kein Fach vorhanden", JOptionPane.CANCEL_OPTION);
+//			setVisible(false);
+//			dispose();
+		}
 	}
 
 	@Override

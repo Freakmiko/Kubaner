@@ -187,7 +187,7 @@ public class ChangeMaskStudent extends JFrame implements ActionListener{
 
 					if (counterSubjects == 0) {
 						JOptionPane.showMessageDialog(null,
-								"Sie haben kein Fach ausgewählt!", "Kein Fach",
+								"Sie haben kein Fach ausgewaehlt!", "Kein Fach",
 								JOptionPane.CANCEL_OPTION);
 					} else {
 
