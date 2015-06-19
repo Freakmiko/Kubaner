@@ -258,19 +258,19 @@ public class PlanGenerator {
 									Exam sourceExam = (Exam)sourceLine.getTimeLineMember(sourceMemberIndex);
 									if(sourceExam.getStudent() == targetExam.getStudent()
 										&& !sourceExam.isDoubleExam()
-										&& sourceExam.getProfessorArray()[0].isAvailable(targetExamStartTime))
+										&& sourceExam.getProfArray()[0].isAvailable(targetExamStartTime))
 									{
 										
 										//copy prof and subject from source to target exam.
 										targetExam.getSubjectArray()[1] = sourceExam.getSubjectArray()[0];
 										
-										targetExam.getProfessorArray()[1] = sourceExam.getProfessorArray()[0];
+										targetExam.getProfArray()[1] = sourceExam.getProfArray()[0];
 										
 										//replace the source exam with a break
 										sourceLine.delete(sourceMemberIndex);
-										sourceLine.insert(
-												new Break(sourceExam.getLength()),
-												sourceMemberIndex);
+										sourceLine.insert(sourceMemberIndex,
+												new Break(sourceExam.getLength())
+												);
 									}
 								}
 							}
@@ -299,7 +299,7 @@ public class PlanGenerator {
 		{
 			if(!plan.getTimeLine(index).containsExams())
 			{
-				plan.remove(index);
+				plan.removeTimeLine(index);
 			}
 			else
 			{
