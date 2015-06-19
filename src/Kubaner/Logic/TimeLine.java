@@ -1,9 +1,10 @@
 package Kubaner.Logic;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class TimeLine {
+public class TimeLine implements Iterable<TimeLineMember> {
 	
 	public String room;
 	private List<TimeLineMember> memberList;
@@ -43,6 +44,21 @@ public class TimeLine {
 	
 	public TimeLineMember getTimeLineMember(int index){
 		return memberList.get(index);
+	}
+	
+	public boolean containsExams(){
+		for(int i = 0; i < memberList.size(); i++){
+			if(memberList.get(i).getClass() == Exam.class){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public Iterator<TimeLineMember> iterator() {
+		// TODO Auto-generated method stub
+		return memberList.iterator();
 	}
 	
 

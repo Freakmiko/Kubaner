@@ -1,7 +1,6 @@
 package Kubaner.Logic;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Plan {
 	private Time startTime;
@@ -366,4 +365,14 @@ public class Plan {
 		}
 		return "";
 	}
+	
+	public void removeTimeLine(int index){
+		//TO-DO
+	}
+
+
+	public Time getStartTime() {
+		return startTime;
+	}
+	
 }

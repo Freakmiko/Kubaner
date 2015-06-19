@@ -38,6 +38,8 @@ public class SubjectList implements Iterable<Subject> {
      * @return Returns the newly created Subject
      */
     public Subject create(String name) {
+        if(name == null || name.equals(""))
+            throw new IllegalArgumentException("Name was null or empty");
         Subject newSubject = new Subject(name);
         add(newSubject);
         return newSubject;

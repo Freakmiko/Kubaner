@@ -3,6 +3,10 @@ package Kubaner.Logic;
 import javax.swing.table.AbstractTableModel;
 
 public class MasterModel extends AbstractTableModel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int rows;
 	private int cols;
 	
