@@ -27,18 +27,18 @@ public class ChangeMaskStudent extends JFrame implements ActionListener{
 		private SpinnerNumberModel startTimeHoursModel, startTimeMinutesModel,
 				endTimeHoursModel, endTimeMinutesModel;
 		private String name;
-		private int startHour, startMinute, endHour, endMinute, studListPosition;
+		private int startHour, startMinute, endHour, endMinute;
 		private Subject[] teachingSubject;
 
 		/**
 		 * 
 		 * @param plan The current plan.
 		 * @param planGenerator The current plangenerator.
-		 * @param studListPosition The position of the Student in teh StudentList, do you want change.
+		 * @param studListPosition The position of the Student in the StudentList, do you want change.
+		 * @throws NoSubjectException 
 		 */
-		ChangeMaskStudent(Plan plan, PlanGenerator planGenerator, int studListPosition) {
+		ChangeMaskStudent(Plan plan, PlanGenerator planGenerator, int studListPosition) throws NoSubjectException {
 
-			this.studListPosition = studListPosition;
 			subList = planGenerator.getSubjectList();
 			currentStudentList = planGenerator.getStudentList();
 			currentStudent = currentStudentList.get(studListPosition);
@@ -149,13 +149,14 @@ public class ChangeMaskStudent extends JFrame implements ActionListener{
 			setLocationRelativeTo(null);
 
 			if (subjectListSize == 0) {
-				JOptionPane
-						.showMessageDialog(
-								null,
-								"Erstellen Sie zuerst ein Fach bevor Sie einen Student erstellen.",
-								"Kein Fach vorhanden", JOptionPane.CANCEL_OPTION);
-				setVisible(false);
-				dispose();
+				throw new NoSubjectException();
+//				JOptionPane
+//						.showMessageDialog(
+//								null,
+//								"Erstellen Sie zuerst ein Fach bevor Sie einen Student erstellen.",
+//								"Kein Fach vorhanden", JOptionPane.CANCEL_OPTION);
+//				setVisible(false);
+//				dispose();
 			}
 		}
 

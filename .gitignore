@@ -8,6 +8,9 @@
 out
 gen
 
+.project
+.classpath
+
 ### Java template
 *.class
 
