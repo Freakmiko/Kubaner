@@ -77,6 +77,11 @@ public class SelectStudent extends JFrame implements ActionListener{
 									JOptionPane.CANCEL_OPTION);
 				} else {
 					selection = (int) studentSpinner.getValue();
+					try {
+						new ChangeMaskStudent(plan, planGenerator, selection);
+					} catch (NoSubjectException e1) {
+						new NoSubjectException();
+					}
 					setVisible(false);
 					dispose();
 				}

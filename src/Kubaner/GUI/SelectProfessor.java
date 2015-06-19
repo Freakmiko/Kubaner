@@ -76,6 +76,11 @@ public class SelectProfessor extends JFrame implements ActionListener {
 								JOptionPane.CANCEL_OPTION);
 			} else {
 				selection = (int) professorSpinner.getValue();
+				try {
+					new ChangeMaskProfessor(plan, planGenerator, selection);
+				} catch (NoSubjectException e1) {
+					new NoSubjectException();
+				}
 				setVisible(false);
 				dispose();
 			}

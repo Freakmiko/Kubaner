@@ -168,13 +168,6 @@ public class ChangeMaskProfessor extends JFrame implements ActionListener{
 
 		if (subjectListSize == 0) {
 			throw new NoSubjectException();
-//			JOptionPane
-//					.showMessageDialog(
-//							null,
-//							"Erstellen Sie zuerst ein Fach bevor Sie einen Dozent erstellen.",
-//							"Kein Fach vorhanden", JOptionPane.CANCEL_OPTION);
-//			setVisible(false);
-//			dispose();
 		}
 	}
 
@@ -242,7 +235,7 @@ public class ChangeMaskProfessor extends JFrame implements ActionListener{
 				try {
 					currentProfList.delete(profListPosition);
 					currentProfList.create(name, teachingSubject, periode);
-					JOptionPane.showMessageDialog(null, "Der Dozent " + name
+					JOptionPane.showInputDialog(null, "Der Dozent " + name
 							+ " wurde erfolgreich bearbeitet.",
 							"Erfolgreiche Eingabe", JOptionPane.CANCEL_OPTION);
 					setVisible(false);
