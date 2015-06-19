@@ -49,6 +49,6 @@ public class overviewMaskSubject extends JFrame implements ActionListener{
 			dispose();
 		}
 		
-	}
+	} 
 
 }
