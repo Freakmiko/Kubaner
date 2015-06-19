@@ -7,7 +7,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -366,11 +365,6 @@ public class PlanGenerator {
 		void add(Student student)
 		{
 			this.students.add(student);
-		}
-		
-		Student get(int index)
-		{
-			return this.students.get(index);
 		}
 		
 		int size()
