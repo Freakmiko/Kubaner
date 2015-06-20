@@ -21,6 +21,7 @@ public class PlanGenerator {
 		studentList = new StudentList();
 		subjectList = new SubjectList();
 		profList = new ProfList();
+//TODO:abc
 	}
 	
 	public StudentList getStudentList() {
@@ -167,7 +168,7 @@ public class PlanGenerator {
 				}
 			}
 		}
-		
+		System.out.println("test");
 		//sort the array
 		sortArray(examLists);
 		
@@ -177,8 +178,15 @@ public class PlanGenerator {
 		//create a timeline for every subject
 		for(StudentPerSubjectList exam: examLists)
 		{
-			//TODO: get Professor from subject
 			Professor prof = null;
+			for(Professor professor: this.getProfList()){
+				for(Subject sub: professor.getSubjectArray()){
+					if(sub.getName().equals(exam.getSubject().getName())){
+						prof = professor;
+					}
+				}
+			}
+			
 			
 			TimeLine timeLine = new TimeLine();
 			
@@ -317,6 +325,9 @@ public class PlanGenerator {
 	 */
 	private Time getTimeWhenProfIsAvailable(Professor prof, Time startTime)
 	{
+		if(prof.getTimePeriodArray().length == 0){
+			return startTime;
+		}
 		for(TimePeriod period : prof.getTimePeriodArray())
 		{
 			if(period.laysBetween(startTime))
