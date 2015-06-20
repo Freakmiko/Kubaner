@@ -49,7 +49,7 @@ public class Professor {
      * @return The subjects as an array.
      */
     public Subject[] getSubjectArray() {
-        return (Subject[]) subjects.toArray();
+        return subjects.toArray(new Subject[subjects.size()]);
     }
 
     /**
@@ -78,7 +78,7 @@ public class Professor {
      * @return The unavailable time periods as an array.
      */
     public TimePeriod[] getTimePeriodArray() {
-        return (TimePeriod[]) timePeriods.toArray();
+        return timePeriods.toArray(new TimePeriod[timePeriods.size()]);
     }
 
     /**
