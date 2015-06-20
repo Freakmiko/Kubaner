@@ -46,7 +46,7 @@ public class ChangeMaskSubject extends JFrame implements ActionListener{
 		subject = subjectList.get(subjectListPosition);
 		time = subject.getExamLength();
 		setTitle("Fach-Eingabemaske");
-		getContentPane().setLayout(new BorderLayout());
+		getContentPane().setLayout(new GridLayout(3,1));
 		setSize(190, 200);
 
 		// Panel fÃ¼r die Facheingabe
@@ -55,7 +55,7 @@ public class ChangeMaskSubject extends JFrame implements ActionListener{
 		subjectField = new JTextField(subject.getName());
 		subjectPanel.add(subjectLabel);
 		subjectPanel.add(subjectField);
-		getContentPane().add(subjectPanel, BorderLayout.CENTER);
+		add(subjectPanel, BorderLayout.CENTER);
 		
 		//Panel für die Zeiteingabe
 		timePanel = new JPanel();
