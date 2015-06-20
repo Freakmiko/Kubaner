@@ -225,7 +225,7 @@ public class Plan {
 						
 				}
 				
-				master.setValueAt(value, i, i2);
+				master.setValueAt(value, i2, i);
 			}
 				
 		}
@@ -233,7 +233,7 @@ public class Plan {
 		//convert times from Time to String
 		for(int i = 1; i < rows; i++) {
 			value = master.getValueAt(i, 0);
-			if(value != null) {
+			if(value != null && value instanceof Time) {
 				Time time = (Time)value;
 				value = "" + time.getHour() + "." + time.getMinute();
 				master.setValueAt(value, i, 0);
