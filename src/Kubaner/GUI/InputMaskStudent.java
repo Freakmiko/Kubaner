@@ -161,9 +161,11 @@ public class InputMaskStudent extends JFrame implements ActionListener {
 					int counter = 0;
 
 					for (int index = 0; index != subjectListSize; index++) {
-						if (subjectListButtons[index].isSelected())
-							teachingSubject[counter] = subList.get(index);
+						if (subjectListButtons[index].isSelected()) {
+							Subject tempSub = subList.get(index);
+							teachingSubject[counter] = tempSub;
 						counter++;
+						}
 					}
 
 					start = new Time(startHour, startMinute);

@@ -102,8 +102,8 @@ public class ChangeMaskSubject extends JFrame implements ActionListener{
 					subject = subjectList.create(name);
 					subject.setExamLength(time);
 					JOptionPane.showOptionDialog(null,
+							"Das Fach " + name +" wurde erfolgreich erstellt.",
 							"Erfolgreiche Eingabe!",
-							"Das Fach wurde erfolgreich erstellt.",
 							JOptionPane.CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
 					setVisible(false);
 					dispose();
