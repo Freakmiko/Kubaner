@@ -149,20 +149,10 @@ public class ClientGUI extends JFrame implements ActionListener{
 			
 			if(planGen.getProfList().size() != 0){
 				if(planGen.getStudentList().size() != 0){
-					InputSartTime tempWindow;
-					tempWindow = new InputSartTime();
-					tempWindow.setVisible(true);
 					
-					Time tempTime = tempWindow.getPlanTime();
-					
-					tempWindow.setVisible(false);
-					tempWindow.dispose();
-					
-					
-					System.out.println(planGen.getSubjectList().size());
-					System.out.println(planGen.getStudentList().size());
-					System.out.println(planGen.getProfList().size());
-					plan = planGen.generatePlan(tempTime);
+					InputSartTimeAndCreatPlan tempWindow;
+					tempWindow = new InputSartTimeAndCreatPlan(planGen);
+					tempWindow.setVisible(true);					
 					
 				}else{
 					JOptionPane.showMessageDialog(
@@ -272,6 +262,10 @@ public class ClientGUI extends JFrame implements ActionListener{
 		
 		this.setSize(new Dimension(screen.width / 2, screen.height / 2));
 		this.setLocation(screen.width/2-this.getSize().width/2, screen.height/2-this.getSize().height/2);
+	}
+	
+	public void setPlan(Plan plan) {
+		this.plan = plan;
 	}
 	
 	public static void main(String[] args) {
