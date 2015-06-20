@@ -133,23 +133,34 @@ public class ClientGUI extends JFrame implements ActionListener{
 			
 			try {
 				new SelectStudent(plan, planGen).setVisible(true);
-			} catch (NoSubjectException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+			} catch (NoSubjectException | NoElementException e1) {
+				JOptionPane.showMessageDialog(
+						null,
+						"Erstellen Sie zuerst einen Studenten.",
+						"Kein Fach vorhanden", JOptionPane.CANCEL_OPTION);
 			}
 			
 		}else if(e.getSource() == profEdit){
 			
 			try {
 				new SelectProfessor(plan, planGen).setVisible(true);
-			} catch (NoSubjectException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+			} catch (NoSubjectException | NoElementException e1) {
+				JOptionPane.showMessageDialog(
+						null,
+						"Erstellen Sie zuerst einen Dozenten.",
+						"Kein Fach vorhanden", JOptionPane.CANCEL_OPTION);
 			}
 			
 		}else if(e.getSource() == subjEdit){
 			
-			new SelectSubject(plan, planGen).setVisible(true);
+			try {
+				new SelectSubject(plan, planGen).setVisible(true);
+			} catch (NoElementException e1) {
+				JOptionPane.showMessageDialog(
+						null,
+						"Erstellen Sie zuerst eine Fach.",
+						"Kein Fach vorhanden", JOptionPane.CANCEL_OPTION);
+			}
 			
 		}else if(e.getSource() == createPlan){
 			
