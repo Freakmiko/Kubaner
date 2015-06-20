@@ -68,7 +68,7 @@ public class PlanGenTest {
     
 	@Test
 	public void test() throws Exception {
-		TimePeriod[] time1 = new TimePeriod[] {new TimePeriod(new Time(0,0), new Time(10,0)), new TimePeriod(new Time(14,0), new Time(24,0))};
+		TimePeriod[] time1 = new TimePeriod[] {new TimePeriod(new Time(0,0), new Time(10,0))};
 		TimePeriod[] time2 = time1;
         profList.create("Kubaner", arraySubjectsKubaner,time1);
         profList.create("Todorov", arraySubjectsTodorov,time1);
@@ -78,7 +78,8 @@ public class PlanGenTest {
         stuList.create("Student 3", arraySubjectsStu3,time2);
         stuList.create("Student 4", arraySubjectsStu4,time2);
         stuList.create("Student 5", arraySubjectsStu5,time2);
-        alpha.generatePlan(new Time(8,0));
+        Plan plan = alpha.generatePlan(new Time(10,0));
+        assertEquals(1,plan.getRoomCount());
 	}
 
 }
