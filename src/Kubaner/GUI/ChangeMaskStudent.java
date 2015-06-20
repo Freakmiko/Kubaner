@@ -37,7 +37,7 @@ public class ChangeMaskStudent extends JFrame implements ActionListener{
 		 * @param studListPosition The position of the Student in the StudentList, do you want change.
 		 * @throws NoSubjectException 
 		 */
-		ChangeMaskStudent(Plan plan, PlanGenerator planGenerator, int studListPosition) throws NoSubjectException {
+		ChangeMaskStudent(Plan plan, PlanGenerator planGenerator, int studListPosition) {
 
 			subList = planGenerator.getSubjectList();
 			currentStudentList = planGenerator.getStudentList();
@@ -45,7 +45,7 @@ public class ChangeMaskStudent extends JFrame implements ActionListener{
 			teachingSubject = currentStudent.getSubjectArray();
 			//Liest die Zeitdaten aus dem aktuellen Studenten.
 			periode = currentStudent.getTimePeriodArray();
-			TimePeriod currentTimePeriod = periode[1];
+			TimePeriod currentTimePeriod = periode[0];
 			start = currentTimePeriod.getStart();
 			end = currentTimePeriod.getEnd();
 			startHour = start.getHour();
@@ -148,9 +148,6 @@ public class ChangeMaskStudent extends JFrame implements ActionListener{
 			pack();
 			setLocationRelativeTo(null);
 
-			if (subjectListSize == 0) {
-				throw new NoSubjectException();
-			}
 		}
 
 		@Override

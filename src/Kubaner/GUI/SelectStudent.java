@@ -23,11 +23,16 @@ public class SelectStudent extends JFrame implements ActionListener{
 	private PlanGenerator planGenerator;
 	private Plan plan;
 
-	public SelectStudent(Plan plan ,PlanGenerator planGenerator) throws NoSubjectException {
+	public SelectStudent(Plan plan ,PlanGenerator planGenerator) throws NoSubjectException, NoElementException {
 		
 		this.planGenerator = planGenerator;
 		this.plan = plan;
-		size = planGenerator.getStudentList().size()-1;
+		size = planGenerator.getStudentList().size();
+		
+		if (size == 0){
+			throw new NoElementException();
+		}
+		
 		setLayout(new GridLayout(3,1));
 		setTitle("Studenten Uebersicht");
 		setLocationRelativeTo(null);
@@ -86,11 +91,7 @@ public class SelectStudent extends JFrame implements ActionListener{
 		if (e.getSource() == confirmButton) {
 			selection = (int) subjectSpinner.getValue();
 			setVisible(false);
-			try {
-				new ChangeMaskStudent(plan, planGenerator, selection).setVisible(true);
-			} catch (NoSubjectException e1) {
-				
-			}
+			new ChangeMaskStudent(plan, planGenerator, selection).setVisible(true);
 			dispose();
 		}
 		

@@ -22,11 +22,15 @@ public class SelectProfessor extends JFrame implements ActionListener {
 	private PlanGenerator planGenerator;
 	private Plan plan;
 
-	public SelectProfessor(Plan plan ,PlanGenerator planGenerator) throws NoSubjectException {
+	public SelectProfessor(Plan plan ,PlanGenerator planGenerator) throws NoSubjectException, NoElementException {
 		
 		this.planGenerator = planGenerator;
 		this.plan = plan;
-		size = planGenerator.getStudentList().size()-1;
+		size = planGenerator.getStudentList().size();
+		
+		if (size == 0){
+			throw new NoElementException();
+		}
 		setLayout(new GridLayout(3,1));
 		setTitle("Dozenten Uebersicht");
 		setLocationRelativeTo(null);
@@ -85,11 +89,8 @@ public class SelectProfessor extends JFrame implements ActionListener {
 		if (e.getSource() == confirmButton) {
 			selection = (int) subjectSpinner.getValue();
 			setVisible(false);
-			try {
-				new ChangeMaskProfessor(plan, planGenerator, selection).setVisible(true);
-			} catch (NoSubjectException e1) {
-				
-			}
+			new ChangeMaskProfessor(plan, planGenerator, selection).setVisible(true);
+
 			dispose();
 		}
 		

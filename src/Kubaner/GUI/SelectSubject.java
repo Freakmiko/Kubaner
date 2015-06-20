@@ -21,10 +21,14 @@ import Kubaner.Logic.*;
 		private int selection;
 		private PlanGenerator planGenerator;
 
-		public SelectSubject(Plan plan ,PlanGenerator planGenerator) {
+		public SelectSubject(Plan plan ,PlanGenerator planGenerator) throws NoElementException {
 			
 			this.planGenerator = planGenerator;
-			size = planGenerator.getSubjectList().size()-1;
+			size = planGenerator.getSubjectList().size();
+			
+			if (size == 0){
+				throw new NoElementException();
+			}
 			setLayout(new GridLayout(3,1));
 			setTitle("Faecher Uebersicht");
 			setLocationRelativeTo(null);

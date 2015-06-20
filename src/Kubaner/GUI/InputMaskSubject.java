@@ -84,7 +84,7 @@ public class InputMaskSubject extends JFrame implements ActionListener {
 			name = subjectField.getText();
 			time = (int) subjectTime.getValue();
 			if (name.equals(""))
-				JOptionPane.showInputDialog(null, "Fehlender Name!",
+				JOptionPane.showMessageDialog(null, "Fehlender Name!",
 						"Sie haben keinen Namen angegeben.",
 						JOptionPane.CANCEL_OPTION);
 			else {

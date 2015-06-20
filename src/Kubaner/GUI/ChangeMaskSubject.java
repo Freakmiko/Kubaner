@@ -51,6 +51,8 @@ public class ChangeMaskSubject extends JFrame implements ActionListener{
 
 		// Panel für die Facheingabe
 		subjectPanel = new JPanel();
+		subjectPanel.setLayout(new GridLayout(2,1));
+		subjectPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		subjectLabel = new JLabel("Name des Fachs: ");
 		subjectField = new JTextField(subject.getName());
 		subjectPanel.add(subjectLabel);
