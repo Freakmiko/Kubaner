@@ -201,6 +201,7 @@ public class PlanGenerator {
 				
 				//add a break if prof is unavailable
 				int breakTime = oldTime.getMinutesBetween(currentTime);
+				System.out.println("Breaktime: " + breakTime);
 				if(breakTime > 0)
 				{
 					timeLine.add(new Break(breakTime));
@@ -227,7 +228,14 @@ public class PlanGenerator {
 //			TimeLine a = plan.getTimeLine(i);
 //			System.out.println("TimeLine " + a.getRoom());
 //			for(int j = 0; j< a.size(); j++){
-//				System.out.println("   - Class: "+ a.getTimeLineMember(j).getClass() );
+//				if(a.getTimeLineMember(j).getClass() == Exam.class){
+//					System.out.println("   - " + ((Exam)a.getTimeLineMember(j)).getStudent().getName());
+//					System.out.println("   - " + ((Exam)a.getTimeLineMember(j)).getSubjectArray()[0].getName());
+//					System.out.println("   - " + ((Exam)a.getTimeLineMember(j)).getSubjectArray()[1]);
+//				}
+//				else{
+//					System.out.println("Break");
+//				}
 //			}
 //		}
 		return plan;
@@ -300,8 +308,7 @@ public class PlanGenerator {
 				
 			}
 			
-		}
-		
+		}	
 		removeEmptyTimeLines(plan);
 	}
 	
