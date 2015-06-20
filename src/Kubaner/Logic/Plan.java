@@ -155,7 +155,8 @@ public class Plan {
 					subjects = exam.getSubjectArray();
 					
 					for(int i3 = 0; i3 < subjects.length; i3++)
-						subjectList.create(subjects[i3].getName());
+						if(subjects[i3] != null)
+							subjectList.create(subjects[i3].getName());
 					
 					student = exam.getStudent();
 					studentList.create(student.getName(), student.getSubjectArray(), student.getTimePeriodArray());
@@ -163,7 +164,8 @@ public class Plan {
 					prof = exam.getProfArray();
 					
 					for(int i3 = 0; i3 < prof.length; i3++)
-						profList.create(prof[i3].getName(), prof[i3].getSubjectArray(), prof[i3].getTimePeriodArray());
+						if(prof[i3] != null)
+							profList.create(prof[i3].getName(), prof[i3].getSubjectArray(), prof[i3].getTimePeriodArray());
 				}
 			}
 		}
