@@ -368,12 +368,15 @@ public class Plan {
 	
 	
 	public void removeTimeLine(int index){
-		if(0 < index && index < timeline.length) {
+		if(0 <= index && index < timeline.length) {
 			TimeLine newTimeline[] = new TimeLine[timeline.length - 1];
 		
 			for(int i = 0; i < newTimeline.length; i++) {
 				if(i >= index) {
 					newTimeline[i] = timeline[i + 1];
+				}
+				else{
+					newTimeline[i] = timeline[i];
 				}
 			}
 		}
