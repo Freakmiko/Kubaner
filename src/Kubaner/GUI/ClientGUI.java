@@ -48,10 +48,8 @@ public class ClientGUI extends JFrame implements ActionListener{
 				 }
 				 
 				 try {
-			            stream = new ObjectInputStream(new FileInputStream(fileToOpen.getAbsolutePath()));
-			            plan = (Plan) stream.readObject();
+			           this.plan = planGen.loadPlan(fileToOpen.getAbsolutePath());
 			            
-			            stream.close();
 			        } catch (IOException ex) {
 			            ex.printStackTrace();
 			        } catch (ClassNotFoundException ex) {
@@ -69,17 +67,10 @@ public class ClientGUI extends JFrame implements ActionListener{
             {
             	File fileToSave = fileChooser.getSelectedFile();
             	
-            	 ObjectOutputStream stream = null;
                  try {
                 	 
-                	 if(fileToSave.exists()){
-                		 stream = new ObjectOutputStream(new FileOutputStream(fileToSave.getAbsolutePath()));
-                	 }else{
-                		stream = new ObjectOutputStream(new FileOutputStream(fileToSave.getAbsolutePath()+".txt"));
-                	 }
-                    
-                     stream.writeObject(plan);
-                     stream.close();
+                	 planGen.savePlan(plan, fileToSave.getAbsolutePath());
+                	 
                  } catch (IOException ex) {
                      ex.printStackTrace();
                  }
