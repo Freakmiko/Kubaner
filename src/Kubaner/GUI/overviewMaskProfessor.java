@@ -25,16 +25,17 @@ public class overviewMaskProfessor extends JFrame implements ActionListener {
 		setSize(400, 400);
 		setLocationRelativeTo(null);
 		
-		TableModel dataModel = new DataModel(list.size(),3);
+		TableModel dataModel = new DataModel(list.size(),4);
 		table = new JTable(dataModel);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		add( new JScrollPane( table ), BorderLayout.CENTER );
 		
 		for ( int row = 0; row < list.size(); row++ )
 			for ( int col = 0; col < 1; col++ ) {
-				dataModel.setValueAt(list.get(row).getName(), row, col);
-				dataModel.setValueAt(subjectsString(list.get(row).getSubjectArray()), row, col+1);
-				dataModel.setValueAt(TimePeriodString(list.get(row).getTimePeriodArray()), row, col+2);
+				dataModel.setValueAt("Nummer: " + row, row, col);
+				dataModel.setValueAt("Name: " + list.get(row).getName(), row, col+1);
+				dataModel.setValueAt("Fach: " + subjectsString(list.get(row).getSubjectArray()), row, col+2);
+				dataModel.setValueAt("Zeit: " + TimePeriodString(list.get(row).getTimePeriodArray()), row, col+3);
 			}
 		
 		//Knopf anlegen
@@ -74,8 +75,8 @@ public class overviewMaskProfessor extends JFrame implements ActionListener {
 	String TimePeriodString(TimePeriod[] period) {		
 		String returnString = "";
 		for(int i = 0; i < period.length; i++) {
-			returnString += "start: " + period[i].getStart().getHour() + ":" + period[i].getStart().getMinute() + " end: " + period[i].getEnd().getHour() + ":" + period[i].getEnd().getMinute() + ", ";
-		}
+			returnString += "Start: " + period[i].getStart().getHour() + ":" + period[i].getStart().getMinute() +" Uhr" + " Ende: " + period[i].getEnd().getHour() + ":" + period[i].getEnd().getMinute() +" Uhr" +  ", ";
+			}
 		return returnString;
 	}
 

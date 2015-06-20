@@ -37,19 +37,20 @@ public class SelectStudent extends JFrame implements ActionListener{
 		setTitle("Studenten Uebersicht");
 		setLocationRelativeTo(null);
 		
+		StudentList list = planGenerator.getStudentList();
 		//Fächerübersicht
 		tablePanel = new JPanel();
 		tablePanel.setLayout(new GridLayout(1,1));
-		TableModel dataModel = new DataModel(planGenerator.getStudentList().size(),3);
+		TableModel dataModel = new DataModel(planGenerator.getStudentList().size(),4);
 		table = new JTable(dataModel);
 		
 	for (int row = 0; row < planGenerator.getStudentList().size(); row++) {
-		for ( int col = 2; col < 3; col++ )
-			dataModel.setValueAt("Fächer: " + planGenerator.getStudentList().get(row).getSubjectArray().toString(), row, col);
-		for (int col = 1; col < 2; col++)
-			dataModel.setValueAt("Name: " + planGenerator.getStudentList().get(row).getName(), row, col);
-		for (int col = 0; col < 1; col++)
+		for ( int col = 0; col < 1; col++ ){
 			dataModel.setValueAt("Nummer: " + row, row, col);
+			dataModel.setValueAt("Name: " + list.get(row).getName(), row, col+1);
+			dataModel.setValueAt("Fach: " + subjectsString(list.get(row).getSubjectArray()), row, col+2);
+			dataModel.setValueAt("Zeit: " + TimePeriodString(list.get(row).getTimePeriodArray()) +"min", row, col+3);
+	}
 	}
 		tablePanel.add(table);
 		add(tablePanel);
@@ -79,6 +80,32 @@ public class SelectStudent extends JFrame implements ActionListener{
 		actionPanel.add(cancelButton);
 		add(actionPanel);
 		pack();
+	}
+	
+	/**
+	 * Function which creates a String with all subjects of a student.
+	 * @param subjects list of subjects.
+	 * @return A String with all subjects of a student.
+	 */
+	String subjectsString(Subject[] subjects) {
+		String returnString = "";
+		for(int i = 0; i < subjects.length; i++) {
+			returnString += subjects[i].getName() + ", ";
+		}
+		return returnString;
+	}
+	
+	/**
+	 * Function which creates a String with all timeperiods of a student.
+	 * @param period list of timeperiods.
+	 * @return A String with all timeperiods of a student.
+	 */
+	String TimePeriodString(TimePeriod[] period) {		
+		String returnString = "";
+		for(int i = 0; i < period.length; i++) {
+			returnString += "Start: " + period[i].getStart().getHour() + ":" + period[i].getStart().getMinute() +" Uhr" + " Ende: " + period[i].getEnd().getHour() + ":" + period[i].getEnd().getMinute() +" Uhr" + ", ";
+		}
+		return returnString;
 	}
 	
 	@Override

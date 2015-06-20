@@ -26,7 +26,7 @@ public class SelectProfessor extends JFrame implements ActionListener {
 		
 		this.planGenerator = planGenerator;
 		this.plan = plan;
-		size = planGenerator.getStudentList().size();
+		size = planGenerator.getProfList().size();
 		
 		if (size == 0){
 			throw new NoElementException();
@@ -35,19 +35,20 @@ public class SelectProfessor extends JFrame implements ActionListener {
 		setTitle("Dozenten Uebersicht");
 		setLocationRelativeTo(null);
 		
+		ProfList list = planGenerator.getProfList();
 		//Fächerübersicht
 		tablePanel = new JPanel();
 		tablePanel.setLayout(new GridLayout(1,1));
-		TableModel dataModel = new DataModel(planGenerator.getProfList().size(),3);
+		TableModel dataModel = new DataModel(planGenerator.getProfList().size(),4);
 		table = new JTable(dataModel);
 		
 	for (int row = 0; row < planGenerator.getProfList().size(); row++) {
-		for ( int col = 2; col < 3; col++ )
-			dataModel.setValueAt("Fächer: " + planGenerator.getProfList().get(row).getSubjectArray().toString(), row, col);
-		for (int col = 1; col < 2; col++)
-			dataModel.setValueAt("Name: " + planGenerator.getProfList().get(row).getName(), row, col);
-		for (int col = 0; col < 1; col++)
+		for ( int col = 0; col < 1; col++ ){
 			dataModel.setValueAt("Nummer: " + row, row, col);
+			dataModel.setValueAt("Name: " + list.get(row).getName(), row, col+1);
+			dataModel.setValueAt("Fach: " + subjectsString(list.get(row).getSubjectArray()), row, col+2);
+			dataModel.setValueAt("Zeit: " + TimePeriodString(list.get(row).getTimePeriodArray()), row, col+3);
+	}
 	}
 		tablePanel.add(table);
 		add(tablePanel);
@@ -77,6 +78,32 @@ public class SelectProfessor extends JFrame implements ActionListener {
 		actionPanel.add(cancelButton);
 		add(actionPanel);
 		pack();
+	}
+	
+	/**
+	 * Function which creates a String with all subjects of a student.
+	 * @param subjects list of subjects.
+	 * @return A String with all subjects of a student.
+	 */
+	String subjectsString(Subject[] subjects) {
+		String returnString = "";
+		for(int i = 0; i < subjects.length; i++) {
+			returnString += subjects[i].getName() + ", ";
+		}
+		return returnString;
+	}
+	
+	/**
+	 * Function which creates a String with all timeperiods of a student.
+	 * @param period list of timeperiods.
+	 * @return A String with all timeperiods of a student.
+	 */
+	String TimePeriodString(TimePeriod[] period) {		
+		String returnString = "";
+		for(int i = 0; i < period.length; i++) {
+			returnString += "Start: " + period[i].getStart().getHour() + ":" + period[i].getStart().getMinute() +" Uhr" + " Ende: " + period[i].getEnd().getHour() + ":" + period[i].getEnd().getMinute() +" Uhr" +  ", ";
+		}
+		return returnString;
 	}
 	
 	@Override

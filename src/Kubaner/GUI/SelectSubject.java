@@ -40,13 +40,13 @@ import Kubaner.Logic.*;
 			table = new JTable(dataModel);
 			
 		for (int row = 0; row < planGenerator.getSubjectList().size(); row++) {
-			for ( int col = 2; col < 3; col++ )
-				dataModel.setValueAt("Prüfungsdauer: " + planGenerator.getSubjectList().get(row).getExamLength(), row, col);
-			for (int col = 1; col < 2; col++)
-				dataModel.setValueAt("Fach: " + planGenerator.getSubjectList().get(row).getName(), row, col);
-			for (int col = 0; col < 1; col++)
+			for ( int col = 0; col < 1; col++ ){
+				dataModel.setValueAt("Prüfungsdauer: " + planGenerator.getSubjectList().get(row).getExamLength() + "min", row, col+2);
+				dataModel.setValueAt("Fach: " + planGenerator.getSubjectList().get(row).getName(), row, col+1);
 				dataModel.setValueAt("Nummer: " + row, row, col);
 		}
+		}
+			
 			tablePanel.add(table);
 			add(tablePanel);
 			
