@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 
 import Kubaner.Logic.Plan;
 import Kubaner.Logic.PlanGenerator;
+import Kubaner.Logic.Time;
 
 public class ClientGUI extends JFrame implements ActionListener{
 	
@@ -134,17 +135,48 @@ public class ClientGUI extends JFrame implements ActionListener{
 			
 		}else if(e.getSource() == studentEdit){
 			
-			new SelectStudent(plan, planGen);
+			new SelectStudent(plan, planGen).setVisible(true);
 			
 		}else if(e.getSource() == profEdit){
 			
-			new SelectProfessor(plan, planGen);
+			new SelectProfessor(plan, planGen).setVisible(true);
 			
 		}else if(e.getSource() == subjEdit){
 			
-			new SelectSubject(plan, planGen);
+			new SelectSubject(plan, planGen).setVisible(true);
 			
 		}else if(e.getSource() == createPlan){
+			
+			if(planGen.getProfList().size() != 0){
+				if(planGen.getStudentList().size() != 0){
+					InputSartTime tempWindow;
+					tempWindow = new InputSartTime();
+					tempWindow.setVisible(true);
+					
+					Time tempTime = tempWindow.getPlanTime();
+					
+					tempWindow.setVisible(false);
+					tempWindow.dispose();
+					
+					
+					System.out.println(planGen.getSubjectList().size());
+					System.out.println(planGen.getStudentList().size());
+					System.out.println(planGen.getProfList().size());
+					plan = planGen.generatePlan(tempTime);
+					
+				}else{
+					JOptionPane.showMessageDialog(
+							null,
+							"itte legen sie zuerst Studenten an bevor, sie einen Plan erstellen möchten.",
+							"Kein Fach vorhanden", JOptionPane.CANCEL_OPTION);
+				}
+			}else{
+				JOptionPane.showMessageDialog(
+						null,
+						"Bitte legen sie zuerst Profesoren an, bevor sie einen Plan erstellen möchten.",
+						"Kein Fach vorhanden", JOptionPane.CANCEL_OPTION);
+			}
+			
 			
 		}else if(e.getSource() == editPlan){
 		
