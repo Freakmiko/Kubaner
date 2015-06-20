@@ -85,17 +85,17 @@ public class InputMaskSubject extends JFrame implements ActionListener {
 			time = (int) subjectTime.getValue();
 			System.out.println(time);
 			if (name.equals(""))
-				JOptionPane.showMessageDialog(null, "Fehlender Name!",
+				JOptionPane.showInputDialog(null, "Fehlender Name!",
 						"Sie haben keinen Namen angegeben.",
 						JOptionPane.CANCEL_OPTION);
 			else {
 				try {
 					subject = subjectList.create(name);
 					subject.setExamLength(time);
-					JOptionPane.showMessageDialog(null,
+					JOptionPane.showOptionDialog(null,
 							"Erfolgreiche Eingabe!",
 							"Das Fach wurde erfolgreich erstellt.",
-							JOptionPane.CANCEL_OPTION);
+							JOptionPane.CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
 					setVisible(false);
 					dispose();
 				} catch (IllegalArgumentException E) {

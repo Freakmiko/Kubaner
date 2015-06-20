@@ -204,7 +204,7 @@ public class Plan {
 							subjects = profList.get(i3).getSubjectArray();
 							
 							for(int i4 = 0; i4 < subjects.length; i4++) {
-								if(subjects[i].getName() == subjectList.get(i - 1).getName())
+								if(subjects[i4].getName() == subjectList.get(i - 1).getName())
 									value += "\n" + profList.get(i3).getName();
 							}
 						}	
@@ -366,8 +366,17 @@ public class Plan {
 		return "";
 	}
 	
+	
 	public void removeTimeLine(int index){
-		//TODO:
+		if(0 < index && index < timeline.length) {
+			TimeLine newTimeline[] = new TimeLine[timeline.length - 1];
+		
+			for(int i = 0; i < newTimeline.length; i++) {
+				if(i >= index) {
+					newTimeline[i] = timeline[i + 1];
+				}
+			}
+		}
 	}
 
 
