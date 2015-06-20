@@ -168,7 +168,6 @@ public class PlanGenerator {
 				}
 			}
 		}
-		System.out.println("test");
 		//sort the array
 		sortArray(examLists);
 		
@@ -176,6 +175,7 @@ public class PlanGenerator {
 		Plan plan = new Plan(startTime);
 		
 		//create a timeline for every subject
+		int indexExam = 1;
 		for(StudentPerSubjectList exam: examLists)
 		{
 			Professor prof = null;
@@ -189,6 +189,7 @@ public class PlanGenerator {
 			
 			
 			TimeLine timeLine = new TimeLine();
+			timeLine.setRoom("Room: " + indexExam);
 			
 			Time currentTime = startTime;
 			
@@ -216,10 +217,19 @@ public class PlanGenerator {
 						exam.subject.getExamLength(),
 						""));
 			}
+			plan.add(timeLine);
+			indexExam++;
 		}
-		
 		mergeTimeLines(plan);
 		
+//		System.out.println("Ergebnis:");
+//		for(int i = 0; i < plan.getRoomCount(); i++){
+//			TimeLine a = plan.getTimeLine(i);
+//			System.out.println("TimeLine " + a.getRoom());
+//			for(int j = 0; j< a.size(); j++){
+//				System.out.println("   - Class: "+ a.getTimeLineMember(j).getClass() );
+//			}
+//		}
 		return plan;
 	}
 	
