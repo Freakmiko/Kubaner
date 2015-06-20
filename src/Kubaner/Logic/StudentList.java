@@ -101,7 +101,6 @@ public class StudentList implements Iterable<Student> {
 
 	@Override
 	public Iterator<Student> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+		return v.iterator();
 	}
 }
