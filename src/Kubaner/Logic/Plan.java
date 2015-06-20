@@ -313,6 +313,9 @@ public class Plan {
 		
 		Time time = new Time(startTime.getHour(), startTime.getMinute());
 		
+		if(startTimeList.isEmpty() == false)
+			rows++;
+		
 		while(time != null) {
 			
 			time = getNextStartTime(time, startTimeList);
@@ -343,7 +346,7 @@ public class Plan {
 					subjects = exam.getSubjectArray();
 					
 					for(int i3 = 0; i3 < subjects.length; i3++)
-						if(subjects[i3].getName().equals(sub.getName())) {
+						if(subjects[i3] != null && subjects[i3].getName().equals(sub.getName())) {
 							return exam;
 						}
 				}
