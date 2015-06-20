@@ -201,7 +201,6 @@ public class PlanGenerator {
 				
 				//add a break if prof is unavailable
 				int breakTime = oldTime.getMinutesBetween(currentTime);
-				System.out.println("Breaktime: " + breakTime);
 				if(breakTime > 0)
 				{
 					timeLine.add(new Break(breakTime));
