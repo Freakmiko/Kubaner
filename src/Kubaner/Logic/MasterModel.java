@@ -36,7 +36,7 @@ public class MasterModel extends AbstractTableModel {
 	
 	public void setValueAt(Object value, int row, int col) {
 		if(-1 < row && row < this.rows && -1 < col && col < this.cols) {
-			data[row][col] = value.toString();
+			data[row][col] = value;
 			fireTableCellUpdated(row, col);
 		}
 	}

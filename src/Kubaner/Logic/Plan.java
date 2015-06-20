@@ -214,7 +214,7 @@ public class Plan {
 					//row > 0
 					} else {
 						//value at i2, i is still an instance of the class Time
-						exam = getExamAtTime((Time)master.getValueAt(i2, i), subjectList.get(i - 1));
+						exam = getExamAtTime((Time)master.getValueAt(i2, 0), subjectList.get(i - 1), startTimeList);
 						
 						if(exam != null) {
 							value = "" + exam.getStudent().getName() + "   " + findExamRoom(exam);
@@ -227,7 +227,6 @@ public class Plan {
 				
 				master.setValueAt(value, i2, i);
 			}
-				
 		}
 		
 		//convert times from Time to String
@@ -263,10 +262,11 @@ public class Plan {
 			
 			timeArray[0] = new Time(startTime.getHour(), startTime.getMinute());
 			
-			for(int i2 = 0; i2 < timeline[i].size(); i2++) {
+			//i2 < timeline[i].size() - 1, we don't need the length of the last one
+			for(int i2 = 0; i2 < timeline[i].size() - 1; i2++) {
 				nextDuration = timeline[i].getTimeLineMember(i2).getLength();
 				actualTime = actualTime.addMinutes(nextDuration);
-				timeArray[i2] = new Time(actualTime.getHour(), actualTime.getMinute());
+				timeArray[i2 + 1] = new Time(actualTime.getHour(), actualTime.getMinute());
 			}
 			list.add(timeArray);
 		}
@@ -280,7 +280,7 @@ public class Plan {
 	 * 			or null if there is no start time later than priorTime.
 	 */
 	private Time getNextStartTime(Time priorTime, ArrayList<Time[]> startTimeList) {
-		Time nextTime = priorTime;
+		Time nextTime = null;
 		
 		Time actualTime;
 		
@@ -289,7 +289,7 @@ public class Plan {
 				actualTime = startTimeList.get(i)[i2];
 				
 				if(actualTime.isLater(priorTime)) {
-					if(actualTime.isEarlier(nextTime))
+					if(nextTime == null || actualTime.isEarlier(nextTime))
 						nextTime = actualTime;
 					break;
 				}
@@ -332,7 +332,7 @@ public class Plan {
 	 * to find the right exam, because there could be more exams at the same time.
 	 * @return The found exam or null if no exam was found.
 	 */
-	private Exam getExamAtTime(Time time, Subject sub) {
+	private Exam getExamAtTime(Time time, Subject sub, ArrayList<Time[]> startTimeList) {
 		TimeLineMember member;
 		Exam exam;
 		
@@ -347,12 +347,13 @@ public class Plan {
 					
 					for(int i3 = 0; i3 < subjects.length; i3++)
 						if(subjects[i3] != null && subjects[i3].getName().equals(sub.getName())) {
-							return exam;
+							if(startTimeList.get(i)[i2].getHour() == time.getHour() && startTimeList.get(i)[i2].getMinute() == time.getMinute()) {
+								return exam;
+							}
 						}
 				}
 			}
 		}
-		
 		return null;
 	}
 	
