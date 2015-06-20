@@ -30,7 +30,8 @@ public class InputMaskStudent extends JFrame implements ActionListener {
 	private int startHour, startMinute, endHour, endMinute;
 	private Subject[] teachingSubject;
 
-	InputMaskStudent(Plan plan, PlanGenerator planGenerator) throws NoSubjectException {
+	InputMaskStudent(Plan plan, PlanGenerator planGenerator)
+			throws NoSubjectException {
 
 		subList = planGenerator.getSubjectList();
 		currentStudentList = planGenerator.getStudentList();
@@ -93,8 +94,8 @@ public class InputMaskStudent extends JFrame implements ActionListener {
 		timePanel.add(timeEndLabel);
 		timeEndPanel = new JPanel();
 		timeEndPanel.setLayout(new GridLayout(1, 2));
-		endTimeHoursModel = new SpinnerNumberModel(0, 0, 23, 1);
-		endTimeMinutesModel = new SpinnerNumberModel(0, 0, 59, 1);
+		endTimeHoursModel = new SpinnerNumberModel(23, 0, 23, 1);
+		endTimeMinutesModel = new SpinnerNumberModel(59, 0, 59, 1);
 		endTimeHours = new JSpinner(endTimeHoursModel);
 		endTimeMinutes = new JSpinner(endTimeMinutesModel);
 		timeEndPanel.add(endTimeHours);
@@ -164,7 +165,7 @@ public class InputMaskStudent extends JFrame implements ActionListener {
 						if (subjectListButtons[index].isSelected()) {
 							Subject tempSub = subList.get(index);
 							teachingSubject[counter] = tempSub;
-						counter++;
+							counter++;
 						}
 					}
 
@@ -172,24 +173,14 @@ public class InputMaskStudent extends JFrame implements ActionListener {
 					end = new Time(endHour, endMinute);
 					periode[0] = new TimePeriod(start, end);
 
-					// Testausgabe
-					// System.out.println("Name: " + professorName);
-					// for (int test = 0; test != counterSubjects; test++)
-					// System.out.println(test +"Fach: " +
-					// teachingSubject[],getName());
-					// System.out.println(test +"Fach: ");
-					// System.out.println("StartZeit: "+ startHour + ":" +
-					// startMinute);
-					// System.out.println("EndZeit: "+ endHour + ":" +
-					// endMinute);
-
 					try {
 						currentStudentList.create(name, teachingSubject,
 								periode);
 						JOptionPane.showOptionDialog(null, "Der Student "
 								+ name + " wurde erfolgreich erstellt!",
 								"Erfolgreiche Eingabe",
-								JOptionPane.CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+								JOptionPane.CANCEL_OPTION,
+								JOptionPane.PLAIN_MESSAGE, null, null, null);
 						setVisible(false);
 						dispose();
 					} catch (IllegalArgumentException E) {

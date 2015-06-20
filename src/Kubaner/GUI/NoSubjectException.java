@@ -1,8 +1,8 @@
 package Kubaner.GUI;
 
-public class NoSubjectException extends Exception{
+public class NoSubjectException extends Exception {
 
-	NoSubjectException(){
+	NoSubjectException() {
 		super();
 	}
 }

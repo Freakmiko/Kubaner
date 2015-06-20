@@ -9,8 +9,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-public class InputMaskProfessor extends JFrame implements ActionListener{
-	
+public class InputMaskProfessor extends JFrame implements ActionListener {
+
 	private SubjectList subList;
 	private ProfList currentProfList;
 	private Time start, end;
@@ -30,7 +30,8 @@ public class InputMaskProfessor extends JFrame implements ActionListener{
 	private int startHour, startMinute, endHour, endMinute;
 	private Subject[] teachingSubject;
 
-	InputMaskProfessor(Plan plan, PlanGenerator planGenerator) throws NoSubjectException {
+	InputMaskProfessor(Plan plan, PlanGenerator planGenerator)
+			throws NoSubjectException {
 
 		subList = planGenerator.getSubjectList();
 		currentProfList = planGenerator.getProfList();
@@ -60,7 +61,8 @@ public class InputMaskProfessor extends JFrame implements ActionListener{
 
 		// Erstellt ein panel für die RadioButtons der Fächer.
 		selectionSubjectPanel = new JPanel();
-		selectionSubjectPanel.setLayout(new GridLayout((subjectListSize) / 2, 2));
+		selectionSubjectPanel
+				.setLayout(new GridLayout((subjectListSize) / 2, 2));
 		for (int i = 0; i != subjectListSize; i++) {
 			subjectListButtons[i] = new JRadioButton((subList.get(i)).getName());
 			selectionSubjectPanel.add(subjectListButtons[i]);
@@ -92,8 +94,8 @@ public class InputMaskProfessor extends JFrame implements ActionListener{
 		timePanel.add(timeEndLabel);
 		timeEndPanel = new JPanel();
 		timeEndPanel.setLayout(new GridLayout(1, 2));
-		endTimeHoursModel = new SpinnerNumberModel(0, 0, 23, 1);
-		endTimeMinutesModel = new SpinnerNumberModel(0, 0, 59, 1);
+		endTimeHoursModel = new SpinnerNumberModel(23, 0, 23, 1);
+		endTimeMinutesModel = new SpinnerNumberModel(59, 0, 59, 1);
 		endTimeHours = new JSpinner(endTimeHoursModel);
 		endTimeMinutes = new JSpinner(endTimeMinutesModel);
 		timeEndPanel.add(endTimeHours);
@@ -169,7 +171,7 @@ public class InputMaskProfessor extends JFrame implements ActionListener{
 					if (subjectListButtons[index].isSelected()) {
 						Subject tempSub = subList.get(index);
 						teachingSubject[counter] = tempSub;
-					counter++;
+						counter++;
 					}
 				}
 
@@ -177,21 +179,12 @@ public class InputMaskProfessor extends JFrame implements ActionListener{
 				end = new Time(endHour, endMinute);
 				periode[0] = new TimePeriod(start, end);
 
-				// Testausgabe
-				// System.out.println("Name: " + professorName);
-				// for (int test = 0; test != counterSubjects; test++)
-				// System.out.println(test +"Fach: " +
-				// teachingSubject[],getName());
-				// System.out.println(test +"Fach: ");
-				// System.out.println("StartZeit: "+ startHour + ":" +
-				// startMinute);
-				// System.out.println("EndZeit: "+ endHour + ":" + endMinute);
-
 				try {
 					currentProfList.create(name, teachingSubject, periode);
 					JOptionPane.showOptionDialog(null, "Der Professor " + name
 							+ " wurde erfolgreich erstellt.",
-							"Erfolgreiche Eingabe", JOptionPane.CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+							"Erfolgreiche Eingabe", JOptionPane.CANCEL_OPTION,
+							JOptionPane.PLAIN_MESSAGE, null, null, null);
 					setVisible(false);
 					dispose();
 				} catch (IllegalArgumentException E) {

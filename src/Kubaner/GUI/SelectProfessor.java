@@ -22,53 +22,60 @@ public class SelectProfessor extends JFrame implements ActionListener {
 	private PlanGenerator planGenerator;
 	private Plan plan;
 
-	public SelectProfessor(Plan plan ,PlanGenerator planGenerator) throws NoSubjectException, NoElementException {
-		
+	public SelectProfessor(Plan plan, PlanGenerator planGenerator)
+			throws NoSubjectException, NoElementException {
+
 		this.planGenerator = planGenerator;
 		this.plan = plan;
 		size = planGenerator.getProfList().size();
-		
-		if (size == 0){
+
+		if (size == 0) {
 			throw new NoElementException();
 		}
-		setLayout(new GridLayout(3,1));
+		setLayout(new GridLayout(3, 1));
 		setTitle("Dozenten Uebersicht");
 		setLocationRelativeTo(null);
-		
+
 		ProfList list = planGenerator.getProfList();
-		//Fächerübersicht
+		// Fächerübersicht
 		tablePanel = new JPanel();
-		tablePanel.setLayout(new GridLayout(1,1));
-		TableModel dataModel = new DataModel(planGenerator.getProfList().size(),4);
+		tablePanel.setLayout(new GridLayout(1, 1));
+		TableModel dataModel = new DataModel(
+				planGenerator.getProfList().size(), 4);
 		table = new JTable(dataModel);
-		
-	for (int row = 0; row < planGenerator.getProfList().size(); row++) {
-		for ( int col = 0; col < 1; col++ ){
-			dataModel.setValueAt("Nummer: " + row, row, col);
-			dataModel.setValueAt("Name: " + list.get(row).getName(), row, col+1);
-			dataModel.setValueAt("Fach: " + subjectsString(list.get(row).getSubjectArray()), row, col+2);
-			dataModel.setValueAt("Zeit: " + TimePeriodString(list.get(row).getTimePeriodArray()), row, col+3);
-	}
-	}
+
+		for (int row = 0; row < planGenerator.getProfList().size(); row++) {
+			for (int col = 0; col < 1; col++) {
+				dataModel.setValueAt("Nummer: " + row, row, col);
+				dataModel.setValueAt("Name: " + list.get(row).getName(), row,
+						col + 1);
+				dataModel.setValueAt("Fach: "
+						+ subjectsString(list.get(row).getSubjectArray()), row,
+						col + 2);
+				dataModel.setValueAt("Zeit: "
+						+ TimePeriodString(list.get(row).getTimePeriodArray()),
+						row, col + 3);
+			}
+		}
 		tablePanel.add(table);
 		add(tablePanel);
-		
-		//Wahl des faches
+
+		// Wahl des faches
 		selectPanel = new JPanel();
 		selectPanel.setLayout(new GridLayout(2, 1));
 		selectPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		subjectLabel = new JLabel();
 		subjectLabel
 				.setText("Geben Sie die Nummer des Dozenten, den Sie der Dozentenueberisicht entnehmen können.");
-		subjectModel = new SpinnerNumberModel(0, 0, size, 1);
+		subjectModel = new SpinnerNumberModel(0, 0, size-1, 1);
 		subjectSpinner = new JSpinner(subjectModel);
 		selectPanel.add(subjectLabel);
 		selectPanel.add(subjectSpinner);
 		add(selectPanel);
-		
-		//Actionsknöpfe
+
+		// Actionsknöpfe
 		actionPanel = new JPanel();
-		actionPanel.setLayout(new GridLayout(1,2));
+		actionPanel.setLayout(new GridLayout(1, 2));
 		actionPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		confirmButton = new JButton("Bearbeiten");
 		cancelButton = new JButton("Abbrechen");
@@ -79,48 +86,56 @@ public class SelectProfessor extends JFrame implements ActionListener {
 		add(actionPanel);
 		pack();
 	}
-	
+
 	/**
 	 * Function which creates a String with all subjects of a student.
-	 * @param subjects list of subjects.
+	 * 
+	 * @param subjects
+	 *            list of subjects.
 	 * @return A String with all subjects of a student.
 	 */
 	String subjectsString(Subject[] subjects) {
 		String returnString = "";
-		for(int i = 0; i < subjects.length; i++) {
+		for (int i = 0; i < subjects.length; i++) {
 			returnString += subjects[i].getName() + ", ";
 		}
 		return returnString;
 	}
-	
+
 	/**
 	 * Function which creates a String with all timeperiods of a student.
-	 * @param period list of timeperiods.
+	 * 
+	 * @param period
+	 *            list of timeperiods.
 	 * @return A String with all timeperiods of a student.
 	 */
-	String TimePeriodString(TimePeriod[] period) {		
+	String TimePeriodString(TimePeriod[] period) {
 		String returnString = "";
-		for(int i = 0; i < period.length; i++) {
-			returnString += "Start: " + period[i].getStart().getHour() + ":" + period[i].getStart().getMinute() +" Uhr" + " Ende: " + period[i].getEnd().getHour() + ":" + period[i].getEnd().getMinute() +" Uhr" +  ", ";
+		for (int i = 0; i < period.length; i++) {
+			returnString += "Start: " + period[i].getStart().getHour() + ":"
+					+ period[i].getStart().getMinute() + " Uhr" + " Ende: "
+					+ period[i].getEnd().getHour() + ":"
+					+ period[i].getEnd().getMinute() + " Uhr" + ", ";
 		}
 		return returnString;
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == cancelButton) {
+		if (e.getSource() == cancelButton) {
 			setVisible(false);
 			dispose();
 		}
-		
+
 		if (e.getSource() == confirmButton) {
 			selection = (int) subjectSpinner.getValue();
 			setVisible(false);
-			new ChangeMaskProfessor(plan, planGenerator, selection).setVisible(true);
+			new ChangeMaskProfessor(plan, planGenerator, selection)
+					.setVisible(true);
 
 			dispose();
 		}
-		
-	} 
+
+	}
 
 }

@@ -25,7 +25,7 @@ import Kubaner.Logic.SubjectList;
 import Kubaner.Logic.Time;
 import Kubaner.Logic.TimePeriod;
 
-public class ChangeMaskProfessor extends JFrame implements ActionListener{
+public class ChangeMaskProfessor extends JFrame implements ActionListener {
 
 	private Professor currentProf;
 	private SubjectList subList;
@@ -49,12 +49,17 @@ public class ChangeMaskProfessor extends JFrame implements ActionListener{
 
 	/**
 	 * 
-	 * @param plan The current plan.
-	 * @param planGenerator The current plangenerator.
-	 * @param profListPosition The position of the professor in the professorList, do you want change.
-	 * @throws NoSubjectException 
+	 * @param plan
+	 *            The current plan.
+	 * @param planGenerator
+	 *            The current plangenerator.
+	 * @param profListPosition
+	 *            The position of the professor in the professorList, do you
+	 *            want change.
+	 * @throws NoSubjectException
 	 */
-	ChangeMaskProfessor(Plan plan, PlanGenerator planGenerator, int profListPosition) {
+	ChangeMaskProfessor(Plan plan, PlanGenerator planGenerator,
+			int profListPosition) {
 
 		this.profListPosition = profListPosition;
 		subList = planGenerator.getSubjectList();
@@ -64,7 +69,7 @@ public class ChangeMaskProfessor extends JFrame implements ActionListener{
 		subjectListSize = subList.size();
 		subjectListButtons = new JRadioButton[subjectListSize];
 
-		//Liest die Zeitdaten aus dem aktuellen Studenten.
+		// Liest die Zeitdaten aus dem aktuellen Studenten.
 		periode = currentProf.getTimePeriodArray();
 		TimePeriod currentTimePeriod = periode[0];
 		start = currentTimePeriod.getStart();
@@ -73,7 +78,7 @@ public class ChangeMaskProfessor extends JFrame implements ActionListener{
 		startMinute = start.getMinute();
 		endHour = end.getHour();
 		endMinute = end.getMinute();
-		
+
 		setTitle("Dozent-Eingabemaske");
 		setLayout(new BorderLayout());
 
@@ -97,14 +102,18 @@ public class ChangeMaskProfessor extends JFrame implements ActionListener{
 
 		// Erstellt ein panel für die RadioButtons der Fächer.
 		selectionSubjectPanel = new JPanel();
-		selectionSubjectPanel.setLayout(new GridLayout((subjectListSize) / 2, 2));
-		
+		selectionSubjectPanel
+				.setLayout(new GridLayout((subjectListSize) / 2, 2));
+
 		int j = 0;
 		for (int i = 0; i != subjectListSize; i++) {
-			subjectListButtons[i] = new JRadioButton((subList.get(i)).getName());
-			if (subList.get(i) == teachingSubject[j]){
-				subjectListButtons[i].isSelected();
+			if (subList.get(i).equals(teachingSubject[j])) {
+				subjectListButtons[i] = new JRadioButton(
+						(subList.get(i)).getName(), true);
 				j++;
+			} else {
+				subjectListButtons[i] = new JRadioButton(
+						(subList.get(i)).getName(), false);
 			}
 			selectionSubjectPanel.add(subjectListButtons[i]);
 			subjectListButtons[i].addActionListener(this);
@@ -213,7 +222,7 @@ public class ChangeMaskProfessor extends JFrame implements ActionListener{
 					if (subjectListButtons[index].isSelected()) {
 						Subject tempSub = subList.get(index);
 						teachingSubject[counter] = tempSub;
-					counter++;
+						counter++;
 					}
 				}
 
@@ -236,7 +245,8 @@ public class ChangeMaskProfessor extends JFrame implements ActionListener{
 					currentProfList.create(name, teachingSubject, periode);
 					JOptionPane.showOptionDialog(null, "Der Dozent " + name
 							+ " wurde erfolgreich bearbeitet.",
-							"Erfolgreiche Eingabe", JOptionPane.CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+							"Erfolgreiche Eingabe", JOptionPane.CANCEL_OPTION,
+							JOptionPane.PLAIN_MESSAGE, null, null, null);
 					setVisible(false);
 					dispose();
 				} catch (IllegalArgumentException E) {

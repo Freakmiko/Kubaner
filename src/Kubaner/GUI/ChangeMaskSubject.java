@@ -20,7 +20,7 @@ import Kubaner.Logic.PlanGenerator;
 import Kubaner.Logic.Subject;
 import Kubaner.Logic.SubjectList;
 
-public class ChangeMaskSubject extends JFrame implements ActionListener{
+public class ChangeMaskSubject extends JFrame implements ActionListener {
 
 	private Subject subject;
 	private SubjectList subjectList;
@@ -36,8 +36,11 @@ public class ChangeMaskSubject extends JFrame implements ActionListener{
 
 	/**
 	 * 
-	 * @param planGenerator The current plangenerator.
-	 * @param subjectListPosition The position of the subject in the subjectList, do you want change.
+	 * @param planGenerator
+	 *            The current plangenerator.
+	 * @param subjectListPosition
+	 *            The position of the subject in the subjectList, do you want
+	 *            change.
 	 */
 	ChangeMaskSubject(PlanGenerator planGenerator, int subjectListPosition) {
 
@@ -46,22 +49,22 @@ public class ChangeMaskSubject extends JFrame implements ActionListener{
 		subject = subjectList.get(subjectListPosition);
 		time = subject.getExamLength();
 		setTitle("Fach-Eingabemaske");
-		getContentPane().setLayout(new GridLayout(3,1));
+		getContentPane().setLayout(new GridLayout(3, 1));
 		setSize(190, 200);
 
 		// Panel fÃ¼r die Facheingabe
 		subjectPanel = new JPanel();
-		subjectPanel.setLayout(new GridLayout(2,1));
+		subjectPanel.setLayout(new GridLayout(2, 1));
 		subjectPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		subjectLabel = new JLabel("Name des Fachs: ");
 		subjectField = new JTextField(subject.getName());
 		subjectPanel.add(subjectLabel);
 		subjectPanel.add(subjectField);
 		add(subjectPanel, BorderLayout.CENTER);
-		
-		//Panel für die Zeiteingabe
+
+		// Panel für die Zeiteingabe
 		timePanel = new JPanel();
-		timePanel.setLayout(new GridLayout(2,1));
+		timePanel.setLayout(new GridLayout(2, 1));
 		timePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		timeLabel = new JLabel("Dauer der Pruefung (in Minuten)");
 		timePanel.add(timeLabel);
@@ -91,7 +94,7 @@ public class ChangeMaskSubject extends JFrame implements ActionListener{
 		}
 
 		if (e.getSource() == setButton) {
-			
+
 			time = (int) subjectTime.getValue();
 			name = subjectField.getText();
 			if (name.equals(""))
@@ -103,10 +106,10 @@ public class ChangeMaskSubject extends JFrame implements ActionListener{
 					subjectList.delete(subjectListPosition);
 					subject = subjectList.create(name);
 					subject.setExamLength(time);
-					JOptionPane.showOptionDialog(null,
-							"Das Fach " + name +" wurde erfolgreich erstellt.",
-							"Erfolgreiche Eingabe!",
-							JOptionPane.CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+					JOptionPane.showOptionDialog(null, "Das Fach " + name
+							+ " wurde erfolgreich erstellt.",
+							"Erfolgreiche Eingabe!", JOptionPane.CANCEL_OPTION,
+							JOptionPane.PLAIN_MESSAGE, null, null, null);
 					setVisible(false);
 					dispose();
 				} catch (IllegalArgumentException E) {

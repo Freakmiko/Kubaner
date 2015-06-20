@@ -40,7 +40,7 @@ public class InputMaskSubject extends JFrame implements ActionListener {
 
 		// Panel fÃ¼r die Facheingabe
 		subjectPanel = new JPanel();
-		subjectPanel.setLayout(new GridLayout(2,1));
+		subjectPanel.setLayout(new GridLayout(2, 1));
 		subjectPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		subjectLabel = new JLabel("Name des Fachs (Pflichtfeld)");
 		subjectField = new JTextField("Fachname");
@@ -48,9 +48,9 @@ public class InputMaskSubject extends JFrame implements ActionListener {
 		subjectPanel.add(subjectField);
 		add(subjectPanel);
 
-		//Panel für die Zeiteingabe
+		// Panel für die Zeiteingabe
 		timePanel = new JPanel();
-		timePanel.setLayout(new GridLayout(2,1));
+		timePanel.setLayout(new GridLayout(2, 1));
 		timePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		timeLabel = new JLabel("Dauer der Pruefung (in Minuten)");
 		timePanel.add(timeLabel);
@@ -58,7 +58,7 @@ public class InputMaskSubject extends JFrame implements ActionListener {
 		subjectTime = new JSpinner(subjectTimeModel);
 		timePanel.add(subjectTime);
 		add(timePanel);
-		
+
 		// Panel fÃ¼r die KnÃ¶pfe
 		south = new JPanel();
 		setButton = new JButton("Anlegen");
@@ -70,7 +70,7 @@ public class InputMaskSubject extends JFrame implements ActionListener {
 		getContentPane().add(south, BorderLayout.SOUTH);
 		pack();
 		setLocationRelativeTo(null);
-		
+
 	}
 
 	@Override
@@ -91,10 +91,10 @@ public class InputMaskSubject extends JFrame implements ActionListener {
 				try {
 					subject = subjectList.create(name);
 					subject.setExamLength(time);
-					JOptionPane.showOptionDialog(null,
-							"Das Fach " + name + " wurde erfolgreich erstellt.",
-							"Erfolgreiche Eingabe!",
-							JOptionPane.CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+					JOptionPane.showOptionDialog(null, "Das Fach " + name
+							+ " wurde erfolgreich erstellt.",
+							"Erfolgreiche Eingabe!", JOptionPane.CANCEL_OPTION,
+							JOptionPane.PLAIN_MESSAGE, null, null, null);
 					setVisible(false);
 					dispose();
 				} catch (IllegalArgumentException E) {
