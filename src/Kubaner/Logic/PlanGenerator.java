@@ -21,7 +21,6 @@ public class PlanGenerator {
 		studentList = new StudentList();
 		subjectList = new SubjectList();
 		profList = new ProfList();
-//TODO:abc
 	}
 	
 	public StudentList getStudentList() {
@@ -222,21 +221,23 @@ public class PlanGenerator {
 		}
 		mergeTimeLines(plan);
 		
-//		System.out.println("Ergebnis:");
-//		for(int i = 0; i < plan.getRoomCount(); i++){
-//			TimeLine a = plan.getTimeLine(i);
-//			System.out.println("TimeLine " + a.getRoom());
-//			for(int j = 0; j< a.size(); j++){
-//				if(a.getTimeLineMember(j).getClass() == Exam.class){
-//					System.out.println("   - " + ((Exam)a.getTimeLineMember(j)).getStudent().getName());
-//					System.out.println("   - " + ((Exam)a.getTimeLineMember(j)).getSubjectArray()[0].getName());
-//					System.out.println("   - " + ((Exam)a.getTimeLineMember(j)).getSubjectArray()[1]);
-//				}
-//				else{
-//					System.out.println("Break");
-//				}
-//			}
-//		}
+		while(checkPropeties(plan));
+		
+		System.out.println("Ergebnis:");
+		for(int i = 0; i < plan.getRoomCount(); i++){
+			TimeLine a = plan.getTimeLine(i);
+			System.out.println("TimeLine " + a.getRoom());
+			for(int j = 0; j< a.size(); j++){
+				if(a.getTimeLineMember(j).getClass() == Exam.class){
+					System.out.println("   - " + ((Exam)a.getTimeLineMember(j)).getStudent().getName());
+					System.out.println("   - " + ((Exam)a.getTimeLineMember(j)).getSubjectArray()[0].getName());
+					System.out.println("   - " + ((Exam)a.getTimeLineMember(j)).getSubjectArray()[1]);
+				}
+				else{
+					System.out.println("Break");
+				}
+			}
+		}
 		return plan;
 	}
 	
@@ -370,6 +371,36 @@ public class PlanGenerator {
 				}	
 			}
 		}
+	}
+	
+	private boolean checkPropeties(Plan plan){
+		boolean change = false;
+		for(int i = 0; i < plan.getRoomCount(); i++){
+			TimeLine line = plan.getTimeLine(i);
+			for(int indexOfExam = 0; indexOfExam < line.size(); indexOfExam++){
+				if(line.getTimeLineMember(indexOfExam).getClass() == Exam.class){			
+					Exam currentExam = (Exam)line.getTimeLineMember(indexOfExam);
+					for(int j = i+1; j < plan.getRoomCount(); j++){
+						TimeLineMember secondTimeLineMember = plan.getTimeLine(j).getTimeLineMember(indexOfExam);
+						if(secondTimeLineMember.getClass() == Exam.class){
+							Exam secondExam = (Exam)secondTimeLineMember;
+							if(secondExam.getStudent() == currentExam.getStudent()){
+								plan.getTimeLine(j).insert(indexOfExam, new Break(60));
+								change = true;
+							}
+							else if(secondExam.getProfArray()[0] == currentExam.getProfArray()[0]
+									|| secondExam.getProfArray()[1] == currentExam.getProfArray()[1]
+											|| secondExam.getProfArray()[0] == currentExam.getProfArray()[1]
+													|| secondExam.getProfArray()[1] == currentExam.getProfArray()[0]){
+								plan.getTimeLine(j).insert(indexOfExam, new Break(60));
+								change = true;
+							}
+						}
+					}
+				}
+			}
+		}
+		return change;
 	}
 	
 	
