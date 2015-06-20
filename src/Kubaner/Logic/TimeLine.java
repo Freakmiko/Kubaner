@@ -23,7 +23,7 @@ public class TimeLine implements Iterable<TimeLineMember> {
 		if(member==null)
 			throw new IllegalArgumentException();
 		if(index > this.size())
-			throw new IllegalArgumentException("index to high");
+			throw new IndexOutOfBoundsException("index to high");
 		memberList.add(index, member);
 	}
 	
