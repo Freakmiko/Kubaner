@@ -27,10 +27,12 @@ public class InputSartTimeAndCreatPlan  extends JFrame implements ActionListener
 	private JButton confirmButton;
 	private JButton cancelButton;
 	private PlanGenerator planGen;
+	private ClientGUI cGui;
 	
-	InputSartTimeAndCreatPlan(PlanGenerator planGen){
+	InputSartTimeAndCreatPlan(PlanGenerator planGen, ClientGUI cGui){
 		
 		this.planGen = planGen;
+		this.cGui = cGui;
 		
 		setTitle("Eingabe der Startzeit");
 		
@@ -78,6 +80,11 @@ public class InputSartTimeAndCreatPlan  extends JFrame implements ActionListener
 			if(tempHour <= 23){
 				if(tempHour <= 59){
 					Plan tempPlan = planGen.generatePlan(new Time(tempHour, tempMin));
+					cGui.setPlan(tempPlan);
+					cGui.showPlan();
+					
+					this.setVisible(false);
+					dispose();
 				}
 			}
 			

@@ -1,5 +1,6 @@
 package Kubaner.GUI;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -17,6 +18,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.TableModel;
 
 import Kubaner.Logic.Plan;
 import Kubaner.Logic.PlanGenerator;
@@ -28,6 +32,8 @@ public class ClientGUI extends JFrame implements ActionListener{
 	private JMenuItem createStudent, createProf, createSubject, studentSummary, profSummary, subjSummary, studentEdit, profEdit, subjEdit;
 	private JMenuItem createPlan, editPlan, addPause, createPdf;
 	
+	private JTable table;
+	
 	private Plan plan = null;
 	private PlanGenerator planGen = new PlanGenerator();
 	
@@ -36,7 +42,6 @@ public class ClientGUI extends JFrame implements ActionListener{
 		if(e.getSource() == open){
 			
 			JFileChooser fileChooser = new JFileChooser();
-			ObjectInputStream stream = null;
 			
 			int result = fileChooser.showOpenDialog(null);
 			
@@ -126,11 +131,21 @@ public class ClientGUI extends JFrame implements ActionListener{
 			
 		}else if(e.getSource() == studentEdit){
 			
-			new SelectStudent(plan, planGen).setVisible(true);
+			try {
+				new SelectStudent(plan, planGen).setVisible(true);
+			} catch (NoSubjectException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			
 		}else if(e.getSource() == profEdit){
 			
-			new SelectProfessor(plan, planGen).setVisible(true);
+			try {
+				new SelectProfessor(plan, planGen).setVisible(true);
+			} catch (NoSubjectException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			
 		}else if(e.getSource() == subjEdit){
 			
@@ -142,7 +157,7 @@ public class ClientGUI extends JFrame implements ActionListener{
 				if(planGen.getStudentList().size() != 0){
 					
 					InputSartTimeAndCreatPlan tempWindow;
-					tempWindow = new InputSartTimeAndCreatPlan(planGen);
+					tempWindow = new InputSartTimeAndCreatPlan(planGen, this);
 					tempWindow.setVisible(true);					
 					
 				}else{
@@ -248,6 +263,13 @@ public class ClientGUI extends JFrame implements ActionListener{
 		
 		//---------------------------Fenster---------------------------
 		
+		getContentPane().setLayout( new BorderLayout() );
+		
+		TableModel dataModel = new DataModel(25,25);
+		table = new JTable(dataModel);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+		add( new JScrollPane( table ), BorderLayout.CENTER );
 		
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 		
@@ -257,6 +279,12 @@ public class ClientGUI extends JFrame implements ActionListener{
 	
 	public void setPlan(Plan plan) {
 		this.plan = plan;
+	}
+	
+	public void showPlan(){
+		TableModel dataModel = plan.createAbstractTableModel();
+		table.setModel(dataModel);
+		table.repaint();
 	}
 	
 	public static void main(String[] args) {

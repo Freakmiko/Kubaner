@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
+import javax.swing.table.TableModel;
 
 import Kubaner.GUI.*;
 import Kubaner.Logic.*;
@@ -11,81 +12,88 @@ import Kubaner.Logic.*;
 
 public class SelectStudent extends JFrame implements ActionListener{
 
-		private int size, selection;
-		private JPanel inputPanel, confirmPanel;
-		private JLabel inputLabel;
-		private SpinnerModel studentModel;
-		private JSpinner studentSpinner;
-		private JButton confirmButton, cancelButton;
-		private PlanGenerator planGenerator;
-		private Plan plan;
+	private JTable table;
+	private JPanel actionPanel, selectPanel, tablePanel;
+	private int size;
+	private JButton confirmButton, cancelButton;
+	private JLabel subjectLabel;
+	private SpinnerNumberModel subjectModel;
+	private JSpinner subjectSpinner;
+	private int selection;
+	private PlanGenerator planGenerator;
+	private Plan plan;
 
-		SelectStudent(Plan plan, PlanGenerator planGenerator) {
-
-			this.planGenerator = planGenerator;
-			this.plan = plan;
-			size = planGenerator.getStudentList().size();
-
-			if (size == 0) {
-				JOptionPane
-						.showMessageDialog(
-								null,
-								"Es ist kein Student vorhanden, der bearbeitet werden kann!",
-								"Kein Student vohanden",
-								JOptionPane.CANCEL_OPTION);
-			}
-
-			setTitle("Studentenauswahl");
-			setLayout(new GridLayout(2, 1));
-			inputPanel = new JPanel();
-			inputPanel.setLayout(new GridLayout(2, 1));
-			inputLabel
-					.setText("Geben Sie die Nummer des Studenten, die Sie der Studentenübersicht entnehmen können.");
-			studentModel = new SpinnerNumberModel(0, 0, size - 1, 1);
-			studentSpinner = new JSpinner(studentModel);
-			inputPanel.add(inputLabel);
-			inputPanel.add(studentSpinner);
-			add(inputPanel);
-
-			confirmPanel = new JPanel();
-			confirmPanel.setLayout(new GridLayout(1, 2));
-			confirmButton = new JButton("OK");
-			confirmButton.addActionListener(this);
-			cancelButton = new JButton("Abbrechen");
-			cancelButton.addActionListener(this);
-			confirmPanel.add(confirmButton);
-			confirmPanel.add(cancelButton);
-			add(confirmPanel);
-
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-
-			if (e.getSource() == cancelButton) {
-				setVisible(false);
-				dispose();
-			}
-
-			if (e.getSource() == confirmButton) {
-				if (size == 0) {
-					JOptionPane
-							.showMessageDialog(
-									null,
-									"Es ist kein Student vorhanden, der bearbeitet werden kann!",
-									"Kein Student vohanden",
-									JOptionPane.CANCEL_OPTION);
-				} else {
-					selection = (int) studentSpinner.getValue();
-					try {
-						new ChangeMaskStudent(plan, planGenerator, selection);
-					} catch (NoSubjectException e1) {
-						new NoSubjectException();
-					}
-					setVisible(false);
-					dispose();
-				}
-			}
-
-		}
+	public SelectStudent(Plan plan ,PlanGenerator planGenerator) throws NoSubjectException {
+		
+		this.planGenerator = planGenerator;
+		this.plan = plan;
+		size = planGenerator.getStudentList().size()-1;
+		setLayout(new GridLayout(3,1));
+		setTitle("Studenten Uebersicht");
+		setLocationRelativeTo(null);
+		
+		//Fächerübersicht
+		tablePanel = new JPanel();
+		tablePanel.setLayout(new GridLayout(1,1));
+		TableModel dataModel = new DataModel(planGenerator.getStudentList().size(),3);
+		table = new JTable(dataModel);
+		
+	for (int row = 0; row < planGenerator.getStudentList().size(); row++) {
+		for ( int col = 2; col < 3; col++ )
+			dataModel.setValueAt("Fächer: " + planGenerator.getStudentList().get(row).getSubjectArray().toString(), row, col);
+		for (int col = 1; col < 2; col++)
+			dataModel.setValueAt("Name: " + planGenerator.getStudentList().get(row).getName(), row, col);
+		for (int col = 0; col < 1; col++)
+			dataModel.setValueAt("Nummer: " + row, row, col);
 	}
+		tablePanel.add(table);
+		add(tablePanel);
+		
+		//Wahl des faches
+		selectPanel = new JPanel();
+		selectPanel.setLayout(new GridLayout(2, 1));
+		selectPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		subjectLabel = new JLabel();
+		subjectLabel
+				.setText("Geben Sie die Nummer des Studenten, den Sie der Studentenueberisicht entnehmen können.");
+		subjectModel = new SpinnerNumberModel(0, 0, size, 1);
+		subjectSpinner = new JSpinner(subjectModel);
+		selectPanel.add(subjectLabel);
+		selectPanel.add(subjectSpinner);
+		add(selectPanel);
+		
+		//Actionsknöpfe
+		actionPanel = new JPanel();
+		actionPanel.setLayout(new GridLayout(1,2));
+		actionPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		confirmButton = new JButton("Bearbeiten");
+		cancelButton = new JButton("Abbrechen");
+		cancelButton.addActionListener(this);
+		confirmButton.addActionListener(this);
+		actionPanel.add(confirmButton);
+		actionPanel.add(cancelButton);
+		add(actionPanel);
+		pack();
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == cancelButton) {
+			setVisible(false);
+			dispose();
+		}
+		
+		if (e.getSource() == confirmButton) {
+			selection = (int) subjectSpinner.getValue();
+			setVisible(false);
+			try {
+				new ChangeMaskStudent(plan, planGenerator, selection).setVisible(true);
+			} catch (NoSubjectException e1) {
+				
+			}
+			dispose();
+		}
+		
+	} 
+
+}
