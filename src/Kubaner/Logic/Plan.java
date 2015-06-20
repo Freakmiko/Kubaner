@@ -195,7 +195,7 @@ public class Plan {
 						//so don't store it as String yet
 						value = actualTime;
 					} else
-						value = null;
+						value = "";
 					
 				//column > 0
 				} else {
@@ -219,7 +219,7 @@ public class Plan {
 						if(exam != null) {
 							value = "" + exam.getStudent().getName() + "   " + findExamRoom(exam);
 						} else {
-							value = null;
+							value = "";
 						}
 					}
 						
