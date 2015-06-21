@@ -22,7 +22,7 @@ public class overviewMaskProfessor extends JFrame implements ActionListener {
 	public overviewMaskProfessor(PlanGenerator planGenerator) {
 		list = planGenerator.getProfList();
 		getContentPane().setLayout(new BorderLayout());
-		setTitle("Professoren Uebersicht");
+		setTitle("Dozenten Übersicht");
 		setSize(400, 400);
 		setLocationRelativeTo(null);
 

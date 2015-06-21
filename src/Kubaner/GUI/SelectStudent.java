@@ -35,11 +35,11 @@ public class SelectStudent extends JFrame implements ActionListener {
 		}
 
 		setLayout(new GridLayout(3, 1));
-		setTitle("Studenten Uebersicht");
+		setTitle("Studenten Ãœbersicht");
 		setLocationRelativeTo(null);
 
 		StudentList list = planGenerator.getStudentList();
-		// Fächerübersicht
+		// Fï¿½cherï¿½bersicht
 		tablePanel = new JPanel();
 		tablePanel.setLayout(new GridLayout(1, 1));
 		TableModel dataModel = new DataModel(planGenerator.getStudentList()
@@ -68,14 +68,14 @@ public class SelectStudent extends JFrame implements ActionListener {
 		selectPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		subjectLabel = new JLabel();
 		subjectLabel
-				.setText("Geben Sie die Nummer des Studenten, den Sie der Studentenueberisicht entnehmen können.");
+				.setText("Geben Sie die Nummer des Studenten, den Sie der StudentenÃ¼bersicht entnehmen kÃ¶nnen.");
 		subjectModel = new SpinnerNumberModel(0, 0, size-1, 1);
 		subjectSpinner = new JSpinner(subjectModel);
 		selectPanel.add(subjectLabel);
 		selectPanel.add(subjectSpinner);
 		add(selectPanel);
 
-		// Actionsknöpfe
+		// Actionsknï¿½pfe
 		actionPanel = new JPanel();
 		actionPanel.setLayout(new GridLayout(1, 2));
 		actionPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));

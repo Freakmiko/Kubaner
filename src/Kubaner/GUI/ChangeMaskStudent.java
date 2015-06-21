@@ -69,7 +69,7 @@ public class ChangeMaskStudent extends JFrame implements ActionListener {
 		itemsPanel = new JPanel();
 		itemsPanel.setLayout(new GridLayout(3, 1));
 
-		// Erstellt ein Panel für die Namenseingabe
+		// Erstellt ein Panel fï¿½r die Namenseingabe
 		namePanel = new JPanel();
 		namePanel.setLayout(new GridLayout(2, 1));
 		namePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -78,13 +78,13 @@ public class ChangeMaskStudent extends JFrame implements ActionListener {
 		namePanel.add(nameLabel);
 		namePanel.add(nameField);
 
-		// Erstellt ein Panel für die Fachauswahl.
+		// Erstellt ein Panel fï¿½r die Fachauswahl.
 		subjectPanel = new JPanel();
 		subjectPanel.setLayout(new GridLayout(2, 1));
 		subjectPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		subjectLabel = new JLabel("Fach des Student (Pflichtfeld): ");
 
-		// Erstellt ein panel für die RadioButtons der Fächer.
+		// Erstellt ein panel fï¿½r die RadioButtons der Fï¿½cher.
 		selectionSubjectPanel = new JPanel();
 		selectionSubjectPanel
 				.setLayout(new GridLayout((subjectListSize) / 2, 2));
@@ -105,14 +105,14 @@ public class ChangeMaskStudent extends JFrame implements ActionListener {
 		subjectPanel.add(subjectLabel);
 		subjectPanel.add(selectionSubjectPanel);
 
-		// Erstellt ein Panel für die Wunschzeit
+		// Erstellt ein Panel fï¿½r die Wunschzeit
 		timePanel = new JPanel();
 		timePanel.setLayout(new GridLayout(4, 1));
 		timePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		timeStartLabel = new JLabel("Wunschstartzeit des Student (optional): ");
 		timePanel.add(timeStartLabel);
 
-		// Erstellt ein Panel für die Startzeit.
+		// Erstellt ein Panel fï¿½r die Startzeit.
 		timeStartPanel = new JPanel();
 		timeStartPanel.setLayout(new GridLayout(1, 2));
 		startTimeHoursModel = new SpinnerNumberModel(startHour, 0, 23, 1);
@@ -125,7 +125,7 @@ public class ChangeMaskStudent extends JFrame implements ActionListener {
 		timeStartPanel.add(startTimeMinutes);
 		timePanel.add(timeStartPanel);
 
-		// Erstellt ein Panel für die Endzeit.
+		// Erstellt ein Panel fï¿½r die Endzeit.
 		timeEndLabel = new JLabel("Wunschendzeit des Student (optional): ");
 		timePanel.add(timeEndLabel);
 		timeEndPanel = new JPanel();
@@ -140,14 +140,14 @@ public class ChangeMaskStudent extends JFrame implements ActionListener {
 		timeEndPanel.add(endTimeMinutes);
 		timePanel.add(timeEndPanel);
 
-		// Erstellt ein Pnale zum bestätigen und zum abbrechen der Eingabe
+		// Erstellt ein Pnale zum bestï¿½tigen und zum abbrechen der Eingabe
 		controlPanel = new JPanel();
 		confirmButton = new JButton("Anlegen");
 		cancelButton = new JButton("Abbrechen");
 		controlPanel.add(confirmButton);
 		controlPanel.add(cancelButton);
 
-		// Fügt ActionListener für die beiden knöpfe hinzu.
+		// Fï¿½gt ActionListener fï¿½r die beiden knï¿½pfe hinzu.
 		confirmButton.addActionListener(this);
 		cancelButton.addActionListener(this);
 
@@ -179,7 +179,7 @@ public class ChangeMaskStudent extends JFrame implements ActionListener {
 				endHour = (int) endTimeHours.getValue();
 				endMinute = (int) endTimeMinutes.getValue();
 
-				// Zählt die ausgewähleten Fächer.
+				// Zï¿½hlt die ausgewï¿½hleten Fï¿½cher.
 				int counterSubjects = 0;
 				for (int index = 0; index != subjectListSize; index++) {
 					if (subjectListButtons[index].isSelected())
@@ -188,11 +188,11 @@ public class ChangeMaskStudent extends JFrame implements ActionListener {
 
 				if (counterSubjects == 0) {
 					JOptionPane.showMessageDialog(null,
-							"Sie haben kein Fach ausgewaehlt!", "Kein Fach",
+							"Sie haben kein Fach ausgewÃ¤hlt!", "Kein Fach",
 							JOptionPane.CANCEL_OPTION);
 				} else {
 
-					// Fügt die unterichtenden Fächer in eine FächerListe ein.
+					// Fï¿½gt die unterichtenden Fï¿½cher in eine Fï¿½cherListe ein.
 					teachingSubject = new Subject[counterSubjects];
 					int counter = 0;
 

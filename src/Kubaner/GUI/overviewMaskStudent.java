@@ -23,7 +23,7 @@ public class overviewMaskStudent extends JFrame implements ActionListener {
 	public overviewMaskStudent(PlanGenerator planGenerator) {
 		list = planGenerator.getStudentList();
 		getContentPane().setLayout(new BorderLayout());
-		setTitle("Studenten Uebersicht");
+		setTitle("Studenten Übersicht");
 		setSize(400, 400);
 		setLocationRelativeTo(null);
 

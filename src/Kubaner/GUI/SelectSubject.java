@@ -31,10 +31,10 @@ public class SelectSubject extends JFrame implements ActionListener {
 			throw new NoElementException();
 		}
 		setLayout(new GridLayout(3, 1));
-		setTitle("Faecher Uebersicht");
+		setTitle("Faecher Ãœbersicht");
 		setLocationRelativeTo(null);
 
-		// Fächerübersicht
+		// Fï¿½cherï¿½bersicht
 		tablePanel = new JPanel();
 		tablePanel.setLayout(new GridLayout(1, 1));
 		TableModel dataModel = new DataModel(planGenerator.getSubjectList()
@@ -43,7 +43,7 @@ public class SelectSubject extends JFrame implements ActionListener {
 
 		for (int row = 0; row < planGenerator.getSubjectList().size(); row++) {
 			for (int col = 0; col < 1; col++) {
-				dataModel.setValueAt("Prüfungsdauer: "
+				dataModel.setValueAt("PrÃ¼fungsdauer: "
 						+ planGenerator.getSubjectList().get(row)
 								.getExamLength() + "min", row, col + 2);
 				dataModel.setValueAt("Fach: "
@@ -62,14 +62,14 @@ public class SelectSubject extends JFrame implements ActionListener {
 		selectPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		subjectLabel = new JLabel();
 		subjectLabel
-				.setText("Geben Sie die Nummer des Faches, die Sie der Faecherueberisicht entnehmen können.");
+				.setText("Geben Sie die Nummer des Faches, die Sie der FaecherÃ¼bersicht entnehmen kÃ¶nnen.");
 		subjectModel = new SpinnerNumberModel(0, 0, size-1, 1);
 		subjectSpinner = new JSpinner(subjectModel);
 		selectPanel.add(subjectLabel);
 		selectPanel.add(subjectSpinner);
 		add(selectPanel);
 
-		// Actionsknöpfe
+		// Actionsknï¿½pfe
 		actionPanel = new JPanel();
 		actionPanel.setLayout(new GridLayout(1, 2));
 		actionPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));

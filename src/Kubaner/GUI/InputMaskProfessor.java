@@ -38,7 +38,7 @@ public class InputMaskProfessor extends JFrame implements ActionListener {
 		subjectListSize = subList.size();
 		subjectListButtons = new JRadioButton[subjectListSize];
 
-		setTitle("Professor-Eingabemaske");
+		setTitle("Dozenten-Eingabemaske");
 		setLayout(new BorderLayout());
 
 		itemsPanel = new JPanel();
@@ -134,7 +134,7 @@ public class InputMaskProfessor extends JFrame implements ActionListener {
 		} else if (e.getSource() == confirmButton) {
 			name = nameField.getText();
 
-			// Easteregg für Herr Knauber :D
+			// Easteregg fï¿½r Herr Knauber :D
 			if (name.contains("Knauber")) {
 				name = "Prof. Dr. Kubaner";
 			}
@@ -159,7 +159,7 @@ public class InputMaskProfessor extends JFrame implements ActionListener {
 
 			if (counterSubjects == 0) {
 				JOptionPane.showMessageDialog(null,
-						"Sie haben kein Fach ausgewählt!", "Kein Fach",
+						"Sie haben kein Fach ausgewÃ¤hlt!", "Kein Fach",
 						JOptionPane.CANCEL_OPTION);
 			} else {
 
@@ -181,7 +181,7 @@ public class InputMaskProfessor extends JFrame implements ActionListener {
 
 				try {
 					currentProfList.create(name, teachingSubject, periode);
-					JOptionPane.showOptionDialog(null, "Der Professor " + name
+					JOptionPane.showOptionDialog(null, "Der Dozent " + name
 							+ " wurde erfolgreich erstellt.",
 							"Erfolgreiche Eingabe", JOptionPane.CANCEL_OPTION,
 							JOptionPane.PLAIN_MESSAGE, null, null, null);

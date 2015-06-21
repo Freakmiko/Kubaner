@@ -21,7 +21,7 @@ public class overviewMaskSubject extends JFrame implements ActionListener {
 
 	public overviewMaskSubject(PlanGenerator planGenerator) {
 		getContentPane().setLayout(new BorderLayout());
-		setTitle("Faecher Uebersicht");
+		setTitle("Fächer Übersicht");
 		setSize(200, 400);
 		setLocationRelativeTo(null);
 
@@ -34,7 +34,7 @@ public class overviewMaskSubject extends JFrame implements ActionListener {
 
 		for (int row = 0; row < planGenerator.getSubjectList().size(); row++) {
 			for (int col = 0; col < 1; col++) {
-				dataModel.setValueAt("Pr�fungsdauer: "
+				dataModel.setValueAt("Prüfungsdauer: "
 						+ planGenerator.getSubjectList().get(row)
 								.getExamLength() + "min", row, col + 2);
 				dataModel.setValueAt("Fach: "
