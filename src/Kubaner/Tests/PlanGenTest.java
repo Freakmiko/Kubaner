@@ -91,7 +91,23 @@ public class PlanGenTest {
 	
 	@Test
 	public void ProfExamTest() throws Exception {
-        assertEquals(15,plan.getTimeLine(0).getTimeLineMember(0).); // <<< wie komme ich hier auf den Prof des Examens?
+		String profName = "";
+		Exam exam = (Exam) plan.getTimeLine(0).getTimeLineMember(0);
+		String tmp = (exam.getProfArray()[0].getName());
+		for(int i = 0; i < arrayAll.length; i++){
+			if(exam.getSubjectArray()[0].getName().equals(arrayAll[i].getName())){
+				for(int j = 0; j < profList.toArray().length; j++){
+					for(int k = 0; k < profList.toArray()[j].getSubjectArray().length; k++){
+						if(arrayAll[i].getName().equals(profList.toArray()[j].getSubjectArray()[k].getName())){
+							profName = profList.toArray()[j].getName();
+						}
+					}
+				}
+				
+			}
+		}
+		exam.getSubjectArray()[0].getName();
+        assertEquals(profName,tmp);
 	}
 	
 
