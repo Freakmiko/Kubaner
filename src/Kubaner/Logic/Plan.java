@@ -123,7 +123,6 @@ public class Plan {
 	 * Creates a MasterModel representing the master plan, using the values which are actually stored in this class.
 	 * @return the created MasterModel.
 	 */
-	//using deprecated methods
 	public MasterModel createAbstractTableModel() {
 		int rows = 0;
 		int cols;
@@ -179,7 +178,6 @@ public class Plan {
 		//+1 because first column stores start times
 		cols = subjectList.size() + 1;
 		
-		
 		master = new MasterModel(rows, cols);
 		actualTime = new Time(startTime.getHour(), startTime.getMinute());
 		
@@ -207,7 +205,7 @@ public class Plan {
 							
 							for(int i4 = 0; i4 < subjects.length; i4++) {
 								if(subjects[i4].getName() == subjectList.get(i - 1).getName())
-									value += "\n" + profList.get(i3).getName();
+									value += " - " + profList.get(i3).getName();
 							}
 						}	
 					
@@ -234,7 +232,10 @@ public class Plan {
 			value = master.getValueAt(i, 0);
 			if(value != null && value instanceof Time) {
 				Time time = (Time)value;
-				value = "" + time.getHour() + "." + time.getMinute();
+				if(time.getMinute() < 10)
+					value = "" + time.getHour() + ":0" + time.getMinute();
+				else
+					value = "" + time.getHour() + ":" + time.getMinute();
 				master.setValueAt(value, i, 0);
 			}
 		}
@@ -247,7 +248,6 @@ public class Plan {
 	 * Creates and returns an ArrayList<Time[]> which stores array with startTimes of every TimeLine object stored in timeline[].
 	 * @return Returns an ArrayList<Time[]> which stores array with startTimes of every TimeLine object stored in timeline[].
 	 */
-	//using deprecated methods
 	private ArrayList<Time[]> createTimeList() {
 		ArrayList<Time[]> list = new ArrayList<Time[]>();
 		Time[] timeArray;
@@ -307,7 +307,6 @@ public class Plan {
 	 * Calculates the number of rows the master model should have.
 	 * @return Returns the number of rows the master model should have.
 	 */
-	//using deprecated methods
 	private int calculateRows(ArrayList<Time[]> startTimeList) {
 		int rows = 1;
 		
