@@ -67,7 +67,7 @@ public class PlanGenTest {
 	}
     
 	@Test
-	public void test() throws Exception {
+	public void RoomCountTest() throws Exception {
 		TimePeriod[] time1 = new TimePeriod[] {new TimePeriod(new Time(0,0), new Time(10,0))};
 		TimePeriod[] time2 = time1;
         profList.create("Kubaner", arraySubjectsKubaner,time1);
@@ -81,6 +81,39 @@ public class PlanGenTest {
         Plan plan = alpha.generatePlan(new Time(10,0));
         assertEquals(1,plan.getRoomCount());
 	}
+	
+	@Test
+	public void ExamCountTest() throws Exception {
+		TimePeriod[] time1 = new TimePeriod[] {new TimePeriod(new Time(0,0), new Time(10,0))};
+		TimePeriod[] time2 = time1;
+        profList.create("Kubaner", arraySubjectsKubaner,time1);
+        profList.create("Todorov", arraySubjectsTodorov,time1);
+        profList.create("Schramm", arraySubjectsSchramm,time1);
+        stuList.create("Student 1", arraySubjectsStu1,time2);
+        stuList.create("Student 2", arraySubjectsStu2,time2);
+        stuList.create("Student 3", arraySubjectsStu3,time2);
+        stuList.create("Student 4", arraySubjectsStu4,time2);
+        stuList.create("Student 5", arraySubjectsStu5,time2);
+        Plan plan = alpha.generatePlan(new Time(10,0));
+        assertEquals(15,plan.getTimeLine(0).size());
+	}
+	
+	@Test
+	public void ProfExamTest() throws Exception {
+		TimePeriod[] time1 = new TimePeriod[] {new TimePeriod(new Time(0,0), new Time(10,0))};
+		TimePeriod[] time2 = time1;
+        profList.create("Kubaner", arraySubjectsKubaner,time1);
+        profList.create("Todorov", arraySubjectsTodorov,time1);
+        profList.create("Schramm", arraySubjectsSchramm,time1);
+        stuList.create("Student 1", arraySubjectsStu1,time2);
+        stuList.create("Student 2", arraySubjectsStu2,time2);
+        stuList.create("Student 3", arraySubjectsStu3,time2);
+        stuList.create("Student 4", arraySubjectsStu4,time2);
+        stuList.create("Student 5", arraySubjectsStu5,time2);
+        Plan plan = alpha.generatePlan(new Time(10,0));
+        assertEquals(15,plan.getTimeLine(0).getTimeLineMember(0).); // <<< wie komme ich hier auf den Prof des Examens?
+	}
+	
 
 }
 
