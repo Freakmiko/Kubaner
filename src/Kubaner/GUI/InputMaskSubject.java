@@ -89,20 +89,44 @@ public class InputMaskSubject extends JFrame implements ActionListener {
 						JOptionPane.CANCEL_OPTION);
 			else {
 				try {
-					subject = subjectList.create(name);
-					subject.setExamLength(time);
-					JOptionPane.showOptionDialog(null, "Das Fach " + name
-							+ " wurde erfolgreich erstellt.",
-							"Erfolgreiche Eingabe!", JOptionPane.CANCEL_OPTION,
-							JOptionPane.PLAIN_MESSAGE, null, null, null);
-					setVisible(false);
-					dispose();
+					if (subjectList.exists(name)) {
+						int answer = JOptionPane
+								.showOptionDialog(
+										null,
+										"Der Name des Faches existiert bereits. Möchten Sie das Fach trotzdem erstellen?",
+										"Doppelter Name",
+										JOptionPane.YES_NO_OPTION,
+										JOptionPane.PLAIN_MESSAGE, null, null,
+										null);
+						if (answer == 0) {
+							subject = subjectList.create(name);
+							subject.setExamLength(time);
+							JOptionPane
+									.showOptionDialog(null, "Das Fach " + name
+											+ " wurde erfolgreich erstellt.",
+											"Erfolgreiche Eingabe",
+											JOptionPane.CANCEL_OPTION,
+											JOptionPane.PLAIN_MESSAGE, null,
+											null, null);
+							setVisible(false);
+							dispose();
+						}
+					} else {
+						subject = subjectList.create(name);
+						subject.setExamLength(time);
+						JOptionPane.showOptionDialog(null, "Das Fach " + name
+								+ " wurde erfolgreich erstellt.",
+								"Erfolgreiche Eingabe!",
+								JOptionPane.CANCEL_OPTION,
+								JOptionPane.PLAIN_MESSAGE, null, null, null);
+						setVisible(false);
+						dispose();
+					}
 				} catch (IllegalArgumentException E) {
 					JOptionPane.showMessageDialog(null, "Fehlerhafte Eingabe!",
 							"Erstellungsfehler", JOptionPane.CANCEL_OPTION);
 				}
 			}
-
 		}
 	}
 }

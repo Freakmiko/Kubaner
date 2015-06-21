@@ -174,20 +174,51 @@ public class InputMaskStudent extends JFrame implements ActionListener {
 					periode[0] = new TimePeriod(start, end);
 
 					try {
-						currentStudentList.create(name, teachingSubject,
-								periode);
-						JOptionPane.showOptionDialog(null, "Der Student "
-								+ name + " wurde erfolgreich erstellt!",
-								"Erfolgreiche Eingabe",
-								JOptionPane.CANCEL_OPTION,
-								JOptionPane.PLAIN_MESSAGE, null, null, null);
-						setVisible(false);
-						dispose();
+						if (currentStudentList.exists(name)) {
+							int answer = JOptionPane
+									.showOptionDialog(
+											null,
+											"Der Name des Studenten existiert bereits. Möchten Sie den Studenten trotzdem erstellen?",
+											"Doppelter Name",
+											JOptionPane.YES_NO_OPTION,
+											JOptionPane.PLAIN_MESSAGE, null,
+											null, null);
+							if (answer == 0) {
+								currentStudentList.create(name,
+										teachingSubject, periode);
+								JOptionPane
+										.showOptionDialog(
+												null,
+												"Der Student "
+														+ name
+														+ " wurde erfolgreich erstellt.",
+												"Erfolgreiche Eingabe",
+												JOptionPane.CANCEL_OPTION,
+												JOptionPane.PLAIN_MESSAGE,
+												null, null, null);
+								setVisible(false);
+								dispose();
+							}
+						} else {
+							currentStudentList.create(name, teachingSubject,
+									periode);
+							JOptionPane
+									.showOptionDialog(null, "Der Student "
+											+ name
+											+ " wurde erfolgreich erstellt!",
+											"Erfolgreiche Eingabe",
+											JOptionPane.CANCEL_OPTION,
+											JOptionPane.PLAIN_MESSAGE, null,
+											null, null);
+							setVisible(false);
+							dispose();
+						}
 					} catch (IllegalArgumentException E) {
 						JOptionPane.showMessageDialog(null,
 								"Einer Ihrer Eingaben ist nicht korreckt!",
 								"Fehlerhafte Eingabe",
 								JOptionPane.CANCEL_OPTION);
+
 					}
 				}
 			}

@@ -62,7 +62,7 @@ public class ChangeMaskSubject extends JFrame implements ActionListener {
 		subjectPanel.add(subjectField);
 		add(subjectPanel, BorderLayout.CENTER);
 
-		// Panel für die Zeiteingabe
+		// Panel fï¿½r die Zeiteingabe
 		timePanel = new JPanel();
 		timePanel.setLayout(new GridLayout(2, 1));
 		timePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -103,15 +103,43 @@ public class ChangeMaskSubject extends JFrame implements ActionListener {
 						JOptionPane.CANCEL_OPTION);
 			else {
 				try {
-					subjectList.delete(subjectListPosition);
-					subject = subjectList.create(name);
-					subject.setExamLength(time);
-					JOptionPane.showOptionDialog(null, "Das Fach " + name
-							+ " wurde erfolgreich erstellt.",
-							"Erfolgreiche Eingabe!", JOptionPane.CANCEL_OPTION,
-							JOptionPane.PLAIN_MESSAGE, null, null, null);
-					setVisible(false);
-					dispose();
+					if (subjectList.exists(name)) {
+						int answer = JOptionPane
+								.showOptionDialog(
+										null,
+										"Der Name des Faches existiert bereits. MÃ¶chten Sie das Fach trotzdem erstellen?",
+										"Doppelter Name",
+										JOptionPane.YES_NO_OPTION,
+										JOptionPane.PLAIN_MESSAGE, null, null,
+										null);
+						if (answer == 0) {
+							subjectList.delete(subjectListPosition);
+							subject = subjectList.create(name);
+							subject.setExamLength(time);
+							JOptionPane
+									.showOptionDialog(null, "Das Fach " + name
+											+ " wurde erfolgreich erstellt.",
+											"Erfolgreiche Eingabe",
+											JOptionPane.CANCEL_OPTION,
+											JOptionPane.PLAIN_MESSAGE, null,
+											null, null);
+							setVisible(false);
+							dispose();
+						} else {
+							subjectList.delete(subjectListPosition);
+							subject = subjectList.create(name);
+							subject.setExamLength(time);
+							JOptionPane
+									.showOptionDialog(null, "Das Fach " + name
+											+ " wurde erfolgreich erstellt.",
+											"Erfolgreiche Eingabe!",
+											JOptionPane.CANCEL_OPTION,
+											JOptionPane.PLAIN_MESSAGE, null,
+											null, null);
+							setVisible(false);
+							dispose();
+						}
+					}
 				} catch (IllegalArgumentException E) {
 					JOptionPane.showMessageDialog(null, "Fehlerhafte Eingabe!",
 							"Erstellungsfehler", JOptionPane.CANCEL_OPTION);
