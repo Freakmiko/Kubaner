@@ -9,6 +9,7 @@ import org.junit.After;
 
 public class PlanGenTest {
 	PlanGenerator alpha = new PlanGenerator();
+	Plan plan;
 	ProfList profList;
 	SubjectList subList;
 	StudentList stuList;
@@ -21,10 +22,11 @@ public class PlanGenTest {
     Subject[] arraySubjectsStu3 = new Subject[4];
     Subject[] arraySubjectsStu4 = new Subject[1];
     Subject[] arraySubjectsStu5 = new Subject[5];
+    
 
     @Before
     public void setup() {
-		profList = alpha.getProfList();
+    	profList = alpha.getProfList();
 		subList = alpha.getSubjectList();
 		stuList = alpha.getStudentList();
         subList.create("ADS"); //0
@@ -55,12 +57,23 @@ public class PlanGenTest {
         arraySubjectsStu5[2] = arrayAll[2];
         arraySubjectsStu5[3] = arrayAll[3];
         arraySubjectsStu5[4] = arrayAll[4];
-        
+		TimePeriod[] time1 = new TimePeriod[] {new TimePeriod(new Time(0,0), new Time(10,0))};
+		TimePeriod[] time2 = time1;
+        profList.create("Kubaner", arraySubjectsKubaner,time1);
+        profList.create("Todorov", arraySubjectsTodorov,time1);
+        profList.create("Schramm", arraySubjectsSchramm,time1);
+        stuList.create("Student 1", arraySubjectsStu1,time2);
+        stuList.create("Student 2", arraySubjectsStu2,time2);
+        stuList.create("Student 3", arraySubjectsStu3,time2);
+        stuList.create("Student 4", arraySubjectsStu4,time2);
+        stuList.create("Student 5", arraySubjectsStu5,time2);
+        plan = alpha.generatePlan(new Time(10,0));
         
     }
     
     @After
 	public void reset() {
+    	plan = null;
     	profList = null;
    		subList = null;
 		stuList = null;
@@ -68,49 +81,16 @@ public class PlanGenTest {
     
 	@Test
 	public void RoomCountTest() throws Exception {
-		TimePeriod[] time1 = new TimePeriod[] {new TimePeriod(new Time(0,0), new Time(10,0))};
-		TimePeriod[] time2 = time1;
-        profList.create("Kubaner", arraySubjectsKubaner,time1);
-        profList.create("Todorov", arraySubjectsTodorov,time1);
-        profList.create("Schramm", arraySubjectsSchramm,time1);
-        stuList.create("Student 1", arraySubjectsStu1,time2);
-        stuList.create("Student 2", arraySubjectsStu2,time2);
-        stuList.create("Student 3", arraySubjectsStu3,time2);
-        stuList.create("Student 4", arraySubjectsStu4,time2);
-        stuList.create("Student 5", arraySubjectsStu5,time2);
-        Plan plan = alpha.generatePlan(new Time(10,0));
         assertEquals(1,plan.getRoomCount());
 	}
 	
 	@Test
 	public void ExamCountTest() throws Exception {
-		TimePeriod[] time1 = new TimePeriod[] {new TimePeriod(new Time(0,0), new Time(10,0))};
-		TimePeriod[] time2 = time1;
-        profList.create("Kubaner", arraySubjectsKubaner,time1);
-        profList.create("Todorov", arraySubjectsTodorov,time1);
-        profList.create("Schramm", arraySubjectsSchramm,time1);
-        stuList.create("Student 1", arraySubjectsStu1,time2);
-        stuList.create("Student 2", arraySubjectsStu2,time2);
-        stuList.create("Student 3", arraySubjectsStu3,time2);
-        stuList.create("Student 4", arraySubjectsStu4,time2);
-        stuList.create("Student 5", arraySubjectsStu5,time2);
-        Plan plan = alpha.generatePlan(new Time(10,0));
         assertEquals(15,plan.getTimeLine(0).size());
 	}
 	
 	@Test
 	public void ProfExamTest() throws Exception {
-		TimePeriod[] time1 = new TimePeriod[] {new TimePeriod(new Time(0,0), new Time(10,0))};
-		TimePeriod[] time2 = time1;
-        profList.create("Kubaner", arraySubjectsKubaner,time1);
-        profList.create("Todorov", arraySubjectsTodorov,time1);
-        profList.create("Schramm", arraySubjectsSchramm,time1);
-        stuList.create("Student 1", arraySubjectsStu1,time2);
-        stuList.create("Student 2", arraySubjectsStu2,time2);
-        stuList.create("Student 3", arraySubjectsStu3,time2);
-        stuList.create("Student 4", arraySubjectsStu4,time2);
-        stuList.create("Student 5", arraySubjectsStu5,time2);
-        Plan plan = alpha.generatePlan(new Time(10,0));
         assertEquals(15,plan.getTimeLine(0).getTimeLineMember(0).); // <<< wie komme ich hier auf den Prof des Examens?
 	}
 	
