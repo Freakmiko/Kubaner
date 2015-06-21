@@ -106,9 +106,9 @@ public class Professor {
     public boolean isAvailable(Time targetExamStartTime){
     	for(int i = 0; i < timePeriods.size(); i++){
     		if(timePeriods.get(i).laysBetween(targetExamStartTime)){
-    			return false;
+    			return true;
     		}
     	}
-    	return true;
+    	return false;
     }
 }
