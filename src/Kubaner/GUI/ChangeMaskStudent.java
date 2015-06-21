@@ -44,7 +44,7 @@ public class ChangeMaskStudent extends JFrame implements ActionListener {
 	 */
 	ChangeMaskStudent(Plan plan, PlanGenerator planGenerator,
 			int studListPosition) {
-		
+
 		this.studListPosition = studListPosition;
 		subList = planGenerator.getSubjectList();
 		currentStudentList = planGenerator.getStudentList();
@@ -220,16 +220,47 @@ public class ChangeMaskStudent extends JFrame implements ActionListener {
 					// endMinute);
 
 					try {
-						currentStudentList.delete(studListPosition);
-						currentStudentList.create(name, teachingSubject,
-								periode);
-						JOptionPane.showOptionDialog(null, "Der Student "
-								+ name + " wurde erfolgreich erstellt!",
-								"Erfolgreiche Eingabe",
-								JOptionPane.CANCEL_OPTION,
-								JOptionPane.PLAIN_MESSAGE, null, null, null);
-						setVisible(false);
-						dispose();
+						if (currentStudentList.exists(name)) {
+							int answer = JOptionPane
+									.showOptionDialog(
+											null,
+											"Der Name des Studenten existiert bereits. Möchten Sie den Studenten trotzdem erstellen?",
+											"Doppelter Name",
+											JOptionPane.YES_NO_OPTION,
+											JOptionPane.PLAIN_MESSAGE, null,
+											null, null);
+							if (answer == 0) {
+								currentStudentList.delete(studListPosition);
+								currentStudentList.create(name,
+										teachingSubject, periode);
+								JOptionPane
+										.showOptionDialog(
+												null,
+												"Der Student "
+														+ name
+														+ " wurde erfolgreich erstellt.",
+												"Erfolgreiche Eingabe",
+												JOptionPane.CANCEL_OPTION,
+												JOptionPane.PLAIN_MESSAGE,
+												null, null, null);
+								setVisible(false);
+								dispose();
+							}
+						} else {
+							currentStudentList.delete(studListPosition);
+							currentStudentList.create(name, teachingSubject,
+									periode);
+							JOptionPane
+									.showOptionDialog(null, "Der Student "
+											+ name
+											+ " wurde erfolgreich erstellt!",
+											"Erfolgreiche Eingabe",
+											JOptionPane.CANCEL_OPTION,
+											JOptionPane.PLAIN_MESSAGE, null,
+											null, null);
+							setVisible(false);
+							dispose();
+						}
 					} catch (IllegalArgumentException E) {
 						JOptionPane.showMessageDialog(null,
 								"Einer Ihrer Eingaben ist nicht korreckt!",

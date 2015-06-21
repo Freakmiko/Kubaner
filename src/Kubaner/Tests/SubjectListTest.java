@@ -101,4 +101,20 @@ public class SubjectListTest {
         assertEquals("GTI", arr[1].getName());
         assertEquals("OOT", arr[2].getName());
     }
+
+    @Test
+    public void testExistsWithOneSubject() throws Exception {
+        subjectList.create("ANA");
+        assertTrue(subjectList.exists("ANA"));
+    }
+
+    @Test
+    public void testExistsWithThreeSubjects() throws Exception {
+        subjectList.create("ANA");
+        subjectList.create("OOT");
+        subjectList.create("GTI");
+        assertTrue(subjectList.exists("ANA"));
+        assertTrue(subjectList.exists("GTI"));
+        assertTrue(subjectList.exists("OOT"));
+    }
 }

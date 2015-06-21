@@ -180,13 +180,39 @@ public class InputMaskProfessor extends JFrame implements ActionListener {
 				periode[0] = new TimePeriod(start, end);
 
 				try {
-					currentProfList.create(name, teachingSubject, periode);
-					JOptionPane.showOptionDialog(null, "Der Dozent " + name
-							+ " wurde erfolgreich erstellt.",
-							"Erfolgreiche Eingabe", JOptionPane.CANCEL_OPTION,
-							JOptionPane.PLAIN_MESSAGE, null, null, null);
-					setVisible(false);
-					dispose();
+					if (currentProfList.exists(name)) {
+						int answer = JOptionPane
+								.showOptionDialog(
+										null,
+										"Der Name des Dozenten existiert bereits. Möchten Sie den Dozenten trotzdem erstellen?",
+										"Doppelter Name",
+										JOptionPane.YES_NO_OPTION,
+										JOptionPane.PLAIN_MESSAGE, null, null,
+										null);
+						if (answer == 0) {
+							currentProfList.create(name, teachingSubject,
+									periode);
+							JOptionPane
+									.showOptionDialog(null, "Der Dozent "
+											+ name
+											+ " wurde erfolgreich erstellt.",
+											"Erfolgreiche Eingabe",
+											JOptionPane.CANCEL_OPTION,
+											JOptionPane.PLAIN_MESSAGE, null,
+											null, null);
+							setVisible(false);
+							dispose();
+						}
+					} else {
+						currentProfList.create(name, teachingSubject, periode);
+						JOptionPane.showOptionDialog(null, "Der Dozent " + name
+								+ " wurde erfolgreich erstellt.",
+								"Erfolgreiche Eingabe",
+								JOptionPane.CANCEL_OPTION,
+								JOptionPane.PLAIN_MESSAGE, null, null, null);
+						setVisible(false);
+						dispose();
+					}
 				} catch (IllegalArgumentException E) {
 					JOptionPane.showMessageDialog(null,
 							"Einer Ihrer Eingaben ist nicht korreckt!",
