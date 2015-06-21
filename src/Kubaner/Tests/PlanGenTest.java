@@ -13,7 +13,7 @@ public class PlanGenTest {
 	ProfList profList;
 	SubjectList subList;
 	StudentList stuList;
-    Subject[] arrayAll = new Subject[5]; //array mit allen fächern
+    Subject[] subjectAllArray = new Subject[5]; //array mit allen fächern
     Subject[] arraySubjectsKubaner = new Subject[2]; //kubaner fach array (1 fach)
     Subject[] arraySubjectsTodorov = new Subject[1]; //todorov fach array (2 fächer)
     Subject[] arraySubjectsSchramm = new Subject[2]; //schramm fach array (2 fächer)
@@ -34,29 +34,29 @@ public class PlanGenTest {
         subList.create("TPE"); //2
         subList.create("GDI"); //3
         subList.create("OOT"); //4
-        arrayAll = subList.toArray();
-        for (int i = 0; i < arrayAll.length; i++ ){
-        arrayAll[i].setExamLength(20);}
-        arraySubjectsKubaner[0] = arrayAll[4];
-        arraySubjectsKubaner[1] = arrayAll[3];
-        arraySubjectsTodorov[0] = arrayAll[1];
-        arraySubjectsSchramm[0] = arrayAll[0];
-        arraySubjectsSchramm[1] = arrayAll[2];
-        arraySubjectsStu1[0] = arrayAll[1];
-        arraySubjectsStu1[1] = arrayAll[3];
-        arraySubjectsStu1[2] = arrayAll[4];
-        arraySubjectsStu2[0] = arrayAll[2];
-        arraySubjectsStu2[1] = arrayAll[4];
-        arraySubjectsStu3[0] = arrayAll[0];
-        arraySubjectsStu3[1] = arrayAll[3];
-        arraySubjectsStu3[2] = arrayAll[4];
-        arraySubjectsStu3[3] = arrayAll[2];
-        arraySubjectsStu4[0] = arrayAll[1];
-        arraySubjectsStu5[0] = arrayAll[0];
-        arraySubjectsStu5[1] = arrayAll[1];
-        arraySubjectsStu5[2] = arrayAll[2];
-        arraySubjectsStu5[3] = arrayAll[3];
-        arraySubjectsStu5[4] = arrayAll[4];
+        subjectAllArray = subList.toArray();
+        for (int i = 0; i < subjectAllArray.length; i++ ){
+        subjectAllArray[i].setExamLength(20);}
+        arraySubjectsKubaner[0] = subjectAllArray[4];
+        arraySubjectsKubaner[1] = subjectAllArray[3];
+        arraySubjectsTodorov[0] = subjectAllArray[1];
+        arraySubjectsSchramm[0] = subjectAllArray[0];
+        arraySubjectsSchramm[1] = subjectAllArray[2];
+        arraySubjectsStu1[0] = subjectAllArray[1];
+        arraySubjectsStu1[1] = subjectAllArray[3];
+        arraySubjectsStu1[2] = subjectAllArray[4];
+        arraySubjectsStu2[0] = subjectAllArray[2];
+        arraySubjectsStu2[1] = subjectAllArray[4];
+        arraySubjectsStu3[0] = subjectAllArray[0];
+        arraySubjectsStu3[1] = subjectAllArray[3];
+        arraySubjectsStu3[2] = subjectAllArray[4];
+        arraySubjectsStu3[3] = subjectAllArray[2];
+        arraySubjectsStu4[0] = subjectAllArray[1];
+        arraySubjectsStu5[0] = subjectAllArray[0];
+        arraySubjectsStu5[1] = subjectAllArray[1];
+        arraySubjectsStu5[2] = subjectAllArray[2];
+        arraySubjectsStu5[3] = subjectAllArray[3];
+        arraySubjectsStu5[4] = subjectAllArray[4];
 		TimePeriod[] time1 = new TimePeriod[] {new TimePeriod(new Time(0,0), new Time(10,0))};
 		TimePeriod[] time2 = time1;
         profList.create("Kubaner", arraySubjectsKubaner,time1);
@@ -86,7 +86,43 @@ public class PlanGenTest {
 	
 	@Test
 	public void ExamCountTest() throws Exception {
-        assertEquals(15,plan.getTimeLine(0).size());
+		int counter = 0;
+			for(int i = 0; i < plan.getTimeLineNumber(); i++){
+				for(int j = 0; j < plan.getTimeLine(i).size(); j++){
+					try{ 
+					Exam tmp = (Exam) plan.getTimeLine(i).getTimeLineMember(j);
+					if(tmp.getStudent().getName()!=null){
+						counter++;
+					}
+					}
+					catch (Exception e){
+					}
+				}
+			}
+        assertEquals(15,counter);
+	}
+	
+	@Test
+	public void StudExamTest() throws Exception {
+		String stuName = "";
+		Exam exam = (Exam) plan.getTimeLine(0).getTimeLineMember(0);
+		String tmp = (exam.getStudent().getName());
+		for(int i = 0; i < subjectAllArray.length; i++){
+			if(exam.getSubjectArray()[0].getName().equals(subjectAllArray[i].getName())){
+				for(int j = 0; j < stuList.toArray().length; j++){
+					if(stuList.toArray()[j].equals(exam.getStudent())){
+						for(int k = 0; k < stuList.toArray()[j].getSubjectArray().length; k++){
+							if(stuList.toArray()[j].getSubjectArray()[k].equals(exam.getSubjectArray()[0])){
+								stuName = stuList.toArray()[j].getName();
+							}
+						}
+					}
+
+				}
+				
+			}
+		}
+        assertEquals(stuName,tmp);
 	}
 	
 	@Test
@@ -94,11 +130,11 @@ public class PlanGenTest {
 		String profName = "";
 		Exam exam = (Exam) plan.getTimeLine(0).getTimeLineMember(0);
 		String tmp = (exam.getProfArray()[0].getName());
-		for(int i = 0; i < arrayAll.length; i++){
-			if(exam.getSubjectArray()[0].getName().equals(arrayAll[i].getName())){
+		for(int i = 0; i < subjectAllArray.length; i++){
+			if(exam.getSubjectArray()[0].getName().equals(subjectAllArray[i].getName())){
 				for(int j = 0; j < profList.toArray().length; j++){
 					for(int k = 0; k < profList.toArray()[j].getSubjectArray().length; k++){
-						if(arrayAll[i].getName().equals(profList.toArray()[j].getSubjectArray()[k].getName())){
+						if(subjectAllArray[i].getName().equals(profList.toArray()[j].getSubjectArray()[k].getName())){
 							profName = profList.toArray()[j].getName();
 						}
 					}
@@ -106,7 +142,6 @@ public class PlanGenTest {
 				
 			}
 		}
-		exam.getSubjectArray()[0].getName();
         assertEquals(profName,tmp);
 	}
 	
