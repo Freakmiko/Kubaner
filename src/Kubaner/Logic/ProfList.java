@@ -83,8 +83,24 @@ public class ProfList implements Iterable<Professor> {
      * @return Returns true if the professor exists and false
      *         if the professor doesn't exist.
      */
-    public boolean exist(Professor professor) {
+    public boolean exists(Professor professor) {
         return professors.contains(professor);
+    }
+
+    /**
+     * Checks if a professor with the given name already
+     * exists in the list.
+     *
+     * @param professorName The name of the professor.
+     * @return Returns true if a professor with that name exists
+     *         returns false if no professor with that name exists.
+     */
+    public boolean exists(String professorName) {
+        for(Professor prof : professors)
+            if (prof.getName().equals(professorName))
+                return true;
+
+        return false;
     }
 
     /**

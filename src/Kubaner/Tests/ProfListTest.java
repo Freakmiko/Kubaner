@@ -96,7 +96,7 @@ public class ProfListTest {
     @Test
     public void testExist() throws Exception {
         Professor prof = profList.create("Kubaner", subjectList.toArray(), new TimePeriod[]{new TimePeriod(new Time(0, 0), new Time(12, 0))});
-        assertTrue(profList.exist(prof));
+        assertTrue(profList.exists(prof));
     }
 
     @Test

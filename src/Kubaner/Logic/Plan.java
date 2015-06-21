@@ -163,7 +163,7 @@ public class Plan {
 					prof = exam.getProfArray();
 					
 					for(int i3 = 0; i3 < prof.length; i3++)
-						if(prof[i3] != null && profList.exist(prof[i3]) == false)
+						if(prof[i3] != null && profList.exists(prof[i3]) == false)
 							profList.add(prof[i3]);
 				}
 			}
