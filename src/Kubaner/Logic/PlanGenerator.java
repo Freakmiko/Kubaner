@@ -5,7 +5,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -232,9 +231,10 @@ public class PlanGenerator {
 					System.out.println("   - " + ((Exam)a.getTimeLineMember(j)).getStudent().getName());
 					System.out.println("   - " + ((Exam)a.getTimeLineMember(j)).getSubjectArray()[0].getName());
 					System.out.println("   - " + ((Exam)a.getTimeLineMember(j)).getSubjectArray()[1]);
+					System.out.println("");
 				}
 				else{
-					System.out.println("Break");
+					System.out.println("Break: " + a.getTimeLineMember(i).getLength() +  " Minuten");
 				}
 			}
 		}
@@ -271,7 +271,7 @@ public class PlanGenerator {
 						if(targetMember.getClass() == Exam.class)
 						{
 							Exam targetExam = (Exam)targetMember;
-							if(!targetExam.isDoubleExam())
+							if(targetExam.isDoubleExam())
 								continue;
 							
 							for(int sourceMemberIndex = 0;
@@ -348,10 +348,12 @@ public class PlanGenerator {
 		for(TimePeriod period : prof.getTimePeriodArray())
 		{
 			if(period.laysBetween(startTime))
-				return period.getEnd();
+				return startTime;
+			else if(period.getStart().isLater(startTime)){
+				return period.getStart();
+			}
 		}
-		
-		return startTime;
+		throw new IllegalArgumentException("Prof ist nie da");
 	}
 
 	
