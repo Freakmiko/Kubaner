@@ -74,8 +74,23 @@ public class SubjectList implements Iterable<Subject> {
      * @return Returns true if the subject exists and false
      *         if it doesn't.
      */
-    public boolean exist(Subject subject) {
+    public boolean exists(Subject subject) {
         return subjects.contains(subject);
+    }
+
+    /**
+     * Checks if whether a Subject with the given name
+     * already exists in the list.
+     *
+     * @param subjectName The name of the subject.
+     * @return Returns true if a subject with that name already exists
+     *         returns false if no subject with that name exists.
+     */
+    public boolean exists(String subjectName) {
+        for(Subject sub : subjects)
+            if (sub.getName().equals(subjectName))
+                return true;
+        return false;
     }
 
     /**

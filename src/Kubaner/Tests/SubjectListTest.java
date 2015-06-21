@@ -80,7 +80,7 @@ public class SubjectListTest {
     @Test
     public void testExist() throws Exception {
         Subject sub = subjectList.create("ANA");
-        assertTrue(subjectList.exist(sub));
+        assertTrue(subjectList.exists(sub));
     }
 
     @Test

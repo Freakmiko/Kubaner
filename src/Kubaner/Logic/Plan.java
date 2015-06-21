@@ -154,7 +154,7 @@ public class Plan {
 					subjects = exam.getSubjectArray();
 					
 					for(int i3 = 0; i3 < subjects.length; i3++)
-						if(subjects[i3] != null && subjectList.exist(subjects[i3]) == false)
+						if(subjects[i3] != null && subjectList.exists(subjects[i3]) == false)
 							subjectList.add(subjects[i3]);
 					
 					student = exam.getStudent();
