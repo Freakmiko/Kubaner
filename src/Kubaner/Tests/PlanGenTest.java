@@ -13,10 +13,14 @@ public class PlanGenTest {
 	ProfList profList;
 	SubjectList subList;
 	StudentList stuList;
-	Subject[] allSubjectsArray = new Subject[5]; // constructor for array containing every subject
-	Subject[] arraySubjectsKubaner = new Subject[2]; // kubaner subject array (1 subject)
-	Subject[] arraySubjectsTodorov = new Subject[1]; // todorov subject array (2 subjects)
-	Subject[] arraySubjectsSchramm = new Subject[2]; // schramm subject array (2 subjects)
+	Subject[] allSubjectsArray = new Subject[5]; // constructor for array
+													// containing every subject
+	Subject[] arraySubjectsKubaner = new Subject[2]; // kubaner subject array (1
+														// subject)
+	Subject[] arraySubjectsTodorov = new Subject[1]; // todorov subject array (2
+														// subjects)
+	Subject[] arraySubjectsSchramm = new Subject[2]; // schramm subject array (2
+														// subjects)
 	Subject[] arraySubjectsStu1 = new Subject[3];
 	Subject[] arraySubjectsStu2 = new Subject[2];
 	Subject[] arraySubjectsStu3 = new Subject[4];
@@ -33,14 +37,15 @@ public class PlanGenTest {
 		subList.create("TPE"); // 2
 		subList.create("GDI"); // 3
 		subList.create("OOT"); // 4
-		
-		//creating array containing all subjects
+
+		// creating array containing all subjects
 		allSubjectsArray = subList.toArray();
-		
-		//set duration of all exams to 20minutes
+
+		// set duration of all exams to 20minutes
 		for (int i = 0; i < allSubjectsArray.length; i++) {
-			allSubjectsArray[i].setExamLength(20);}
-		
+			allSubjectsArray[i].setExamLength(20);
+		}
+
 		arraySubjectsKubaner[0] = allSubjectsArray[4];
 		arraySubjectsKubaner[1] = allSubjectsArray[3];
 		arraySubjectsTodorov[0] = allSubjectsArray[1];
@@ -61,10 +66,11 @@ public class PlanGenTest {
 		arraySubjectsStu5[2] = allSubjectsArray[2];
 		arraySubjectsStu5[3] = allSubjectsArray[3];
 		arraySubjectsStu5[4] = allSubjectsArray[4];
-		
-		TimePeriod[] time1 = new TimePeriod[] { new TimePeriod(new Time(0, 0),new Time(10, 0)) };
+
+		TimePeriod[] time1 = new TimePeriod[] { new TimePeriod(new Time(0, 0),
+				new Time(10, 0)) };
 		TimePeriod[] time2 = time1;
-		
+
 		profList.create("Kubaner", arraySubjectsKubaner, time1);
 		profList.create("Todorov", arraySubjectsTodorov, time1);
 		profList.create("Schramm", arraySubjectsSchramm, time1);
@@ -97,10 +103,12 @@ public class PlanGenTest {
 				try { // try to -cast- expected exam or break to exam
 					@SuppressWarnings("unused")
 					Exam tmp = (Exam) plan.getTimeLine(i).getTimeLineMember(j);
-					// if it is an exam we can cast it and we -increment- the counter,
-						counter++;
+					// if it is an exam we can cast it and we -increment- the
+					// counter,
+					counter++;
 				}
-				// if it's a break we -can't cast- it, so we catch the exception and -don't increment- the counter.
+				// if it's a break we -can't cast- it, so we catch the exception
+				// and -don't increment- the counter.
 				catch (Exception e) {
 				}
 			}
@@ -121,22 +129,30 @@ public class PlanGenTest {
 					String tmp = (exam.getProfArray()[0].getName());
 					// ...check if correct:
 					for (int i = 0; i < allSubjectsArray.length; i++) {
-						// if exam subject exists in arrayAll (contains all subjects)
-						if (exam.getSubjectArray()[0].equals(allSubjectsArray[i])) {
+						// if exam subject exists in arrayAll (contains all
+						// subjects)
+						if (exam.getSubjectArray()[0]
+								.equals(allSubjectsArray[i])) {
 							// check profList for...
 							for (int j = 0; j < profList.toArray().length; j++) {
 								// ...specific subjects of professor
-								for (int k = 0; k < profList.toArray()[j].getSubjectArray().length; k++) {
-									// if subject name in arrayAll at pos i equals subject of specific professor at pos j
-									if (allSubjectsArray[i].equals(profList.toArray()[j].getSubjectArray()[k])) {
+								for (int k = 0; k < profList.toArray()[j]
+										.getSubjectArray().length; k++) {
+									// if subject name in arrayAll at pos i
+									// equals subject of specific professor at
+									// pos j
+									if (allSubjectsArray[i].equals(profList
+											.toArray()[j].getSubjectArray()[k])) {
 										// set profName as professor at pos j
-										profName = profList.toArray()[j].getName();
+										profName = profList.toArray()[j]
+												.getName();
 									}
 								}
 							}
 						}
 					}
-					// check if professor can test this subject by comparing profname we got and profname we checked
+					// check if professor can test this subject by comparing
+					// profname we got and profname we checked
 					assertEquals(profName, tmp);
 				}
 			}
@@ -158,17 +174,23 @@ public class PlanGenTest {
 					// ...check if correct:
 					for (int i = 0; i < allSubjectsArray.length; i++) {
 
-						if (exam.getSubjectArray()[0].equals(allSubjectsArray[i])) {
+						if (exam.getSubjectArray()[0]
+								.equals(allSubjectsArray[i])) {
 
 							for (int j = 0; j < stuList.toArray().length; j++) {
 
-								if (stuList.toArray()[j].equals(exam.getStudent())) {
+								if (stuList.toArray()[j].equals(exam
+										.getStudent())) {
 
-									for (int k = 0; k < stuList.toArray()[j].getSubjectArray().length; k++) {
+									for (int k = 0; k < stuList.toArray()[j]
+											.getSubjectArray().length; k++) {
 
-										if (stuList.toArray()[j].getSubjectArray()[k].equals(exam.getSubjectArray()[0])) {
+										if (stuList.toArray()[j]
+												.getSubjectArray()[k]
+												.equals(exam.getSubjectArray()[0])) {
 
-											stuName = stuList.toArray()[j].getName();
+											stuName = stuList.toArray()[j]
+													.getName();
 										}
 									}
 								}
@@ -181,4 +203,34 @@ public class PlanGenTest {
 		} catch (Exception e) {
 		}
 	}
+
+	@Test
+	public void DoubleExamTest() throws Exception {
+
+		for (int g = 0; g < plan.getTimeLineNumber(); g++) {
+			for (int h = 0; h < plan.getTimeLine(g).size(); h++) {
+				try {
+					Exam exam = (Exam) plan.getTimeLine(g).getTimeLineMember(h);
+					for (int i = 0; i < plan.getTimeLineNumber(); i++) {
+						for (int j = 0; j < plan.getTimeLine(i).size(); j++) {
+							try {
+								Exam tmp = (Exam) plan.getTimeLine(i)
+										.getTimeLineMember(j);
+								if (exam.equals(tmp)
+										&& plan.getTimeLine(g)
+												.getTimeLineMember(h) != plan
+												.getTimeLine(i)
+												.getTimeLineMember(j)) {
+									fail("double!");
+								}
+							} catch (Exception e) {
+							}
+						}
+					}
+				} catch (Exception f) {
+				}
+			}
+		}
+	}
+
 }
