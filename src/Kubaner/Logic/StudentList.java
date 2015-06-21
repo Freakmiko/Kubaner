@@ -79,6 +79,23 @@ public class StudentList implements Iterable<Student> {
 	}
 	
 	/**
+	 * Checks if a student object with exactly the same name
+	 * as the given String (parameter) exists in this StudentList
+	 * (Knauber handles case that students have the same name, so the same name means the same student)
+	 * @param name the name of the student
+	 * @return true if such a student already exists and false if not
+	 */
+	public boolean exists(String name){
+		for(int i=0;i<v.size();i++){
+			//falls name gleich
+			if(name.equals(v.elementAt(i).getName())){
+				return true;				
+			}			
+		}
+		return false;
+	}
+	
+	/**
 	 * This method tries to delete the student at the given index from this studentList
 	 * 
 	 * @param index int
