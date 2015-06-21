@@ -1,6 +1,16 @@
 package Kubaner.Logic;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 
 public class Plan {
 	private Time startTime;
@@ -382,6 +392,60 @@ public class Plan {
 			}
 			this.timeline = newTimeline;
 		}
+	}
+	
+	
+	/**
+	 * Creates and saves a table as PDF-file at a certain data-path.
+	 * @param fileName - the data-path.
+	 * @param planType - 0 for master plan, 1 for student plan and 2 for professor plan.
+	 * @param titel - The title of the table.
+	 * @return The room name, or "" if no room was found.
+	 */
+	public void createPdf(String fileName, int planType, String title) throws FileNotFoundException, DocumentException {
+		MasterModel model;
+		
+		PdfPTable table = new PdfPTable(0); 
+		
+		//null -> NOT landscape format, numbers = space in pixels
+		//between border and table: left, right, top, bottom  
+		Document document = new Document(PageSize.A4, 20, 15, 15, 15);
+		PdfPCell cell;
+		
+		int cols;
+		int rows;
+		
+		String value;
+		
+		
+		switch(planType) {
+		case 0:
+			model = createAbstractTableModel();
+			table = new PdfPTable(model.getColumnCount()); 
+			
+			cols = model.getColumnCount();
+			rows = model.getRowCount();
+		
+			//make a header cell
+			cell = new PdfPCell(new Phrase("Master-Plan: " + title));
+			cell.setColspan(cols);
+			table.addCell(cell);
+		
+			//initialize PDF table as master plan
+			for(int i = 0; i < rows; i++) {
+				for(int i2 = 0; i2 < cols; i2++) {
+					value = (String)model.getValueAt(i, i2);
+					table.addCell(new Phrase(value));
+				}
+			}
+			break;
+		}
+		
+		//Write the file
+		PdfWriter.getInstance(document, new FileOutputStream(fileName));
+        document.open();
+        document.add(table);
+        document.close();
 	}
 
 
