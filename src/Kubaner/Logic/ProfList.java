@@ -18,6 +18,10 @@ public class ProfList implements Iterable<Professor> {
      * @param professor The professor that will be added.
      */
     void add(Professor professor) {
+        // The professor list is sorted lexicographically
+        // so here the first name that is lexicographically after the
+        // new professors name is searched and the new professor is
+        // inserted right before that other professor.
         for(int i = 0; i < size(); i++) {
             if(professors.get(i).getName().compareTo(professor.getName()) >= 1) {
                 professors.add(i, professor);
