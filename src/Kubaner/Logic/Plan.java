@@ -385,6 +385,7 @@ public class Plan {
 					newTimeline[i] = timeline[i];
 				}
 			}
+			this.timeline = newTimeline;
 		}
 	}
 
