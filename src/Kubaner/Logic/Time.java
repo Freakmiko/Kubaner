@@ -76,7 +76,7 @@ public class Time {
 	public boolean isLater(Time t){
 		if(hour>t.hour)
 			return true;
-		else if(hour>t.hour)
+		else if(hour == t.hour)
 			if(minute>t.minute)
 				return true;
 			

@@ -155,8 +155,8 @@ public class Plan {
 					subjects = exam.getSubjectArray();
 					
 					for(int i3 = 0; i3 < subjects.length; i3++)
-						if(subjects[i3] != null)
-							subjectList.create(subjects[i3].getName());
+						if(subjects[i3] != null && subjectList.exist(subjects[i3]) == false)
+							subjectList.add(subjects[i3]);
 					
 					student = exam.getStudent();
 					studentList.create(student.getName(), student.getSubjectArray(), student.getTimePeriodArray());
@@ -164,8 +164,8 @@ public class Plan {
 					prof = exam.getProfArray();
 					
 					for(int i3 = 0; i3 < prof.length; i3++)
-						if(prof[i3] != null)
-							profList.create(prof[i3].getName(), prof[i3].getSubjectArray(), prof[i3].getTimePeriodArray());
+						if(prof[i3] != null && profList.exist(prof[i3]) == false)
+							profList.add(prof[i3]);
 				}
 			}
 		}
@@ -288,7 +288,7 @@ public class Plan {
 			for(int i2 = 0; i2 < startTimeList.get(i).length; i2++) {
 				actualTime = startTimeList.get(i)[i2];
 				
-				if(actualTime.isLater(priorTime)) {
+				if(priorTime == null || actualTime.isLater(priorTime)) {
 					if(nextTime == null || actualTime.isEarlier(nextTime))
 						nextTime = actualTime;
 					break;
@@ -311,18 +311,14 @@ public class Plan {
 	private int calculateRows(ArrayList<Time[]> startTimeList) {
 		int rows = 1;
 		
-		Time time = new Time(startTime.getHour(), startTime.getMinute());
+		Time time = null;
 		
-		if(startTimeList.isEmpty() == false)
-			rows++;
-		
-		while(time != null) {
-			
+		 do {
 			time = getNextStartTime(time, startTimeList);
 			
 			if(time != null)
 					rows++;
-		}
+		} while(time != null);
 		return rows;
 	}
 	
