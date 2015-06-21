@@ -115,4 +115,20 @@ public class StudentListTest {
         assertEquals("Schramm", arr[1].getName());
         assertEquals("Todorov", arr[2].getName());
     }
+
+    @Test
+    public void testExistsWithOneStudent() throws Exception {
+        studentList.create("Kubaner", subjectList.toArray(),new TimePeriod[] {new TimePeriod(new Time(0,0), new Time(12,0))});
+        assertTrue(studentList.exists("Kubaner"));
+    }
+
+    @Test
+    public void testExistsWithThreeStudents() throws Exception {
+        studentList.create("Kubaner", subjectList.toArray(),new TimePeriod[] {new TimePeriod(new Time(0,0), new Time(12,0))});
+        studentList.create("Todorov", subjectList.toArray(),new TimePeriod[] {new TimePeriod(new Time(0,0), new Time(12,0))});
+        studentList.create("Schramm", subjectList.toArray(),new TimePeriod[] {new TimePeriod(new Time(0,0), new Time(12,0))});
+        assertTrue(studentList.exists("Kubaner"));
+        assertTrue(studentList.exists("Todorov"));
+        assertTrue(studentList.exists("Schramm"));
+    }
 }

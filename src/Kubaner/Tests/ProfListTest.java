@@ -117,4 +117,20 @@ public class ProfListTest {
         assertEquals("Schramm", arr[1].getName());
         assertEquals("Todorov", arr[2].getName());
     }
+
+    @Test
+    public void testExistsWithOneProfessor() throws Exception {
+        profList.create("Kubaner", subjectList.toArray(),new TimePeriod[] {new TimePeriod(new Time(0,0), new Time(12,0))});
+        assertTrue(profList.exists("Kubaner"));
+    }
+
+    @Test
+    public void testExistsWithThreeProfessors() throws Exception {
+        profList.create("Kubaner", subjectList.toArray(),new TimePeriod[] {new TimePeriod(new Time(0,0), new Time(12,0))});
+        profList.create("Todorov", subjectList.toArray(),new TimePeriod[] {new TimePeriod(new Time(0,0), new Time(12,0))});
+        profList.create("Schramm", subjectList.toArray(),new TimePeriod[] {new TimePeriod(new Time(0,0), new Time(12,0))});
+        assertTrue(profList.exists("Kubaner"));
+        assertTrue(profList.exists("Todorov"));
+        assertTrue(profList.exists("Schramm"));
+    }
 }
