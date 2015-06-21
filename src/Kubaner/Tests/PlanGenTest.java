@@ -39,7 +39,7 @@ public class PlanGenTest {
 		
 		//set duration of all exams to 20minutes
 		for (int i = 0; i < allSubjectsArray.length; i++) {
-			allSubjectsArray[i].setExamLength(20);}
+			allSubjectsArray[i].setExamLength(10);}
 		
 		arraySubjectsKubaner[0] = allSubjectsArray[2];
 		arraySubjectsKubaner[1] = allSubjectsArray[3];
@@ -210,4 +210,48 @@ public class PlanGenTest {
 			}
 		}
 	}
+	
+	@Test
+	public void DoubleExamTimeTest() throws Exception {
+		for (int g = 0; g < plan.getTimeLineNumber(); g++) {
+			for (int h = 0; h < plan.getTimeLine(g).size(); h++) {
+				try {
+					Exam exam = (Exam) plan.getTimeLine(g).getTimeLineMember(h);
+					if(exam.isDoubleExam()){
+						assertEquals(exam.getSubjectArray()[0].getExamLength()+exam.getSubjectArray()[1].getExamLength(),exam.getLength());
+					}
+					
+				} catch (Exception f) {
+				}
+			}
+
+		}
+	}
+	
+	@Test
+	public void AssessorExistTest() throws Exception {
+		for (int g = 0; g < plan.getTimeLineNumber(); g++) {
+			for (int h = 0; h < plan.getTimeLine(g).size(); h++) {
+				try {
+					Exam exam = (Exam) plan.getTimeLine(g).getTimeLineMember(h);
+						assertNotNull(exam.getAssessor());
+				} catch (Exception f) {
+				}
+			}
+		}
+	}
+	
+	@Test
+	public void AssessorProfTest() throws Exception {
+		for (int g = 0; g < plan.getTimeLineNumber(); g++) {
+			for (int h = 0; h < plan.getTimeLine(g).size(); h++) {
+				try {
+					Exam exam = (Exam) plan.getTimeLine(g).getTimeLineMember(h);
+						assertNotEquals(exam.getProfArray()[0].getName(), exam.getAssessor());
+				} catch (Exception f) {
+				}
+			}
+		}
+	}
+
 }
