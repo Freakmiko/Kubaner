@@ -20,7 +20,6 @@ import Kubaner.Logic.Time;
 
 public class InputSartTimeAndCreatPlan  extends JFrame implements ActionListener {
 
-	private Time planTime;
 	private JSpinner startTimeHours;
 	private JSpinner startTimeMinutes;
 	private JPanel controlPanel;
@@ -38,7 +37,7 @@ public class InputSartTimeAndCreatPlan  extends JFrame implements ActionListener
 		
 		getContentPane().setLayout(new BorderLayout());
 		
-		JLabel timeStartLabel = new JLabel("Bitte geben sie DIe Uhrzeit an, an dem die Prüfungen Starten sollen: ");
+		JLabel timeStartLabel = new JLabel("Bitte geben sie Die Uhrzeit an, an dem die Prüfungen Starten sollen: ");
 		
 		JPanel timeStartPanel = new JPanel();
 		timeStartPanel.setLayout(new GridLayout(1, 2));

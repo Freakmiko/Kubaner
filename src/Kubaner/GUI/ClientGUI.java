@@ -119,15 +119,36 @@ public class ClientGUI extends JFrame implements ActionListener{
 			
 		}else if(e.getSource() == studentSummary){
 			
-			new overviewMaskStudent(planGen).setVisible(true);
+			try {
+				new overviewMaskStudent(planGen).setVisible(true);
+			} catch (NoElementException e1) {
+				JOptionPane.showMessageDialog(
+						null,
+						"Erstellen Sie zuerst ein Studenten.",
+						"Kein Student vorhanden", JOptionPane.CANCEL_OPTION);
+			}
 			
 		}else if(e.getSource() == profSummary){
 			
-			new overviewMaskProfessor(planGen).setVisible(true);
+			try {
+				new overviewMaskProfessor(planGen).setVisible(true);
+			} catch (NoElementException e1) {
+				JOptionPane.showMessageDialog(
+						null,
+						"Erstellen Sie zuerst ein Professor.",
+						"Kein Professor vorhanden", JOptionPane.CANCEL_OPTION);
+			}
 			
 		}else if(e.getSource() == subjSummary){
 			
-			new overviewMaskSubject(planGen).setVisible(true);
+			try {
+				new overviewMaskSubject(planGen).setVisible(true);
+			} catch (NoElementException e1) {
+				JOptionPane.showMessageDialog(
+						null,
+						"Erstellen Sie zuerst ein Fach.",
+						"Kein Facher vorhanden", JOptionPane.CANCEL_OPTION);
+			}
 			
 		}else if(e.getSource() == studentEdit){
 			
@@ -137,7 +158,7 @@ public class ClientGUI extends JFrame implements ActionListener{
 				JOptionPane.showMessageDialog(
 						null,
 						"Erstellen Sie zuerst einen Studenten.",
-						"Kein Fach vorhanden", JOptionPane.CANCEL_OPTION);
+						"Kein Student vorhanden", JOptionPane.CANCEL_OPTION);
 			}
 			
 		}else if(e.getSource() == profEdit){
@@ -148,7 +169,7 @@ public class ClientGUI extends JFrame implements ActionListener{
 				JOptionPane.showMessageDialog(
 						null,
 						"Erstellen Sie zuerst einen Dozenten.",
-						"Kein Fach vorhanden", JOptionPane.CANCEL_OPTION);
+						"Kein Professor vorhanden", JOptionPane.CANCEL_OPTION);
 			}
 			
 		}else if(e.getSource() == subjEdit){
@@ -175,19 +196,28 @@ public class ClientGUI extends JFrame implements ActionListener{
 					JOptionPane.showMessageDialog(
 							null,
 							"itte legen sie zuerst Studenten an bevor, sie einen Plan erstellen möchten.",
-							"Kein Fach vorhanden", JOptionPane.CANCEL_OPTION);
+							"Kein Student vorhanden", JOptionPane.CANCEL_OPTION);
 				}
 			}else{
 				JOptionPane.showMessageDialog(
 						null,
 						"Bitte legen sie zuerst Profesoren an, bevor sie einen Plan erstellen möchten.",
-						"Kein Fach vorhanden", JOptionPane.CANCEL_OPTION);
+						"Kein Professor vorhanden", JOptionPane.CANCEL_OPTION);
 			}
 			
 			
 		}else if(e.getSource() == editPlan){
 		
 		}else if(e.getSource() == addPause){
+			
+			if(plan != null){
+				new CreateBreak(plan, this).setVisible(true);
+			}else{
+				JOptionPane.showMessageDialog(
+						null,
+						"Bitte erstellen/laden Sie zuerst einen Plan.",
+						"Kein Plan vorhanden", JOptionPane.CANCEL_OPTION);
+			}
 			
 		}else if(e.getSource() == createPdf){
 			
@@ -255,7 +285,7 @@ public class ClientGUI extends JFrame implements ActionListener{
 		editPlan = new JMenuItem("Prüfungsplan bearbeiten");
 		editPlan.addActionListener(this);
 		planMenu.add(editPlan);
-		addPause = new JMenuItem("Pauseeinfügen");
+		addPause = new JMenuItem("Pause einfügen");
 		addPause.addActionListener(this);
 		planMenu.add(addPause);
 		createPdf = new JMenuItem("Druckversion erstellen");
@@ -273,6 +303,8 @@ public class ClientGUI extends JFrame implements ActionListener{
 		
 		
 		//---------------------------Fenster---------------------------
+		
+		setTitle("Prüfungsplan Generator");
 		
 		getContentPane().setLayout( new BorderLayout() );
 		
