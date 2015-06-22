@@ -1,5 +1,6 @@
 package Kubaner.Logic;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -413,7 +414,7 @@ public class Plan {
 	public void createPdf(String fileName, int planType, String investigator) throws FileNotFoundException, DocumentException {
 		MasterModel model;
 		
-		PdfPTable table = new PdfPTable(0); 
+		PdfPTable table = null; 
 		
 		//null -> NOT landscape format, numbers = space in pixels
 		//between border and table: left, right, top, bottom  
@@ -456,7 +457,8 @@ public class Plan {
 		
 		
 		//Write the file
-		PdfWriter.getInstance(document, new FileOutputStream(fileName));
+		File file = new File(fileName);
+		PdfWriter.getInstance(document, new FileOutputStream(file));
         document.open();
         document.add(table);
         document.close();
