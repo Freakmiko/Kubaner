@@ -13,6 +13,7 @@ public class Break implements TimeLineMember {
 		return length;
 	}
 	
+	@Override
 	public void setLength(int length){
 		this.length=length;
 	}
