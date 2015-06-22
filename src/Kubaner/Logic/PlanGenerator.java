@@ -213,9 +213,7 @@ public class PlanGenerator {
 			plan.add(timeLine);
 			indexExam++;
 		}
-		mergeTimeLines(plan);
-
-		
+		mergeTimeLines(plan);	
 
 		while (checkPropeties(plan));
 
@@ -243,7 +241,7 @@ public class PlanGenerator {
 					System.out.println("");
 				} else {
 					System.out.println("Break: "
-							+ a.getTimeLineMember(i).getLength() + " Minuten");
+							+ a.getTimeLineMember(j).getLength() + " Minuten");
 				}
 			}
 		}
@@ -302,11 +300,11 @@ public class PlanGenerator {
 												+ sourceExam.getLength());
 
 										// replace the source exam with a break
-										sourceLine.delete(sourceMemberIndex);
 										sourceLine.insert(
 												sourceMemberIndex,
-												new Break(sourceExam
-														.getLength()));
+												new Break(targetExam.getLength()));
+										sourceLine.delete(sourceMemberIndex+1);
+										
 									}
 								}
 							}
@@ -420,7 +418,7 @@ public class PlanGenerator {
 							if (secondExam.getStudent() == currentExam
 									.getStudent()) {
 								plan.getTimeLine(j).insert(indexOfExam,
-										new Break(180));
+										new Break(currentExam.getLength()));
 								change = true;
 							} else if (secondExam.getProfArray()[0] == currentExam
 									.getProfArray()[0]
