@@ -3,6 +3,7 @@ package Kubaner.Logic;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -145,14 +146,13 @@ public class Plan {
 		MasterModel master;
 		Object value;
 		Time actualTime;
-		
 		TimeLineMember member;
 		Exam exam;
 		
 		Student student;
 		Subject subjects[];
 		Professor prof[];
-		
+		LinkedList<String> assessors = new LinkedList<String>();
 		
 		//get nearly all information stored in the plan to work with it
 		for(int i = 0; i < timeline.length; i++) {
@@ -161,8 +161,10 @@ public class Plan {
 				
 				if(member instanceof Exam) {
 					exam = (Exam)member;
-					subjects = exam.getSubjectArray();
+					if(exam.getAssessor() != null && exam.getAssessor() != "")
+						assessors.add(exam.getAssessor());
 					
+					subjects = exam.getSubjectArray();
 					for(int i3 = 0; i3 < subjects.length; i3++)
 						if(subjects[i3] != null && subjectList.exists(subjects[i3]) == false)
 							subjectList.add(subjects[i3]);
@@ -183,7 +185,7 @@ public class Plan {
 		startTimeList = createTimeList();
 		
 		//calculate master model size
-		rows = calculateRows(startTimeList);
+		rows = calculateRows(startTimeList, assessors.size());
 		
 		//+1 because first column stores start times
 		cols = subjectList.size() + 1;
@@ -208,16 +210,22 @@ public class Plan {
 				//column > 0
 				} else {
 					if(i2 == 0) {
-						value = subjectList.get(i - 1).getName();
+						//column <= subjectList.size() - subject/professor column
+						if(i <= subjectList.size()) {
+							value = subjectList.get(i - 1).getName();
 						
-						for(int i3 = 0; i3 < profList.size(); i3++) {
-							subjects = profList.get(i3).getSubjectArray();
+							for(int i3 = 0; i3 < profList.size(); i3++) {
+								subjects = profList.get(i3).getSubjectArray();
 							
 							for(int i4 = 0; i4 < subjects.length; i4++) {
 								if(subjects[i4].getName() == subjectList.get(i - 1).getName())
 									value += " - " + profList.get(i3).getName();
+								}
 							}
-						}	
+							
+						//column > subjectList.size() - assessor column
+						} else
+							value = assessors.get(i - (subjectList.size() + 1));
 					
 					//row > 0
 					} else {
@@ -230,9 +238,7 @@ public class Plan {
 							value = "";
 						}
 					}
-						
 				}
-				
 				master.setValueAt(value, i2, i);
 			}
 		}
@@ -317,17 +323,19 @@ public class Plan {
 	 * Calculates the number of rows the master model should have.
 	 * @return Returns the number of rows the master model should have.
 	 */
-	private int calculateRows(ArrayList<Time[]> startTimeList) {
+	private int calculateRows(ArrayList<Time[]> startTimeList, int assessorCount) {
 		int rows = 1;
 		
 		Time time = null;
 		
-		 do {
+		do {
 			time = getNextStartTime(time, startTimeList);
 			
 			if(time != null)
 					rows++;
 		} while(time != null);
+		
+		rows += assessorCount;
 		return rows;
 	}
 	
@@ -399,10 +407,10 @@ public class Plan {
 	 * Creates and saves a table as PDF-file at a certain data-path.
 	 * @param fileName - the data-path.
 	 * @param planType - 0 for master plan, 1 for student plan and 2 for professor plan.
-	 * @param name - The name of the investigator, only necessary for plantype 2.
+	 * @param investigator - The name of the investigator, only necessary for plantype 2.
 	 * @return The room name, or "" if no room was found.
 	 */
-	public void createPdf(String fileName, int planType, String name) throws FileNotFoundException, DocumentException {
+	public void createPdf(String fileName, int planType, String investigator) throws FileNotFoundException, DocumentException {
 		MasterModel model;
 		
 		PdfPTable table = new PdfPTable(0); 
@@ -442,7 +450,7 @@ public class Plan {
 			table = getPdfPTableType1();
 			break;
 		case 2:
-			table = getPdfPTableType2(name);
+			table = getPdfPTableType2(investigator);
 			break;
 		}
 		
@@ -540,9 +548,7 @@ public class Plan {
 		return table;
 	}
 	
-	
-	
-	private PdfPTable getPdfPTableType2(String name) {
+	private PdfPTable getPdfPTableType2(String investigator) {
 		ArrayList<Time[]> startTimeList = createTimeList();
 		
 		int cols = 4;
@@ -553,7 +559,7 @@ public class Plan {
 		Exam exam;
 		
 		//make a header cell
-		cell = new PdfPCell(new Phrase("Investigator-Plan: " + name));
+		cell = new PdfPCell(new Phrase("Investigator-Plan: " + investigator));
 		cell.setColspan(cols);
 		table.addCell(cell);
 		
@@ -579,7 +585,7 @@ public class Plan {
 			for(int i2 = 0; i2 < startTimeList.get(i).length; i2++) {
 				value = "";
 				time = this.getNextStartTime(null, startTimeList);
-				exam = getExamAtTime(time, name, startTimeList);
+				exam = getExamWithInvestigatorAtTime(time, investigator, startTimeList);
 				
 				if(exam != null) {
 					if(time.getMinute() < 10)
@@ -597,9 +603,12 @@ public class Plan {
 						table.addCell("");
 					}
 					
+					if(exam.getAssessor().equals(investigator))
+						value += investigator;
+					
 					profs = exam.getProfArray();
 					for(int i3 = 0; i3 < profs.length; i3++) {
-						if(profs[i3].getName().equals(name) == false) 
+						if(profs[i3].getName().equals(investigator) == false) 
 							value += profs[i3].getName();
 					}
 					table.addCell(new Phrase(value));
@@ -609,7 +618,7 @@ public class Plan {
 		return table;
 	}
 	
-	private Exam getExamAtTime(Time time, String prof, ArrayList<Time[]> startTimeList) {
+	private Exam getExamWithInvestigatorAtTime(Time time, String investigator, ArrayList<Time[]> startTimeList) {
 		TimeLineMember member;
 		Exam exam;
 		
@@ -620,10 +629,13 @@ public class Plan {
 				member = timeline[i].getTimeLineMember(i2);
 				if(member instanceof Exam) {
 					exam = (Exam)member;
-					profs = exam.getProfArray();
 					
+					if(exam.getAssessor().equals(investigator))
+						return exam;
+					
+					profs = exam.getProfArray();
 					for(int i3 = 0; i3 < profs.length; i3++)
-						if(profs[i3] != null && profs[i3].getName().equals(prof)) {
+						if(profs[i3] != null && profs[i3].getName().equals(investigator)) {
 							if(startTimeList.get(i)[i2].getHour() == time.getHour() && startTimeList.get(i)[i2].getMinute() == time.getMinute()) {
 								return exam;
 							}
