@@ -25,6 +25,7 @@ public class Exam implements TimeLineMember
 		return this.length;
 	}
 	
+	@Override
 	public void setLength(int length){
 		this.length = length;
 	}
