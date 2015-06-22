@@ -291,6 +291,8 @@ public class PlanGenerator {
 										
 										targetExam.getProfArray()[1] = sourceExam.getProfArray()[0];
 										
+										targetExam.setLength(targetExam.getLength() + sourceExam.getLength());
+										
 										//replace the source exam with a break
 										sourceLine.delete(sourceMemberIndex);
 										sourceLine.insert(sourceMemberIndex,
