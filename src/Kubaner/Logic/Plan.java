@@ -399,10 +399,10 @@ public class Plan {
 	 * Creates and saves a table as PDF-file at a certain data-path.
 	 * @param fileName - the data-path.
 	 * @param planType - 0 for master plan, 1 for student plan and 2 for professor plan.
-	 * @param titel - The title of the table.
+	 * @param name - The name of the investigator, only necessary for plantype 2.
 	 * @return The room name, or "" if no room was found.
 	 */
-	public void createPdf(String fileName, int planType, String title) throws FileNotFoundException, DocumentException {
+	public void createPdf(String fileName, int planType, String name) throws FileNotFoundException, DocumentException {
 		MasterModel model;
 		
 		PdfPTable table = new PdfPTable(0); 
@@ -417,7 +417,6 @@ public class Plan {
 		
 		String value;
 		
-		
 		switch(planType) {
 		case 0:
 			model = createAbstractTableModel();
@@ -427,7 +426,7 @@ public class Plan {
 			rows = model.getRowCount();
 		
 			//make a header cell
-			cell = new PdfPCell(new Phrase("Master-Plan: " + title));
+			cell = new PdfPCell(new Phrase("Master-Plan"));
 			cell.setColspan(cols);
 			table.addCell(cell);
 		
@@ -439,7 +438,14 @@ public class Plan {
 				}
 			}
 			break;
+		case 1:
+			table = getPdfPTableType1();
+			break;
+		case 2:
+			table = getPdfPTableType2(name);
+			break;
 		}
+		
 		
 		//Write the file
 		PdfWriter.getInstance(document, new FileOutputStream(fileName));
@@ -447,8 +453,199 @@ public class Plan {
         document.add(table);
         document.close();
 	}
+	
+	
+	private PdfPTable getPdfPTableType1() {
+		ArrayList<Time[]> startTimeList = createTimeList();
+		
+		int rows = startTimeList.size() + 1;
+		int cols = timeline.length * 3 + 1;
+		
+		PdfPTable table = new PdfPTable(cols); 
+		PdfPCell cell;
+		
+		String data[][];
+		String value;
+		
+		TimeLineMember member;
+		Exam exam;
+		Subject[] subjects;
+		
+		//make a header cell
+		cell = new PdfPCell(new Phrase("Student-Plan"));
+		cell.setColspan(cols);
+		table.addCell(cell);
+		
+		
+		//initialize the first row of student plan
+		table.addCell(new Phrase(""));
+		
+		for(int i = 1; i < cols; i++) {
+			if(i % 3 == 1)
+				table.addCell(new Phrase("Raum"));
+			else if(i % 3 == 2)
+				table.addCell(new Phrase("Fächer/Fach"));
+			else
+				table.addCell(new Phrase("Prüfling"));
+		}
+		
+		Time time = null;
+		data = new String[startTimeList.size()][cols];
+		
+		//calculate data for the remaining table
+		for(int i = 0; i < cols; i++) {
+			for(int i2 = 0; i2 < startTimeList.size(); i2++) {
+				value = "";
+				//column 0: Times
+				if(i == 0) {
+					time = getNextStartTime(time, startTimeList);
+					if(time.getMinute() < 10)
+						value = time.getHour() + ":0" + time.getMinute();
+					else
+						value = time.getHour() + ":" + time.getMinute();
+					
+				//room column
+				} else if(i % 3 == 1) {
+					value = timeline[i / 3].getRoom();
+				
+				//subject or student column
+				} else {
+					if(i2 < timeline[i / 3].size()) {
+						member = timeline[i / 3].getTimeLineMember(i2);
+						if(member instanceof Exam) {
+							exam = (Exam)member;
+							
+							//subject column
+							if(i % 3 == 2) {
+								subjects = exam.getSubjectArray();
+								for(int i3 = 0; i3 < subjects.length; i3++) {
+									if(subjects[i3] != null)
+										value += subjects[i3].getName();
+								}
+								
+							//i % 3 == 0 student column
+							} else
+								value = exam.getStudent().getName();
+						}
+					}
+				}
+				data[i2][i] = value;	
+			}
+		}
+		
+		for(int i = 0; i < rows; i++)
+			for(int i2 = 0; i2 < cols; i2++)
+				table.addCell(new Phrase(data[i][i2]));
+		
+		return table;
+	}
+	
+	
+	
+	private PdfPTable getPdfPTableType2(String name) {
+		ArrayList<Time[]> startTimeList = createTimeList();
+		
+		int cols = 4;
+		
+		PdfPTable table = new PdfPTable(cols); 
+		PdfPCell cell;
+		
+		Exam exam;
+		
+		//make a header cell
+		cell = new PdfPCell(new Phrase("Investigator-Plan: " + name));
+		cell.setColspan(cols);
+		table.addCell(cell);
+		
+		
+		//initialize the first row of student plan
+		table.addCell(new Phrase(""));
+		
+		for(int i = 1; i < cols; i++) {
+			if(i % 3 == 1)
+				table.addCell(new Phrase("COM"));
+			else if(i % 3 == 2)
+				table.addCell(new Phrase("Raum"));
+			else
+				table.addCell(new Phrase("Mitprüfer"));
+		}
+		
+		Time time;
+		String value;
+		Professor[] profs;
+		
+		//calculate data for the remaining table
+		for(int i = 0; i < startTimeList.size(); i++) {
+			for(int i2 = 0; i2 < startTimeList.get(i).length; i2++) {
+				value = "";
+				time = this.getNextStartTime(null, startTimeList);
+				exam = getExamAtTime(time, name, startTimeList);
+				
+				if(exam != null) {
+					if(time.getMinute() < 10)
+						value = time.getHour() + ":0" + time.getMinute();
+					else
+						value = time.getHour() + ":" + time.getMinute();
+					
+					table.addCell(new Phrase(value));
+					table.addCell(new Phrase(exam.getStudent().getName()));
+					
+					TimeLine line = timelineOfExam(exam);
+					if(line != null) {
+						table.addCell(new Phrase(line.getRoom()));
+					} else {
+						table.addCell("");
+					}
+					
+					profs = exam.getProfArray();
+					for(int i3 = 0; i3 < profs.length; i3++) {
+						if(profs[i3].getName().equals(name) == false) 
+							value += profs[i3].getName();
+					}
+					table.addCell(new Phrase(value));
+				}
+			}
+		}
+		return table;
+	}
+	
+	private Exam getExamAtTime(Time time, String prof, ArrayList<Time[]> startTimeList) {
+		TimeLineMember member;
+		Exam exam;
+		
+		Professor[] profs;
+		
+		for(int i = 0; i < timeline.length; i++) {
+			for(int i2 = 0; i2 < timeline[i].size(); i2++) {
+				member = timeline[i].getTimeLineMember(i2);
+				if(member instanceof Exam) {
+					exam = (Exam)member;
+					profs = exam.getProfArray();
+					
+					for(int i3 = 0; i3 < profs.length; i3++)
+						if(profs[i3] != null && profs[i3].getName().equals(prof)) {
+							if(startTimeList.get(i)[i2].getHour() == time.getHour() && startTimeList.get(i)[i2].getMinute() == time.getMinute()) {
+								return exam;
+							}
+						}
+				}
+			}
+		}
+		return null;
+	}
 
 
+	private TimeLine timelineOfExam(Exam exam) {
+		for(int i = 0; i < timeline.length; i++) {
+			for(int i2 = 0; i2 < timeline[i].size(); i2++) {
+				if(timeline[i].getTimeLineMember(i2) == exam) {
+					return timeline[i];
+				}
+			}
+		}
+		return null;
+	}
+	
 	public Time getStartTime() {
 		return startTime;
 	}
