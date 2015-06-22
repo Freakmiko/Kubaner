@@ -136,7 +136,12 @@ public class PlanGenTest {
 				}
 			}
 		}
-		assertEquals(15, counter);
+		// check if total number of exams matches count of subjects per student to test
+		 int counter2 = 0;
+		 for(int k = 0; k < stuList.toArray().length; k++){
+		 counter2 += stuList.toArray()[k].getSubjectArray().length;
+		 }
+		 assertEquals(counter2, counter); 
 	}
 
 	@Test
