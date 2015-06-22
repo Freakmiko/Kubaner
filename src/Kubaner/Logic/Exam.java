@@ -1,6 +1,8 @@
 package Kubaner.Logic;
 
-public class Exam implements TimeLineMember
+import java.io.Serializable;
+
+public class Exam implements TimeLineMember, Serializable
 {
 
 	private String assessor;

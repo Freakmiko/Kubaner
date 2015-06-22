@@ -1,6 +1,8 @@
 package Kubaner.Logic;
 
-public class Break implements TimeLineMember {
+import java.io.Serializable;
+
+public class Break implements TimeLineMember, Serializable {
 
 	private int length;
 	

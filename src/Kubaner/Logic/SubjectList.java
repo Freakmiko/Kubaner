@@ -1,10 +1,11 @@
 package Kubaner.Logic;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-public class SubjectList implements Iterable<Subject> {
+public class SubjectList implements Iterable<Subject>, Serializable {
 
     List<Subject> subjects;
 

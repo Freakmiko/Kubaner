@@ -3,6 +3,7 @@ package Kubaner.Logic;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -14,7 +15,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
-public class Plan {
+public class Plan implements Serializable {
 	private Time startTime;
 	private TimeLine timeline[];
 	

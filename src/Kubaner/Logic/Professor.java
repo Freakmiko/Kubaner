@@ -1,9 +1,10 @@
 package Kubaner.Logic;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Professor {
+public class Professor implements Serializable {
     private String name;
     private List<Subject> subjects;
     private List<TimePeriod> timePeriods;

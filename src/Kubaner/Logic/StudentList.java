@@ -1,12 +1,13 @@
 package Kubaner.Logic;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Vector;
 
 /**
  * Holds all Students in lexicographical order
  */
-public class StudentList implements Iterable<Student> {
+public class StudentList implements Iterable<Student>, Serializable {
 
 	private Vector<Student> v = new Vector<>(100,10);
 	
