@@ -20,8 +20,11 @@ public class overviewMaskStudent extends JFrame implements ActionListener {
 	String times = "";
 	StudentList list;
 
-	public overviewMaskStudent(PlanGenerator planGenerator) {
+	public overviewMaskStudent(PlanGenerator planGenerator) throws NoElementException {
 		list = planGenerator.getStudentList();
+		if (list.size() == 0) {
+			throw new NoElementException();
+		}
 		getContentPane().setLayout(new BorderLayout());
 		setTitle("Studenten Übersicht");
 		setSize(400, 400);

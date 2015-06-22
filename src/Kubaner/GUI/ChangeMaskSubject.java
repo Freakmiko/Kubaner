@@ -15,13 +15,11 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
-import Kubaner.Logic.Plan;
-import Kubaner.Logic.PlanGenerator;
-import Kubaner.Logic.Subject;
-import Kubaner.Logic.SubjectList;
+import Kubaner.Logic.*;
 
 public class ChangeMaskSubject extends JFrame implements ActionListener {
 
+	private PlanGenerator planGenerator;
 	private Subject subject;
 	private SubjectList subjectList;
 	private JButton setButton, exitButton;
@@ -44,6 +42,7 @@ public class ChangeMaskSubject extends JFrame implements ActionListener {
 	 */
 	ChangeMaskSubject(PlanGenerator planGenerator, int subjectListPosition) {
 
+		this.planGenerator = planGenerator;
 		this.subjectListPosition = subjectListPosition;
 		subjectList = planGenerator.getSubjectList();
 		subject = subjectList.get(subjectListPosition);
@@ -113,6 +112,9 @@ public class ChangeMaskSubject extends JFrame implements ActionListener {
 										JOptionPane.PLAIN_MESSAGE, null, null,
 										null);
 						if (answer == 0) {
+							Subject oldSubject = subjectList
+									.get(subjectListPosition);
+
 							subjectList.delete(subjectListPosition);
 							subject = subjectList.create(name);
 							subject.setExamLength(time);
@@ -123,23 +125,79 @@ public class ChangeMaskSubject extends JFrame implements ActionListener {
 											JOptionPane.CANCEL_OPTION,
 											JOptionPane.PLAIN_MESSAGE, null,
 											null, null);
-							setVisible(false);
-							dispose();
-						} else {
-							subjectList.delete(subjectListPosition);
-							subject = subjectList.create(name);
-							subject.setExamLength(time);
-							JOptionPane
-									.showOptionDialog(null, "Das Fach " + name
-											+ " wurde erfolgreich erstellt.",
-											"Erfolgreiche Eingabe!",
-											JOptionPane.CANCEL_OPTION,
-											JOptionPane.PLAIN_MESSAGE, null,
-											null, null);
+
+							// Anpassen aller Betroffenen Studenten und Dozenten
+							StudentList tempStudentList = planGenerator
+									.getStudentList();
+							ProfList tempProfList = planGenerator.getProfList();
+
+							for (int i = 0; i != tempStudentList.size(); i++) {
+								Student tempStudent = tempStudentList.get(i);
+								for (int j = 0; j != tempStudent
+										.getSubjectArray().length; j++) {
+									Subject[] tempStudentSubject = tempStudent
+											.getSubjectArray();
+									if (oldSubject
+											.equals(tempStudentSubject[j]))
+										tempStudentSubject[j] = subject;
+								}
+							}
+							for (int i = 0; i != tempProfList.size(); i++) {
+								Professor tempPorfessor = tempProfList.get(i);
+								for (int j = 0; j != tempPorfessor
+										.getSubjectArray().length; j++) {
+									Subject[] tempProfSubject = tempPorfessor
+											.getSubjectArray();
+									if (oldSubject.equals(tempProfSubject[j]))
+										tempProfSubject[j] = subject;
+								}
+							}
 							setVisible(false);
 							dispose();
 						}
+					} else {
+						Subject oldSubject = subjectList
+								.get(subjectListPosition);
+
+						subjectList.delete(subjectListPosition);
+						subject = subjectList.create(name);
+						subject.setExamLength(time);
+						JOptionPane.showOptionDialog(null, "Das Fach " + name
+								+ " wurde erfolgreich erstellt.",
+								"Erfolgreiche Eingabe!",
+								JOptionPane.CANCEL_OPTION,
+								JOptionPane.PLAIN_MESSAGE, null, null, null);
+
+						// Anpassen aller Betroffenen Studenten und Dozenten
+						StudentList tempStudentList = planGenerator
+								.getStudentList();
+						ProfList tempProfList = planGenerator.getProfList();
+
+						for (int i = 0; i != tempStudentList.size(); i++) {
+							Student tempStudent = tempStudentList.get(i);
+							for (int j = 0; j != tempStudent.getSubjectArray().length; j++) {
+								Subject[] tempStudentSubject = tempStudent
+										.getSubjectArray();
+								if (oldSubject.equals(tempStudentSubject[j]))
+									tempStudentSubject[j] = subject;
+							}
+						}
+						for (int i = 0; i != tempProfList.size(); i++) {
+							Professor tempPorfessor = tempProfList.get(i);
+							for (int j = 0; j != tempPorfessor
+									.getSubjectArray().length; j++) {
+								Subject[] tempProfSubject = tempPorfessor
+										.getSubjectArray();
+								if (oldSubject.equals(tempProfSubject[j]))
+									tempProfSubject[j] = subject;
+							}
+						}
+
+						setVisible(false);
+						dispose();
+
 					}
+
 				} catch (IllegalArgumentException E) {
 					JOptionPane.showMessageDialog(null, "Fehlerhafte Eingabe!",
 							"Erstellungsfehler", JOptionPane.CANCEL_OPTION);

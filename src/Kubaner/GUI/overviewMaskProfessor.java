@@ -19,8 +19,13 @@ public class overviewMaskProfessor extends JFrame implements ActionListener {
 	private JPanel south;
 	ProfList list;
 
-	public overviewMaskProfessor(PlanGenerator planGenerator) {
+	public overviewMaskProfessor(PlanGenerator planGenerator) throws NoElementException {
 		list = planGenerator.getProfList();
+		
+		if (list.size() == 0) {
+			throw new NoElementException();
+		}
+		
 		getContentPane().setLayout(new BorderLayout());
 		setTitle("Dozenten Übersicht");
 		setSize(400, 400);
