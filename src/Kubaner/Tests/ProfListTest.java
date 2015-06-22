@@ -4,8 +4,6 @@ import Kubaner.Logic.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.concurrent.ExecutionException;
-
 import static org.junit.Assert.*;
 
 public class ProfListTest {
