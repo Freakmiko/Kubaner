@@ -15,13 +15,14 @@ public class SelectStudent extends JFrame implements ActionListener {
 	private JTable table;
 	private JPanel actionPanel, selectPanel, tablePanel;
 	private int size;
-	private JButton confirmButton, cancelButton;
+	private JButton confirmButton, cancelButton, deleteButton;
 	private JLabel subjectLabel;
 	private SpinnerNumberModel subjectModel;
 	private JSpinner subjectSpinner;
 	private int selection;
 	private PlanGenerator planGenerator;
 	private Plan plan;
+	StudentList list;
 
 	public SelectStudent(Plan plan, PlanGenerator planGenerator)
 			throws NoSubjectException, NoElementException {
@@ -38,7 +39,7 @@ public class SelectStudent extends JFrame implements ActionListener {
 		setTitle("Studenten Übersicht");
 		setLocationRelativeTo(null);
 
-		StudentList list = planGenerator.getStudentList();
+		list = planGenerator.getStudentList();
 		// F�cher�bersicht
 		tablePanel = new JPanel();
 		tablePanel.setLayout(new GridLayout(1, 1));
@@ -77,14 +78,17 @@ public class SelectStudent extends JFrame implements ActionListener {
 
 		// Actionskn�pfe
 		actionPanel = new JPanel();
-		actionPanel.setLayout(new GridLayout(1, 2));
+		actionPanel.setLayout(new GridLayout(1, 3));
 		actionPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		confirmButton = new JButton("Bearbeiten");
 		cancelButton = new JButton("Abbrechen");
+		deleteButton = new JButton("Löschen");
 		cancelButton.addActionListener(this);
 		confirmButton.addActionListener(this);
+		deleteButton.addActionListener(this);
 		actionPanel.add(confirmButton);
 		actionPanel.add(cancelButton);
+		actionPanel.add(deleteButton);
 		add(actionPanel);
 		pack();
 	}
@@ -134,6 +138,16 @@ public class SelectStudent extends JFrame implements ActionListener {
 			setVisible(false);
 			new ChangeMaskStudent(plan, planGenerator, selection)
 					.setVisible(true);
+			dispose();
+		}
+		if (e.getSource() == deleteButton) {
+			selection = (int) subjectSpinner.getValue();
+			String name = list.get(selection).getName();
+			list.delete(selection);
+			JOptionPane.showMessageDialog(null,
+					"Sie haben den Student " + name + " gelöscht!", "Student gelöscht",
+					JOptionPane.CANCEL_OPTION);
+			setVisible(false);
 			dispose();
 		}
 

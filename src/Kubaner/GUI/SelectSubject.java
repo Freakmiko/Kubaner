@@ -13,21 +13,21 @@ public class SelectSubject extends JFrame implements ActionListener {
 
 	private JTable table;
 	private JPanel actionPanel, selectPanel, tablePanel;
-	private int size;
-	private JButton confirmButton, cancelButton;
+	private JButton confirmButton, cancelButton, deleteButton;
 	private JLabel subjectLabel;
 	private SpinnerNumberModel subjectModel;
 	private JSpinner subjectSpinner;
 	private int selection;
 	private PlanGenerator planGenerator;
+	private SubjectList list;
 
 	public SelectSubject(Plan plan, PlanGenerator planGenerator)
 			throws NoElementException {
 
 		this.planGenerator = planGenerator;
-		size = planGenerator.getSubjectList().size();
+		list = planGenerator.getSubjectList();
 
-		if (size == 0) {
+		if (list.size() == 0) {
 			throw new NoElementException();
 		}
 		setLayout(new GridLayout(3, 1));
@@ -37,17 +37,16 @@ public class SelectSubject extends JFrame implements ActionListener {
 		// F�cher�bersicht
 		tablePanel = new JPanel();
 		tablePanel.setLayout(new GridLayout(1, 1));
-		TableModel dataModel = new DataModel(planGenerator.getSubjectList()
-				.size(), 3);
+		TableModel dataModel = new DataModel(list.size(), 3);
 		table = new JTable(dataModel);
 
-		for (int row = 0; row < planGenerator.getSubjectList().size(); row++) {
+		for (int row = 0; row < list.size(); row++) {
 			for (int col = 0; col < 1; col++) {
 				dataModel.setValueAt("Prüfungsdauer: "
-						+ planGenerator.getSubjectList().get(row)
+						+ list.get(row)
 								.getExamLength() + "min", row, col + 2);
 				dataModel.setValueAt("Fach: "
-						+ planGenerator.getSubjectList().get(row).getName(),
+						+ list.get(row).getName(),
 						row, col + 1);
 				dataModel.setValueAt("Nummer: " + row, row, col);
 			}
@@ -63,7 +62,7 @@ public class SelectSubject extends JFrame implements ActionListener {
 		subjectLabel = new JLabel();
 		subjectLabel
 				.setText("Geben Sie die Nummer des Faches, die Sie der Faecherübersicht entnehmen können.");
-		subjectModel = new SpinnerNumberModel(0, 0, size-1, 1);
+		subjectModel = new SpinnerNumberModel(0, 0, list.size()-1, 1);
 		subjectSpinner = new JSpinner(subjectModel);
 		selectPanel.add(subjectLabel);
 		selectPanel.add(subjectSpinner);
@@ -71,14 +70,17 @@ public class SelectSubject extends JFrame implements ActionListener {
 
 		// Actionskn�pfe
 		actionPanel = new JPanel();
-		actionPanel.setLayout(new GridLayout(1, 2));
+		actionPanel.setLayout(new GridLayout(1, 3));
 		actionPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		confirmButton = new JButton("Bearbeiten");
 		cancelButton = new JButton("Abbrechen");
+		deleteButton = new JButton("Löschen");
 		cancelButton.addActionListener(this);
 		confirmButton.addActionListener(this);
+		deleteButton.addActionListener(this);
 		actionPanel.add(confirmButton);
 		actionPanel.add(cancelButton);
+		actionPanel.add(deleteButton);
 		add(actionPanel);
 		pack();
 	}
@@ -96,7 +98,59 @@ public class SelectSubject extends JFrame implements ActionListener {
 			new ChangeMaskSubject(planGenerator, selection).setVisible(true);
 			dispose();
 		}
-
+		if (e.getSource() == deleteButton) {
+			selection = (int) subjectSpinner.getValue();
+			String name = list.get(selection).getName();
+			
+			if (subjectRemovabel(list.get(selection))){
+			list.delete(selection);
+			JOptionPane.showMessageDialog(null,
+					"Sie haben das Fach " + name + " gelöscht!", "Fach gelöscht",
+					JOptionPane.CANCEL_OPTION);
+			setVisible(false);
+			dispose();
+			}
+			else {
+				JOptionPane.showMessageDialog(null,
+						"Sie können das Fach " + name + " nicht löschen, weil mindestens ein Dozent oder Student nur dieses Fach hat!", "Kein Fach",
+						JOptionPane.CANCEL_OPTION);
+			}
+	}
 	}
 
+	private boolean subjectRemovabel(Subject subject) {
+		
+		StudentList tempStudentList = planGenerator.getStudentList();
+		ProfList tempProfList = planGenerator.getProfList();
+
+		for (int i = 0; i != tempStudentList.size(); i++) {
+			Student tempStudent = tempStudentList.get(i);
+			for (int j = 0; j != tempStudent.getSubjectArray().length; j++) {
+				Subject[] tempStudentSubject = tempStudent
+						.getSubjectArray();
+				if (subject.equals(tempStudentSubject[j]))
+					if (tempStudent.getSubjectArray().length != 1)
+						tempStudent.deleteSubject(j);
+					else 
+						return false;
+				
+			}
+		}
+		for (int i = 0; i != tempProfList.size(); i++) {
+			Professor tempPorfessor = tempProfList.get(i);
+			for (int j = 0; j != tempPorfessor
+					.getSubjectArray().length; j++) {
+				Subject[] tempProfSubject = tempPorfessor
+						.getSubjectArray();
+				if (subject.equals(tempProfSubject[j]))
+					if (tempPorfessor.getSubjectArray().length != 1)
+						tempPorfessor.deleteSubject(j);
+					else 
+						return false;
+			}
+		}
+
+		
+		return true;
+	}
 }
