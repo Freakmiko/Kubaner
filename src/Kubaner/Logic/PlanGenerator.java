@@ -411,26 +411,28 @@ public class PlanGenerator {
 					Exam currentExam = (Exam) line
 							.getTimeLineMember(indexOfExam);
 					for (int j = i + 1; j < plan.getRoomCount(); j++) {
-						TimeLineMember secondTimeLineMember = plan.getTimeLine(
-								j).getTimeLineMember(indexOfExam);
-						if (secondTimeLineMember.getClass() == Exam.class) {
-							Exam secondExam = (Exam) secondTimeLineMember;
-							if (secondExam.getStudent() == currentExam
-									.getStudent()) {
+						TimeLine secondTimeLine = plan.getTimeLine(
+								j);
+						if(secondTimeLine.size() <= indexOfExam){
+							continue;
+						}
+						else{
+							TimeLineMember secondTimeLineMember = secondTimeLine.getTimeLineMember(indexOfExam);
+							if (secondTimeLineMember.getClass() == Exam.class) {
+								Exam secondExam = (Exam) secondTimeLineMember;
+								if (secondExam.getStudent() == currentExam
+										.getStudent()) {
+									plan.getTimeLine(j).insert(indexOfExam,
+											new Break(currentExam.getLength()));
+									change = true;
+								} else if (secondExam.getProfArray()[0] == currentExam.getProfArray()[0]
+												|| secondExam.getProfArray()[1] == currentExam.getProfArray()[1]
+												|| secondExam.getProfArray()[0] == currentExam.getProfArray()[1]
+												|| secondExam.getProfArray()[1] == currentExam.getProfArray()[0]) {
 								plan.getTimeLine(j).insert(indexOfExam,
 										new Break(currentExam.getLength()));
 								change = true;
-							} else if (secondExam.getProfArray()[0] == currentExam
-									.getProfArray()[0]
-									|| secondExam.getProfArray()[1] == currentExam
-											.getProfArray()[1]
-									|| secondExam.getProfArray()[0] == currentExam
-											.getProfArray()[1]
-									|| secondExam.getProfArray()[1] == currentExam
-											.getProfArray()[0]) {
-								plan.getTimeLine(j).insert(indexOfExam,
-										new Break(currentExam.getLength()));
-								change = true;
+								}
 							}
 						}
 					}
