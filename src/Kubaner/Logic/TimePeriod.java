@@ -1,6 +1,8 @@
 package Kubaner.Logic;
 
-public class TimePeriod {
+import java.io.Serializable;
+
+public class TimePeriod implements Serializable {
 
 	private Time start;
 	private Time end;
