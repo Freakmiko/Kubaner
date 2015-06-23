@@ -102,6 +102,8 @@ public class PlanGenSecondTest {
 		arraySubjectsStu_8[0] = allSubjectsArray[2];
 		arraySubjectsStu_9[0] = allSubjectsArray[1];
 		arraySubjectsStu_9[1] = allSubjectsArray[3];
+		arraySubjectsStu_9[2] = allSubjectsArray[4];
+		arraySubjectsStu_9[3] = allSubjectsArray[6];
 		arraySubjectsStu_10[0] = allSubjectsArray[2];
 		arraySubjectsStu_10[1] = allSubjectsArray[5];
 		arraySubjectsStu_10[2] = allSubjectsArray[0];
