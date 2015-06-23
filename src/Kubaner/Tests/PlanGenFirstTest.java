@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.After;
 
-public class PlanGenTest {
+public class PlanGenFirstTest {
 	PlanGenerator alpha = new PlanGenerator();
 	Plan plan;
 	ProfList profList;
