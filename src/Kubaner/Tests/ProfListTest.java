@@ -22,12 +22,10 @@ public class ProfListTest {
     public void testCreateProfessor() throws Exception {
         Professor prof = profList.create("Kubaner", subjectList.toArray(),new TimePeriod[] {new TimePeriod(new Time(0,0), new Time(12,0))});
         assertEquals("Kubaner", prof.getName());
-        // TODO: Sollen hier noch die Faecher und die Zeiten ueberprueft werden?
     }
 
     @Test
     public void testCreateWithTwoProfessorsCreateOneInbetween() throws Exception {
-        // TODO: Das ist sollte nicht so getestet werden! (Momentan kein anderer Weg)
         profList.create("Kubaner", subjectList.toArray(),new TimePeriod[] {new TimePeriod(new Time(0,0), new Time(12,0))});
         profList.create("Todorov", subjectList.toArray(),new TimePeriod[] {new TimePeriod(new Time(0,0), new Time(12,0))});
         profList.create("Schramm", subjectList.toArray(),new TimePeriod[] {new TimePeriod(new Time(0,0), new Time(12,0))});
