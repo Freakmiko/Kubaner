@@ -122,7 +122,7 @@ public class ChangeMaskSubject extends JFrame implements ActionListener {
 									.showOptionDialog(null, "Das Fach " + name
 											+ " wurde erfolgreich erstellt.",
 											"Erfolgreiche Eingabe",
-											JOptionPane.CANCEL_OPTION,
+											JOptionPane.DEFAULT_OPTION,
 											JOptionPane.PLAIN_MESSAGE, null,
 											null, null);
 
@@ -166,7 +166,7 @@ public class ChangeMaskSubject extends JFrame implements ActionListener {
 						JOptionPane.showOptionDialog(null, "Das Fach " + name
 								+ " wurde erfolgreich erstellt.",
 								"Erfolgreiche Eingabe!",
-								JOptionPane.CANCEL_OPTION,
+								JOptionPane.DEFAULT_OPTION,
 								JOptionPane.PLAIN_MESSAGE, null, null, null);
 
 						// Anpassen aller Betroffenen Studenten und Dozenten
@@ -189,9 +189,10 @@ public class ChangeMaskSubject extends JFrame implements ActionListener {
 									.getSubjectArray().length; j++) {
 								Subject[] tempProfSubject = tempPorfessor
 										.getSubjectArray();
-								if (oldSubject.equals(tempProfSubject[j]))
+								if (oldSubject.equals(tempProfSubject[j])) {
 									tempPorfessor.deleteSubject(j);
-								tempPorfessor.addSubject(subject);
+									tempPorfessor.addSubject(subject);
+								}
 							}
 						}
 

@@ -193,9 +193,7 @@ public class InputMaskStudent extends JFrame implements ActionListener {
 														+ name
 														+ " wurde erfolgreich erstellt.",
 												"Erfolgreiche Eingabe",
-												JOptionPane.CANCEL_OPTION,
-												JOptionPane.PLAIN_MESSAGE,
-												null, null, null);
+												JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
 								setVisible(false);
 								dispose();
 							}
@@ -203,13 +201,13 @@ public class InputMaskStudent extends JFrame implements ActionListener {
 							currentStudentList.create(name, teachingSubject,
 									periode);
 							JOptionPane
-									.showOptionDialog(null, "Der Student "
+							.showOptionDialog(
+									null,
+									"Der Student "
 											+ name
-											+ " wurde erfolgreich erstellt!",
-											"Erfolgreiche Eingabe",
-											JOptionPane.CANCEL_OPTION,
-											JOptionPane.PLAIN_MESSAGE, null,
-											null, null);
+											+ " wurde erfolgreich erstellt.",
+									"Erfolgreiche Eingabe",
+									JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
 							setVisible(false);
 							dispose();
 						}

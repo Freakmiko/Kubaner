@@ -249,7 +249,7 @@ public class ChangeMaskProfessor extends JFrame implements ActionListener {
 											+ name
 											+ " wurde erfolgreich erstellt.",
 											"Erfolgreiche Eingabe",
-											JOptionPane.CANCEL_OPTION,
+											JOptionPane.DEFAULT_OPTION,
 											JOptionPane.PLAIN_MESSAGE, null,
 											null, null);
 							setVisible(false);
@@ -261,7 +261,7 @@ public class ChangeMaskProfessor extends JFrame implements ActionListener {
 						JOptionPane.showOptionDialog(null, "Der Dozent " + name
 								+ " wurde erfolgreich bearbeitet.",
 								"Erfolgreiche Eingabe",
-								JOptionPane.CANCEL_OPTION,
+								JOptionPane.DEFAULT_OPTION,
 								JOptionPane.PLAIN_MESSAGE, null, null, null);
 						setVisible(false);
 						dispose();

@@ -229,7 +229,7 @@ public class ChangeMaskStudent extends JFrame implements ActionListener {
 														+ name
 														+ " wurde erfolgreich erstellt.",
 												"Erfolgreiche Eingabe",
-												JOptionPane.CANCEL_OPTION,
+												JOptionPane.DEFAULT_OPTION,
 												JOptionPane.PLAIN_MESSAGE,
 												null, null, null);
 								setVisible(false);
@@ -244,7 +244,7 @@ public class ChangeMaskStudent extends JFrame implements ActionListener {
 											+ name
 											+ " wurde erfolgreich erstellt!",
 											"Erfolgreiche Eingabe",
-											JOptionPane.CANCEL_OPTION,
+											JOptionPane.DEFAULT_OPTION,
 											JOptionPane.PLAIN_MESSAGE, null,
 											null, null);
 							setVisible(false);

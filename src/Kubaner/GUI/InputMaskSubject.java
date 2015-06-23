@@ -105,7 +105,7 @@ public class InputMaskSubject extends JFrame implements ActionListener {
 									.showOptionDialog(null, "Das Fach " + name
 											+ " wurde erfolgreich erstellt.",
 											"Erfolgreiche Eingabe",
-											JOptionPane.CANCEL_OPTION,
+											JOptionPane.DEFAULT_OPTION,
 											JOptionPane.PLAIN_MESSAGE, null,
 											null, null);
 							setVisible(false);
@@ -117,7 +117,7 @@ public class InputMaskSubject extends JFrame implements ActionListener {
 						JOptionPane.showOptionDialog(null, "Das Fach " + name
 								+ " wurde erfolgreich erstellt.",
 								"Erfolgreiche Eingabe!",
-								JOptionPane.CANCEL_OPTION,
+								JOptionPane.DEFAULT_OPTION,
 								JOptionPane.PLAIN_MESSAGE, null, null, null);
 						setVisible(false);
 						dispose();

@@ -147,7 +147,7 @@ public class SelectProfessor extends JFrame implements ActionListener {
 			list.delete(selection);
 			JOptionPane.showMessageDialog(null, "Sie haben den Dozenten "
 					+ name + " gelöscht!", "Dozent gelöscht",
-					JOptionPane.CANCEL_OPTION);
+					JOptionPane.DEFAULT_OPTION);
 			setVisible(false);
 			dispose();
 		}

@@ -106,7 +106,7 @@ public class SelectSubject extends JFrame implements ActionListener {
 			list.delete(selection);
 			JOptionPane.showMessageDialog(null,
 					"Sie haben das Fach " + name + " gelöscht!", "Fach gelöscht",
-					JOptionPane.CANCEL_OPTION);
+					JOptionPane.DEFAULT_OPTION);
 			setVisible(false);
 			dispose();
 			}

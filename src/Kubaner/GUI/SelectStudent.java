@@ -147,7 +147,7 @@ public class SelectStudent extends JFrame implements ActionListener {
 			list.delete(selection);
 			JOptionPane.showMessageDialog(null, "Sie haben den Student " + name
 					+ " gelöscht!", "Student gelöscht",
-					JOptionPane.CANCEL_OPTION);
+					JOptionPane.DEFAULT_OPTION);
 			setVisible(false);
 			dispose();
 		}
