@@ -187,10 +187,10 @@ public class Plan implements Serializable {
 		startTimeList = createTimeList();
 		
 		//calculate master model size
-		rows = calculateRows(startTimeList, assessors.size());
+		rows = calculateRows(startTimeList);
 		
 		//+1 because first column stores start times
-		cols = subjectList.size() + 1;
+		cols = 1 + subjectList.size() + assessors.size();
 		
 		master = new MasterModel(rows, cols);
 		actualTime = new Time(startTime.getHour(), startTime.getMinute());
@@ -219,9 +219,9 @@ public class Plan implements Serializable {
 							for(int i3 = 0; i3 < profList.size(); i3++) {
 								subjects = profList.get(i3).getSubjectArray();
 							
-							for(int i4 = 0; i4 < subjects.length; i4++) {
-								if(subjects[i4].getName() == subjectList.get(i - 1).getName())
-									value += " - " + profList.get(i3).getName();
+								for(int i4 = 0; i4 < subjects.length; i4++) {
+									if(subjects[i4].getName() == subjectList.get(i - 1).getName())
+										value += " - " + profList.get(i3).getName();
 								}
 							}
 							
@@ -231,13 +231,24 @@ public class Plan implements Serializable {
 					
 					//row > 0
 					} else {
-						//value at i2, i is still an instance of the class Time
-						exam = getExamAtTime((Time)master.getValueAt(i2, 0), subjectList.get(i - 1), startTimeList);
+						if(i <= subjectList.size()) {
+							//value at i2, i is still an instance of the class Time
+							exam = getExamAtTime((Time)master.getValueAt(i2, 0), subjectList.get(i - 1), startTimeList);
 						
-						if(exam != null) {
-							value = "" + exam.getStudent().getName() + "   " + findExamRoom(exam);
+							if(exam != null)
+								value = "" + exam.getStudent().getName() + "   " + findExamRoom(exam);
+							else 
+								value = "";
+							
+						//assessor column
 						} else {
-							value = "";
+							exam = getExamWithInvestigatorAtTime((Time)master.getValueAt(i2, 0)
+									, assessors.get(i - subjectList.size()), startTimeList);
+							
+							if(exam != null)
+								value = "" + exam.getStudent().getName() + "   " + findExamRoom(exam);
+							else 
+								value = "";
 						}
 					}
 				}
@@ -325,7 +336,7 @@ public class Plan implements Serializable {
 	 * Calculates the number of rows the master model should have.
 	 * @return Returns the number of rows the master model should have.
 	 */
-	private int calculateRows(ArrayList<Time[]> startTimeList, int assessorCount) {
+	private int calculateRows(ArrayList<Time[]> startTimeList) {
 		int rows = 1;
 		
 		Time time = null;
@@ -337,7 +348,6 @@ public class Plan implements Serializable {
 					rows++;
 		} while(time != null);
 		
-		rows += assessorCount;
 		return rows;
 	}
 	
@@ -469,7 +479,7 @@ public class Plan implements Serializable {
 	private PdfPTable getPdfPTableType1() {
 		ArrayList<Time[]> startTimeList = createTimeList();
 		
-		int rows = startTimeList.size() + 1;
+		int rows = calculateRows(startTimeList);
 		int cols = timeline.length * 3 + 1;
 		
 		PdfPTable table = new PdfPTable(cols); 
@@ -501,11 +511,11 @@ public class Plan implements Serializable {
 		}
 		
 		Time time = null;
-		data = new String[startTimeList.size()][cols];
+		data = new String[rows][cols];
 		
 		//calculate data for the remaining table
 		for(int i = 0; i < cols; i++) {
-			for(int i2 = 0; i2 < startTimeList.size(); i2++) {
+			for(int i2 = 0; i2 < rows; i2++) {
 				value = "";
 				//column 0: Times
 				if(i == 0) {
@@ -521,8 +531,8 @@ public class Plan implements Serializable {
 				
 				//subject or student column
 				} else {
-					if(i2 < timeline[i / 3].size()) {
-						member = timeline[i / 3].getTimeLineMember(i2);
+					if(i2 < timeline[(i - 1) / 3].size()) {
+						member = timeline[(i - 1) / 3].getTimeLineMember(i2);
 						if(member instanceof Exam) {
 							exam = (Exam)member;
 							
@@ -579,15 +589,16 @@ public class Plan implements Serializable {
 				table.addCell(new Phrase("Mitprüfer"));
 		}
 		
-		Time time;
+		Time time = null;
 		String value;
 		Professor[] profs;
 		
 		//calculate data for the remaining table
-		for(int i = 0; i < startTimeList.size(); i++) {
-			for(int i2 = 0; i2 < startTimeList.get(i).length; i2++) {
+		time = this.getNextStartTime(time, startTimeList);
+		
+		if(time != null) {
+			do {
 				value = "";
-				time = this.getNextStartTime(null, startTimeList);
 				exam = getExamWithInvestigatorAtTime(time, investigator, startTimeList);
 				
 				if(exam != null) {
@@ -600,23 +611,29 @@ public class Plan implements Serializable {
 					table.addCell(new Phrase(exam.getStudent().getName()));
 					
 					TimeLine line = timelineOfExam(exam);
-					if(line != null) {
+					if(line != null)
 						table.addCell(new Phrase(line.getRoom()));
-					} else {
+					else
 						table.addCell("");
-					}
 					
-					if(exam.getAssessor().equals(investigator))
+					value = "";
+					if(exam.getAssessor() != null && exam.getAssessor() != "" && exam.getAssessor().equals(investigator) == false)
 						value += investigator;
 					
 					profs = exam.getProfArray();
 					for(int i3 = 0; i3 < profs.length; i3++) {
-						if(profs[i3].getName().equals(investigator) == false) 
-							value += profs[i3].getName();
+						if(profs[i3].getName().equals(investigator) == false) {
+							if(value.equals(""))
+								value = profs[i3].getName();
+							else
+								value += ", " + profs[i3].getName();
+						}
 					}
 					table.addCell(new Phrase(value));
 				}
-			}
+				
+				time = this.getNextStartTime(time, startTimeList);
+			} while(time != null);
 		}
 		return table;
 	}
