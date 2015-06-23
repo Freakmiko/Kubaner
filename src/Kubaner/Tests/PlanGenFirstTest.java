@@ -106,6 +106,94 @@ public class PlanGenFirstTest {
 	}
 
 	@Test
+	public void RoomTimeLogicTest() throws Exception{
+		Time[] timeArray = new Time[plan.getRoomCount()];
+		for(int i = 0; i < plan.getRoomCount(); i++){
+			timeArray[i] = new Time(10,0);
+		}
+		for (int i = 0; i < plan.getTimeLineNumber(); i++) {
+			for (int j = 0; j < plan.getTimeLine(i).size(); j++) {
+				timeArray[i] = timeArray[i].addMinutes(plan.getTimeLine(i).getTimeLineMember(j).getLength());
+			}
+		}
+		for(int i = 0; i < plan.getRoomCount(); i++){
+			if(timeArray[i].isLater(new Time(24,0))){
+				fail();
+			}
+		}
+	}
+	
+	
+	
+	
+	@Test
+	public void ProfTimeLogicTest() throws Exception{
+		TimePeriod[][] timeArray = new TimePeriod[15][profList.size()];
+		for (int k = 0; k < profList.size() ; k++){
+			int m = 1;
+			timeArray[0][k] = new TimePeriod(new Time(0, 0),new Time(10, 0));
+			for (int i = 0; i < plan.getTimeLineNumber(); i++) {
+				for (int j = 0; j < plan.getTimeLine(i).size(); j++) {
+					try { // try to -cast- expected exam or break to exam
+						Exam tmp = (Exam) plan.getTimeLine(i).getTimeLineMember(j);
+						if(tmp.isDoubleExam() && ( tmp.getProfArray()[0].equals(profList.toArray()[k]) || tmp.getProfArray()[1].equals(profList.toArray()[k]) )){
+							Time tmpTime = new Time(10,0);
+							for (int l = 0; l < j; l++) {
+								tmpTime = tmpTime.addMinutes(plan.getTimeLine(i).getTimeLineMember(l).getLength());
+							}
+							Time tmpTime2 = tmpTime;
+							tmpTime2 = tmpTime2.addMinutes(tmp.getLength());
+							timeArray[m][k] = new TimePeriod(tmpTime, tmpTime2);
+							m++;
+						}
+						else {
+							if(tmp.getProfArray()[0].equals(profList.toArray()[k])){
+							Time tmpTime = new Time(10,0);
+							for (int l = 0; l < j; l++) {
+								tmpTime = tmpTime.addMinutes(plan.getTimeLine(i).getTimeLineMember(l).getLength());
+							}
+							Time tmpTime2 = tmpTime;
+							tmpTime2 = tmpTime2.addMinutes(tmp.getLength());
+							timeArray[m][k] = new TimePeriod(tmpTime, tmpTime2);
+							m++;
+							}
+						}
+						}
+					catch (Exception e) {
+					}				
+				}
+			}
+		}
+		for(int i = 0; i < profList.size(); i++){
+			for(int j =  0; j < 15; j++){
+				if(timeArray[j][i]==null){
+				}
+				else {
+					for(int k = 0; k < 15; k++){
+						if(timeArray[k][i]==null){
+						}
+						else if(!(k==j)){
+							if(timeArray[j][i].getStart().isEarlier(timeArray[k][i].getStart()) && timeArray[j][i].getStart().isEarlier(timeArray[k][i].getEnd()) && timeArray[j][i].getEnd().isEarlier(timeArray[k][i].getEnd()) && timeArray[j][i].getEnd().isEarlierOrEqual(timeArray[k][i].getStart())){	
+							} else if(timeArray[j][i].getStart().isLater(timeArray[k][i].getStart()) && timeArray[j][i].getStart().isLaterOrEqual(timeArray[k][i].getEnd()) && timeArray[j][i].getEnd().isLater(timeArray[k][i].getEnd()) && timeArray[j][i].getEnd().isLater(timeArray[k][i].getStart())){
+							} else fail("Prof: " + profList.toArray()[i].getName() + "\n" + "Start: " + timeArray[j][i].getStart().getHour() + ":" + timeArray[j][i].getStart().getMinute() + " Uhr" + "\n" +
+									"Ende: "  + timeArray[j][i].getEnd().getHour() + ":" + timeArray[j][i].getEnd().getMinute() + " Uhr" + "\n" +
+									"Start2: " + timeArray[k][i].getStart().getHour() + ":" + timeArray[k][i].getStart().getMinute() + " Uhr" + "\n" +
+									"Ende2: "  + timeArray[k][i].getEnd().getHour() + ":" + timeArray[k][i].getEnd().getMinute() + " Uhr" + "\n");
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	@Test
 	/**
 	 * Check for the quantity of used rooms
 	 * @throws Exception
