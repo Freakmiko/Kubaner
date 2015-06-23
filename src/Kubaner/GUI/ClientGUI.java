@@ -215,6 +215,16 @@ public class ClientGUI extends JFrame implements ActionListener{
 			
 		}else if(e.getSource() == deleteExam){
 			
+			if(plan != null){
+				new removeExam(plan, this).setVisible(true);
+			}else{
+				JOptionPane.showMessageDialog(
+						null,
+						"Bitte erstellen/laden Sie zuerst einen Plan.",
+						"Kein Plan vorhanden", JOptionPane.CANCEL_OPTION);
+			}
+			
+			
 		}else if(e.getSource() == switchExams){
 		
 		}else if(e.getSource() == addPause){
@@ -250,8 +260,10 @@ public class ClientGUI extends JFrame implements ActionListener{
 						}
 						
 					} catch (FileNotFoundException | DocumentException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						JOptionPane.showMessageDialog(
+								null,
+								"Datei konnte nicht angelegt werden.",
+								"Kein Pdf möglich", JOptionPane.CANCEL_OPTION);
 					}
 	            	
 	                
@@ -330,11 +342,11 @@ public class ClientGUI extends JFrame implements ActionListener{
 		//editPlan.setMnemonic(KeyEvent.VK_S);
 		
 		deleteExam = new JMenuItem("Termin löschen");
-		deleteExam.addActionListener(this);
+		deleteExam.setEnabled(false);
 		editPlan.add(deleteExam);
 		
 		switchExams = new JMenuItem("Termin Vertauschen");
-		switchExams.addActionListener(this);
+		switchExams.setEnabled(false);
 		editPlan.add(switchExams);
 		
 		planMenu.add(editPlan);
