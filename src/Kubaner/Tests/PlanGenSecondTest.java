@@ -153,6 +153,10 @@ public class PlanGenSecondTest {
 	}
 
 	@Test
+	/**
+	 * Check for occupancy of a room outside exam period
+	 * @throws Exception
+	 */
 	public void RoomTimeLogicTest() throws Exception{
 		Time[] timeArray = new Time[plan.getRoomCount()];
 		for(int i = 0; i < plan.getRoomCount(); i++){
@@ -172,7 +176,12 @@ public class PlanGenSecondTest {
 	
 	
 	@Test
+	/**
+	 * Check if professor has to attend multiple exams at the same time / overlapping exams
+	 * @throws Exception
+	 */
 	public void ProfTimeLogicTest() throws Exception{
+		//creating timearray containing every exam for each professor
 		TimePeriod[][] timeArray = new TimePeriod[41][profList.size()];
 		for (int k = 0; k < profList.size() ; k++){
 			int m = 1;
@@ -209,6 +218,7 @@ public class PlanGenSecondTest {
 				}
 			}
 		}
+		//check for overlapping / multiple exams
 		for(int i = 0; i < profList.size(); i++){
 			for(int j =  0; j < 41; j++){
 				if(timeArray[j][i]==null){
