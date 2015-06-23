@@ -31,7 +31,7 @@ public class SelectSubject extends JFrame implements ActionListener {
 			throw new NoElementException();
 		}
 		setLayout(new GridLayout(3, 1));
-		setTitle("Faecher Übersicht");
+		setTitle("Fächer Übersicht");
 		setLocationRelativeTo(null);
 
 		// F�cher�bersicht
@@ -61,7 +61,7 @@ public class SelectSubject extends JFrame implements ActionListener {
 		selectPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		subjectLabel = new JLabel();
 		subjectLabel
-				.setText("Geben Sie die Nummer des Faches, die Sie der Faecherübersicht entnehmen können.");
+				.setText("Geben Sie die Nummer des Faches, die Sie der Fächerübersicht entnehmen können.");
 		subjectModel = new SpinnerNumberModel(0, 0, list.size()-1, 1);
 		subjectSpinner = new JSpinner(subjectModel);
 		selectPanel.add(subjectLabel);

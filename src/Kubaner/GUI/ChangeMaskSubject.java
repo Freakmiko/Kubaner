@@ -150,7 +150,7 @@ public class ChangeMaskSubject extends JFrame implements ActionListener {
 											.getSubjectArray();
 									if (oldSubject.equals(tempProfSubject[j]))
 										tempPorfessor.deleteSubject(j);
-										tempPorfessor.addSubject(subject);
+									tempPorfessor.addSubject(subject);
 								}
 							}
 							setVisible(false);
@@ -191,7 +191,7 @@ public class ChangeMaskSubject extends JFrame implements ActionListener {
 										.getSubjectArray();
 								if (oldSubject.equals(tempProfSubject[j]))
 									tempPorfessor.deleteSubject(j);
-									tempPorfessor.addSubject(subject);
+								tempPorfessor.addSubject(subject);
 							}
 						}
 

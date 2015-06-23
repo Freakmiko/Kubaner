@@ -230,16 +230,6 @@ public class ChangeMaskProfessor extends JFrame implements ActionListener {
 				end = new Time(endHour, endMinute);
 				periode[0] = new TimePeriod(start, end);
 
-				// Testausgabe
-				// System.out.println("Name: " + professorName);
-				// for (int test = 0; test != counterSubjects; test++)
-				// System.out.println(test +"Fach: " +
-				// teachingSubject[],getName());
-				// System.out.println(test +"Fach: ");
-				// System.out.println("StartZeit: "+ startHour + ":" +
-				// startMinute);
-				// System.out.println("EndZeit: "+ endHour + ":" + endMinute);
-
 				try {
 					if (currentProfList.exists(name)) {
 						int answer = JOptionPane

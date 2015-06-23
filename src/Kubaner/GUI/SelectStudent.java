@@ -70,7 +70,7 @@ public class SelectStudent extends JFrame implements ActionListener {
 		subjectLabel = new JLabel();
 		subjectLabel
 				.setText("Geben Sie die Nummer des Studenten, den Sie der Studentenübersicht entnehmen können.");
-		subjectModel = new SpinnerNumberModel(0, 0, size-1, 1);
+		subjectModel = new SpinnerNumberModel(0, 0, size - 1, 1);
 		subjectSpinner = new JSpinner(subjectModel);
 		selectPanel.add(subjectLabel);
 		selectPanel.add(subjectSpinner);
@@ -104,7 +104,7 @@ public class SelectStudent extends JFrame implements ActionListener {
 		String returnString = "";
 		for (int i = 0; i < subjects.length; i++) {
 			if (subjects[i] != null)
-			returnString += subjects[i].getName() + ", ";
+				returnString += subjects[i].getName() + ", ";
 		}
 		return returnString;
 	}
@@ -145,8 +145,8 @@ public class SelectStudent extends JFrame implements ActionListener {
 			selection = (int) subjectSpinner.getValue();
 			String name = list.get(selection).getName();
 			list.delete(selection);
-			JOptionPane.showMessageDialog(null,
-					"Sie haben den Student " + name + " gelöscht!", "Student gelöscht",
+			JOptionPane.showMessageDialog(null, "Sie haben den Student " + name
+					+ " gelöscht!", "Student gelöscht",
 					JOptionPane.CANCEL_OPTION);
 			setVisible(false);
 			dispose();

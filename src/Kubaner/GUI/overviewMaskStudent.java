@@ -20,7 +20,8 @@ public class overviewMaskStudent extends JFrame implements ActionListener {
 	String times = "";
 	StudentList list;
 
-	public overviewMaskStudent(PlanGenerator planGenerator) throws NoElementException {
+	public overviewMaskStudent(PlanGenerator planGenerator)
+			throws NoElementException {
 		list = planGenerator.getStudentList();
 		if (list.size() == 0) {
 			throw new NoElementException();
@@ -32,10 +33,10 @@ public class overviewMaskStudent extends JFrame implements ActionListener {
 
 		TableModel dataModel = new DataModel(list.size(), 4);
 		table = new JTable(dataModel);
-//		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-//		add(new JScrollPane(table), BorderLayout.CENTER);
+		// table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		// add(new JScrollPane(table), BorderLayout.CENTER);
 		add(table);
-		
+
 		for (int row = 0; row < list.size(); row++)
 			for (int col = 0; col < 1; col++) {
 				dataModel.setValueAt("Nummer: " + row, row, col);
@@ -76,7 +77,7 @@ public class overviewMaskStudent extends JFrame implements ActionListener {
 		String returnString = "";
 		for (int i = 0; i < subjects.length; i++) {
 			if (subjects[i] != null)
-			returnString += subjects[i].getName() + ", ";
+				returnString += subjects[i].getName() + ", ";
 		}
 		return returnString;
 	}
