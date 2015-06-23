@@ -5,8 +5,10 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -22,15 +24,20 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
+import com.itextpdf.text.DocumentException;
+
 import Kubaner.Logic.Plan;
 import Kubaner.Logic.PlanGenerator;
+import Kubaner.Logic.Professor;
 import Kubaner.Logic.Time;
 
 public class ClientGUI extends JFrame implements ActionListener{
 	
 	private JMenuItem open, save, exit;
 	private JMenuItem createStudent, createProf, createSubject, studentSummary, profSummary, subjSummary, studentEdit, profEdit, subjEdit;
-	private JMenuItem createPlan, editPlan, addPause, createPdf;
+	private JMenuItem createPlan, addPause, createPdf;
+	private JMenu editPlan;
+	private JMenuItem deleteExam, switchExams;
 	
 	private JTable table;
 	
@@ -206,7 +213,9 @@ public class ClientGUI extends JFrame implements ActionListener{
 			}
 			
 			
-		}else if(e.getSource() == editPlan){
+		}else if(e.getSource() == deleteExam){
+			
+		}else if(e.getSource() == switchExams){
 		
 		}else if(e.getSource() == addPause){
 			
@@ -221,6 +230,40 @@ public class ClientGUI extends JFrame implements ActionListener{
 			
 		}else if(e.getSource() == createPdf){
 			
+			if(plan != null){
+			
+				JFileChooser fileChooser = new JFileChooser();
+				
+				int result = fileChooser.showSaveDialog(null);
+				
+	            if(result == JFileChooser.APPROVE_OPTION)
+	            {
+	            	File fileToSave = fileChooser.getSelectedFile();
+	            	
+	            	try {
+						plan.createPdf(fileToSave.getAbsolutePath(), 0, null);
+						
+						plan.createPdf(fileToSave.getAbsolutePath(), 1, null);
+						
+						for(Professor prof : planGen.getProfList()){
+							plan.createPdf(fileToSave.getAbsolutePath(), 2, prof.getName());
+						}
+						
+					} catch (FileNotFoundException | DocumentException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+	            	
+	                
+	            }
+            
+			}else{
+				JOptionPane.showMessageDialog(
+						null,
+						"Bitte erstellen/laden Sie zuerst einen Plan.",
+						"Kein Plan vorhanden", JOptionPane.CANCEL_OPTION);
+			}
+            
 		}
 	}
 	
@@ -282,9 +325,20 @@ public class ClientGUI extends JFrame implements ActionListener{
 		createPlan = new JMenuItem("Prüfungsplan erstellen");
 		createPlan.addActionListener(this);
 		planMenu.add(createPlan);
-		editPlan = new JMenuItem("Prüfungsplan bearbeiten");
-		editPlan.addActionListener(this);
+		
+		editPlan = new JMenu("Prüfungsplan bearbeiten");
+		//editPlan.setMnemonic(KeyEvent.VK_S);
+		
+		deleteExam = new JMenuItem("Termin löschen");
+		deleteExam.addActionListener(this);
+		editPlan.add(deleteExam);
+		
+		switchExams = new JMenuItem("Termin Vertauschen");
+		switchExams.addActionListener(this);
+		editPlan.add(switchExams);
+		
 		planMenu.add(editPlan);
+		
 		addPause = new JMenuItem("Pause einfügen");
 		addPause.addActionListener(this);
 		planMenu.add(addPause);
