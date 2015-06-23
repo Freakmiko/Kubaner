@@ -76,6 +76,7 @@ public class overviewMaskProfessor extends JFrame implements ActionListener {
 	String subjectsString(Subject[] subjects) {
 		String returnString = "";
 		for (int i = 0; i < subjects.length; i++) {
+			if (subjects[i] != null)
 			returnString += subjects[i].getName() + ", ";
 		}
 		return returnString;
