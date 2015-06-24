@@ -216,6 +216,13 @@ public class PlanGenerator {
 		mergeTimeLines(plan);	
 		while (checkPropeties(plan));
 		while(mergeBreakes(plan));
+		
+		for(int i = 0; i < plan.getRoomCount(); i++){
+			TimeLine line = plan.getTimeLine(i);
+			for(int j = 0; j < line.size(); j++){
+				System.out.println(line.getTimeLineMember(j).getClass() + ": " + line.getTimeLineMember(j).getLength());
+			}
+		}
 		return plan;
 	}
 
@@ -402,13 +409,14 @@ public class PlanGenerator {
 									i++;
 									change = true;
 								} else if (secondExam.getProfArray()[0] == currentExam.getProfArray()[0]
-												|| secondExam.getProfArray()[1] == currentExam.getProfArray()[1]
+												|| (secondExam.getProfArray()[1] == currentExam.getProfArray()[1]&&secondExam.getProfArray()[1]!= null)
 												|| secondExam.getProfArray()[0] == currentExam.getProfArray()[1]
 												|| secondExam.getProfArray()[1] == currentExam.getProfArray()[0]) {
 								plan.getTimeLine(indexOfSecondTimeline).insert(i,
 										new Break(currentExam.getLength()));
 								i++;
 								change = true;
+								System.out.println(currentStartTime.getMinutesBetween(secondEndTime));
 								}
 							}
 							else if(secondStartTime.isLater(currentEndTime)){
