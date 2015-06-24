@@ -210,7 +210,7 @@ public class ChangeMaskProfessor extends JFrame implements ActionListener {
 
 			if (counterSubjects == 0) {
 				JOptionPane.showMessageDialog(null,
-						"Sie haben kein Fach ausgewählt!", "Kein Fach",
+						"Sie haben kein Fach ausgew\u00E4hlt!", "Kein Fach",
 						JOptionPane.CANCEL_OPTION);
 			} else {
 
@@ -235,7 +235,7 @@ public class ChangeMaskProfessor extends JFrame implements ActionListener {
 						int answer = JOptionPane
 								.showOptionDialog(
 										null,
-										"Der Name des Dozenten existiert bereits. Möchten Sie den Dozenten trotzdem erstellen?",
+										"Der Name des Dozenten existiert bereits. M\u00F6chten Sie den Dozenten trotzdem erstellen?",
 										"Doppelter Name",
 										JOptionPane.YES_NO_OPTION,
 										JOptionPane.PLAIN_MESSAGE, null, null,

@@ -178,7 +178,7 @@ public class InputMaskStudent extends JFrame implements ActionListener {
 							int answer = JOptionPane
 									.showOptionDialog(
 											null,
-											"Der Name des Studenten existiert bereits. Möchten Sie den Studenten trotzdem erstellen?",
+											"Der Name des Studenten existiert bereits. M\u00F6chten Sie den Studenten trotzdem erstellen?",
 											"Doppelter Name",
 											JOptionPane.YES_NO_OPTION,
 											JOptionPane.PLAIN_MESSAGE, null,

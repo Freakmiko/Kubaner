@@ -106,7 +106,7 @@ public class ChangeMaskSubject extends JFrame implements ActionListener {
 						int answer = JOptionPane
 								.showOptionDialog(
 										null,
-										"Der Name des Faches existiert bereits. Möchten Sie das Fach trotzdem erstellen?",
+										"Der Name des Faches existiert bereits. M\u00F6chten Sie das Fach trotzdem erstellen?",
 										"Doppelter Name",
 										JOptionPane.YES_NO_OPTION,
 										JOptionPane.PLAIN_MESSAGE, null, null,

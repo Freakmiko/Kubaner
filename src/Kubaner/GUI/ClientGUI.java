@@ -202,13 +202,13 @@ public class ClientGUI extends JFrame implements ActionListener{
 				}else{
 					JOptionPane.showMessageDialog(
 							null,
-							"itte legen sie zuerst Studenten an bevor, sie einen Plan erstellen möchten.",
+							"Bitte legen sie zuerst Studenten an bevor, sie einen Plan erstellen m\u00F6chten.",
 							"Kein Student vorhanden", JOptionPane.CANCEL_OPTION);
 				}
 			}else{
 				JOptionPane.showMessageDialog(
 						null,
-						"Bitte legen sie zuerst Profesoren an, bevor sie einen Plan erstellen möchten.",
+						"Bitte legen sie zuerst Profesoren an, bevor sie einen Plan erstellen m\u00F6chten.",
 						"Kein Professor vorhanden", JOptionPane.CANCEL_OPTION);
 			}
 			
@@ -263,7 +263,7 @@ public class ClientGUI extends JFrame implements ActionListener{
 						JOptionPane.showMessageDialog(
 								null,
 								"Datei konnte nicht angelegt werden.",
-								"Kein Pdf möglich", JOptionPane.CANCEL_OPTION);
+								"Kein Pdf m\u00F6glich", JOptionPane.CANCEL_OPTION);
 					}
 	            	
 	                
@@ -285,7 +285,7 @@ public class ClientGUI extends JFrame implements ActionListener{
 		JMenu fileMenu = new JMenu("Datei");
 		
 		
-		open = new JMenuItem("Öffnen...");
+		open = new JMenuItem("\u00D6ffnen...");
 		open.addActionListener(this);
 		fileMenu.add(open);
 		save = new JMenuItem("Speichern");
@@ -309,13 +309,13 @@ public class ClientGUI extends JFrame implements ActionListener{
 		createSubject.addActionListener(this);
 		sourceMenu.add(createSubject);
 		sourceMenu.addSeparator();	
-		studentSummary = new JMenuItem("Studentenübersicht");
+		studentSummary = new JMenuItem("Studenten\u00FCbersicht");
 		studentSummary.addActionListener(this);
 		sourceMenu.add(studentSummary);
-		profSummary = new JMenuItem("Dozentenübersicht");
+		profSummary = new JMenuItem("Dozenten\u00FCbersicht");
 		profSummary.addActionListener(this);
 		sourceMenu.add(profSummary);
-		subjSummary = new JMenuItem("Fachübersicht");
+		subjSummary = new JMenuItem("Fach\u00FCbersicht");
 		subjSummary.addActionListener(this);
 		sourceMenu.add(subjSummary);
 		sourceMenu.addSeparator();	
@@ -334,14 +334,14 @@ public class ClientGUI extends JFrame implements ActionListener{
 		
 		JMenu planMenu = new JMenu("Plan");
 		
-		createPlan = new JMenuItem("Prüfungsplan erstellen");
+		createPlan = new JMenuItem("Pr\u00FCfungsplan erstellen");
 		createPlan.addActionListener(this);
 		planMenu.add(createPlan);
 		
-		editPlan = new JMenu("Prüfungsplan bearbeiten");
+		editPlan = new JMenu("Pr\u00FCfungsplan bearbeiten");
 		//editPlan.setMnemonic(KeyEvent.VK_S);
 		
-		deleteExam = new JMenuItem("Termin löschen");
+		deleteExam = new JMenuItem("Termin l\u00F6schen");
 		deleteExam.setEnabled(false);
 		editPlan.add(deleteExam);
 		
@@ -351,7 +351,7 @@ public class ClientGUI extends JFrame implements ActionListener{
 		
 		planMenu.add(editPlan);
 		
-		addPause = new JMenuItem("Pause einfügen");
+		addPause = new JMenuItem("Pause einf\u00FCgen");
 		addPause.addActionListener(this);
 		planMenu.add(addPause);
 		createPdf = new JMenuItem("Druckversion erstellen");
@@ -370,7 +370,7 @@ public class ClientGUI extends JFrame implements ActionListener{
 		
 		//---------------------------Fenster---------------------------
 		
-		setTitle("Prüfungsplan Generator");
+		setTitle("Pr\u00FCfungsplan Generator");
 		
 		getContentPane().setLayout( new BorderLayout() );
 		

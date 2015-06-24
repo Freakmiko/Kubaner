@@ -52,7 +52,7 @@ public class InputMaskSubject extends JFrame implements ActionListener {
 		timePanel = new JPanel();
 		timePanel.setLayout(new GridLayout(2, 1));
 		timePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		timeLabel = new JLabel("Dauer der Prüfung (in Minuten)");
+		timeLabel = new JLabel("Dauer der Pr\u00FCfung (in Minuten)");
 		timePanel.add(timeLabel);
 		subjectTimeModel = new SpinnerNumberModel(10, 5, 10, 5);
 		subjectTime = new JSpinner(subjectTimeModel);
