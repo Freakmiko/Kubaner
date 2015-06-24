@@ -185,6 +185,7 @@ public class PlanGenFirstTest {
 						else if(!(k==j)){
 							if(timeArray[j][i].getStart().isEarlier(timeArray[k][i].getStart()) && timeArray[j][i].getStart().isEarlier(timeArray[k][i].getEnd()) && timeArray[j][i].getEnd().isEarlier(timeArray[k][i].getEnd()) && timeArray[j][i].getEnd().isEarlierOrEqual(timeArray[k][i].getStart())){	
 							} else if(timeArray[j][i].getStart().isLater(timeArray[k][i].getStart()) && timeArray[j][i].getStart().isLaterOrEqual(timeArray[k][i].getEnd()) && timeArray[j][i].getEnd().isLater(timeArray[k][i].getEnd()) && timeArray[j][i].getEnd().isLater(timeArray[k][i].getStart())){
+							} else if(timeArray[j][i].getStart().isLaterOrEqual(timeArray[k][i].getStart()) && timeArray[j][i].getStart().isLaterOrEqual(timeArray[k][i].getEnd()) && timeArray[j][i].getEnd().isLaterOrEqual(timeArray[k][i].getEnd()) && timeArray[j][i].getEnd().isLaterOrEqual(timeArray[k][i].getStart())) {
 							} else fail("Prof: " + profList.toArray()[i].getName() + "\n" + "Start: " + timeArray[j][i].getStart().getHour() + ":" + timeArray[j][i].getStart().getMinute() + " Uhr" + "\n" +
 									"Ende: "  + timeArray[j][i].getEnd().getHour() + ":" + timeArray[j][i].getEnd().getMinute() + " Uhr" + "\n" +
 									"Start2: " + timeArray[k][i].getStart().getHour() + ":" + timeArray[k][i].getStart().getMinute() + " Uhr" + "\n" +
