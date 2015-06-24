@@ -50,9 +50,10 @@ public class Time implements Serializable {
 		int additionalHours = (this.minute + additionalMinutes) / 60;
 		int newHour = (this.hour + additionalHours) % 24;
 		
-		Time newTime = new Time(newHour, newMinutes);
+		this.hour = newHour;
+		this.minute = newMinutes;
 		
-		return newTime;
+		return this;
 	}
 	
 	/**
