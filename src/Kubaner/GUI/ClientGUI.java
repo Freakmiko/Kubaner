@@ -6,6 +6,8 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -384,6 +386,15 @@ public class ClientGUI extends JFrame implements ActionListener{
 		
 		this.setSize(new Dimension(screen.width / 2, screen.height / 2));
 		this.setLocation(screen.width/2-this.getSize().width/2, screen.height/2-this.getSize().height/2);
+		
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		
+		addWindowListener(new WindowAdapter(){
+				public void windowClosing(WindowEvent e){
+					System.exit(0);
+				}
+			}
+		);
 	}
 	
 	public void setPlan(Plan plan) {
