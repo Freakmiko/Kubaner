@@ -35,8 +35,11 @@ public class TimePeriod implements Serializable {
 	 * @param tp TimePeriod
 	 */
 	public boolean overlaying(TimePeriod tp){		
-		if(tp.end.isEarlier(start) || end.isEarlier(tp.start))
+		if(tp.getEnd().isEarlier(start) || end.isEarlier(tp.getStart()))
 			return false;
+		if(tp.getEnd().equals(start) || end.equals(tp.getStart())){
+			return false;
+		}	
 		return true;
 		
 	}
