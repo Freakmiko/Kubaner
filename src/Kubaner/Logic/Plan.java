@@ -422,7 +422,7 @@ public class Plan implements Serializable {
 	 * @param investigator - The name of the investigator, only necessary for plantype 2.
 	 * @return The room name, or "" if no room was found.
 	 */
-	public void createPdf(String fileName, int planType, String investigator) throws FileNotFoundException, DocumentException {
+	public void createPdf(String fileName, ProfList profList) throws FileNotFoundException, DocumentException {
 		MasterModel model;
 		
 		PdfPTable table = null; 
@@ -430,6 +430,9 @@ public class Plan implements Serializable {
 		//null -> NOT landscape format, numbers = space in pixels
 		//between border and table: left, right, top, bottom  
 		Document document = new Document(PageSize.A4, 20, 15, 15, 15);
+		File file = new File(fileName);
+		PdfWriter.getInstance(document, new FileOutputStream(file));
+		
 		PdfPCell cell;
 		
 		int cols;
@@ -437,41 +440,37 @@ public class Plan implements Serializable {
 		
 		String value;
 		
-		switch(planType) {
-		case 0:
-			model = createAbstractTableModel();
-			table = new PdfPTable(model.getColumnCount()); 
+		model = createAbstractTableModel();
+		table = new PdfPTable(model.getColumnCount()); 
 			
-			cols = model.getColumnCount();
-			rows = model.getRowCount();
+		cols = model.getColumnCount();
+		rows = model.getRowCount();
 		
-			//make a header cell
-			cell = new PdfPCell(new Phrase("Master-Plan"));
-			cell.setColspan(cols);
-			table.addCell(cell);
+		//make a header cell
+		cell = new PdfPCell(new Phrase("Master-Plan"));
+		cell.setColspan(cols);
+		table.addCell(cell);
 		
-			//initialize PDF table as master plan
-			for(int i = 0; i < rows; i++) {
-				for(int i2 = 0; i2 < cols; i2++) {
-					value = (String)model.getValueAt(i, i2);
-					table.addCell(new Phrase(value));
-				}
+		//initialize PDF table as master plan
+		for(int i = 0; i < rows; i++) {
+			for(int i2 = 0; i2 < cols; i2++) {
+				value = (String)model.getValueAt(i, i2);
+				table.addCell(new Phrase(value));
 			}
-			break;
-		case 1:
-			table = getPdfPTableType1();
-			break;
-		case 2:
-			table = getPdfPTableType2(investigator);
-			break;
 		}
 		
-		
 		//Write the file
-		File file = new File(fileName);
-		PdfWriter.getInstance(document, new FileOutputStream(file));
-        document.open();
-        document.add(table);
+		document.open();
+		document.add(table);
+		document.add(new Phrase("\n"));
+		
+		document.add(getPdfPTableType1());
+		document.add(new Phrase("\n"));
+		
+		for(Professor prof : profList) {
+			document.add(getPdfPTableType2(prof.getName()));
+			document.add(new Phrase("\n"));
+		}
         document.close();
 	}
 	
@@ -479,7 +478,7 @@ public class Plan implements Serializable {
 	private PdfPTable getPdfPTableType1() {
 		ArrayList<Time[]> startTimeList = createTimeList();
 		
-		int rows = calculateRows(startTimeList);
+		int rows = calculateRows(startTimeList) - 1;
 		int cols = timeline.length * 3 + 1;
 		
 		PdfPTable table = new PdfPTable(cols); 
@@ -622,7 +621,7 @@ public class Plan implements Serializable {
 					
 					profs = exam.getProfArray();
 					for(int i3 = 0; i3 < profs.length; i3++) {
-						if(profs[i3].getName().equals(investigator) == false) {
+						if(profs[i3] != null && profs[i3].getName().equals(investigator) == false) {
 							if(value.equals(""))
 								value = profs[i3].getName();
 							else
