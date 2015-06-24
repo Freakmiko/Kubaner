@@ -190,11 +190,11 @@ public class PlanGenerator {
 			TimeLine timeLine = new TimeLine();
 			timeLine.setRoom("Room: " + indexExam);
 
-			Time currentTime = startTime;
+			Time currentTime = new Time(startTime.getHour(), startTime.getMinute());
 
 			// create an exam and optional a break for every student
 			for (Student stud : exam) {
-				Time oldTime = currentTime;
+				Time oldTime = new Time(currentTime.getHour(), currentTime.getMinute());
 				currentTime = getTimeWhenProfIsAvailable(prof, currentTime);
 
 				// add a break if prof is unavailable
@@ -238,7 +238,7 @@ public class PlanGenerator {
 				{
 					TimeLine sourceLine = plan.getTimeLine(sourceLineIndex);
 
-					Time targetExamStartTime = plan.getStartTime();
+					Time targetExamStartTime = new Time(plan.getStartTime().getHour(), plan.getStartTime().getMinute());
 
 					for (TimeLineMember targetMember : targetLine) {
 						if (targetMember.getClass() == Exam.class) {
