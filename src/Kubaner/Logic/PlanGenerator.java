@@ -217,12 +217,6 @@ public class PlanGenerator {
 		while (checkPropeties(plan));
 		while(mergeBreakes(plan));
 		
-		for(int i = 0; i < plan.getRoomCount(); i++){
-			TimeLine line = plan.getTimeLine(i);
-			for(int j = 0; j < line.size(); j++){
-				System.out.println(line.getTimeLineMember(j).getClass() + ": " + line.getTimeLineMember(j).getLength());
-			}
-		}
 		return plan;
 	}
 
@@ -416,7 +410,6 @@ public class PlanGenerator {
 										new Break(currentExam.getLength()));
 								i++;
 								change = true;
-								System.out.println(currentStartTime.getMinutesBetween(secondEndTime));
 								}
 							}
 							else if(secondStartTime.isLater(currentEndTime)){
