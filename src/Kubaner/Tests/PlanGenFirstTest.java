@@ -129,7 +129,6 @@ public class PlanGenFirstTest {
 	
 	
 	
-	
 	@Test
 	/**
 	 * Check if professor has to attend multiple exams at the same time / overlapping exams
@@ -185,6 +184,7 @@ public class PlanGenFirstTest {
 						else if(!(k==j)){
 							if(timeArray[j][i].getStart().isEarlier(timeArray[k][i].getStart()) && timeArray[j][i].getStart().isEarlier(timeArray[k][i].getEnd()) && timeArray[j][i].getEnd().isEarlier(timeArray[k][i].getEnd()) && timeArray[j][i].getEnd().isEarlierOrEqual(timeArray[k][i].getStart())){	
 							} else if(timeArray[j][i].getStart().isLater(timeArray[k][i].getStart()) && timeArray[j][i].getStart().isLaterOrEqual(timeArray[k][i].getEnd()) && timeArray[j][i].getEnd().isLater(timeArray[k][i].getEnd()) && timeArray[j][i].getEnd().isLater(timeArray[k][i].getStart())){
+							} else if(timeArray[j][i].getStart().isLaterOrEqual(timeArray[k][i].getStart()) && timeArray[j][i].getStart().isLaterOrEqual(timeArray[k][i].getEnd()) && timeArray[j][i].getEnd().isLaterOrEqual(timeArray[k][i].getEnd()) && timeArray[j][i].getEnd().isLaterOrEqual(timeArray[k][i].getStart())) {
 							} else fail("Prof: " + profList.toArray()[i].getName() + "\n" + "Start: " + timeArray[j][i].getStart().getHour() + ":" + timeArray[j][i].getStart().getMinute() + " Uhr" + "\n" +
 									"Ende: "  + timeArray[j][i].getEnd().getHour() + ":" + timeArray[j][i].getEnd().getMinute() + " Uhr" + "\n" +
 									"Start2: " + timeArray[k][i].getStart().getHour() + ":" + timeArray[k][i].getStart().getMinute() + " Uhr" + "\n" +
@@ -198,6 +198,72 @@ public class PlanGenFirstTest {
 	
 	
 	
+	@Test
+	/**
+	 * Check if professor has to attend multiple exams at the same time / overlapping exams
+	 * @throws Exception
+	 */
+	public void StudTimeLogicTest() throws Exception{
+		//creating timearray containing every exam for each professor
+		TimePeriod[][] timeArray = new TimePeriod[5][stuList.size()];
+		for (int k = 0; k < stuList.size() ; k++){
+			int m = 1;
+			timeArray[0][k] = new TimePeriod(new Time(0, 0),new Time(10, 0));
+			for (int i = 0; i < plan.getTimeLineNumber(); i++) {
+				for (int j = 0; j < plan.getTimeLine(i).size(); j++) {
+					try { // try to -cast- expected exam or break to exam
+						Exam tmp = (Exam) plan.getTimeLine(i).getTimeLineMember(j);
+						if(tmp.isDoubleExam() && ( tmp.getProfArray()[0].equals(stuList.toArray()[k]) || tmp.getProfArray()[1].equals(stuList.toArray()[k]) )){
+							Time tmpTime = new Time(10,0);
+							for (int l = 0; l < j; l++) {
+								tmpTime = tmpTime.addMinutes(plan.getTimeLine(i).getTimeLineMember(l).getLength());
+							}
+							Time tmpTime2 = tmpTime;
+							tmpTime2 = tmpTime2.addMinutes(tmp.getLength());
+							timeArray[m][k] = new TimePeriod(tmpTime, tmpTime2);
+							m++;
+						}
+						else {
+							if(tmp.getProfArray()[0].equals(stuList.toArray()[k])){
+							Time tmpTime = new Time(10,0);
+							for (int l = 0; l < j; l++) {
+								tmpTime = tmpTime.addMinutes(plan.getTimeLine(i).getTimeLineMember(l).getLength());
+							}
+							Time tmpTime2 = tmpTime;
+							tmpTime2 = tmpTime2.addMinutes(tmp.getLength());
+							timeArray[m][k] = new TimePeriod(tmpTime, tmpTime2);
+							m++;
+							}
+						}
+						}
+					catch (Exception e) {
+					}				
+				}
+			}
+		}
+		//check for overlapping / multiple exams
+		for(int i = 0; i < stuList.size(); i++){
+			for(int j =  0; j < 5; j++){
+				if(timeArray[j][i]==null){
+				}
+				else {
+					for(int k = 0; k < 5; k++){
+						if(timeArray[k][i]==null){
+						}
+						else if(!(k==j)){
+							if(timeArray[j][i].getStart().isEarlier(timeArray[k][i].getStart()) && timeArray[j][i].getStart().isEarlier(timeArray[k][i].getEnd()) && timeArray[j][i].getEnd().isEarlier(timeArray[k][i].getEnd()) && timeArray[j][i].getEnd().isEarlierOrEqual(timeArray[k][i].getStart())){	
+							} else if(timeArray[j][i].getStart().isLater(timeArray[k][i].getStart()) && timeArray[j][i].getStart().isLaterOrEqual(timeArray[k][i].getEnd()) && timeArray[j][i].getEnd().isLater(timeArray[k][i].getEnd()) && timeArray[j][i].getEnd().isLater(timeArray[k][i].getStart())){
+							} else if(timeArray[j][i].getStart().isLaterOrEqual(timeArray[k][i].getStart()) && timeArray[j][i].getStart().isLaterOrEqual(timeArray[k][i].getEnd()) && timeArray[j][i].getEnd().isLaterOrEqual(timeArray[k][i].getEnd()) && timeArray[j][i].getEnd().isLaterOrEqual(timeArray[k][i].getStart())) {
+							} else fail("Student: " + stuList.toArray()[i].getName() + "\n" + "Start: " + timeArray[j][i].getStart().getHour() + ":" + timeArray[j][i].getStart().getMinute() + " Uhr" + "\n" +
+									"Ende: "  + timeArray[j][i].getEnd().getHour() + ":" + timeArray[j][i].getEnd().getMinute() + " Uhr" + "\n" +
+									"Start2: " + timeArray[k][i].getStart().getHour() + ":" + timeArray[k][i].getStart().getMinute() + " Uhr" + "\n" +
+									"Ende2: "  + timeArray[k][i].getEnd().getHour() + ":" + timeArray[k][i].getEnd().getMinute() + " Uhr" + "\n");
+						}
+					}
+				}
+			}
+		}
+	}
 	
 	
 	

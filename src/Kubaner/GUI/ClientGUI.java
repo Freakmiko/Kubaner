@@ -253,13 +253,7 @@ public class ClientGUI extends JFrame implements ActionListener{
 	            	File fileToSave = fileChooser.getSelectedFile();
 	            	
 	            	try {
-						plan.createPdf(fileToSave.getAbsolutePath(), 0, null);
-						
-						plan.createPdf(fileToSave.getAbsolutePath(), 1, null);
-						
-						for(Professor prof : planGen.getProfList()){
-							plan.createPdf(fileToSave.getAbsolutePath(), 2, prof.getName());
-						}
+	            		plan.createPdf(fileToSave.getAbsolutePath(), planGen.getProfList());
 						
 					} catch (FileNotFoundException | DocumentException e1) {
 						JOptionPane.showMessageDialog(
